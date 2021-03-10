@@ -1,0 +1,15 @@
+Jak reklamobiorca chcemy mieć możliwość wyświetlenia dostępnych reklam.
+
+Jak reklamobiorca chcemy mieć możliwość sprawdzenia szczegółów dotyczących reklamy,
+dzięki czemu możemy dostosować reklamę do naszych odbiorców.
+
+Jako reklamodawca chcę mieć możliwość dodania reklamy do serwisu.
+
+Jako reklamodowaca chcę mieć możliwość opisania swojej reklamy, dzięki czemu
+reklamobiorca może poznać szczegóły bez potrzeby dodatkowego kontaktu.
+
+Jako reklamodawaca chcę mieć możliwość ustalenia grupy docelowej dla danej reklamy.
+
+Jako reklamodawca chcę mieć możliwość sprawdzenia zasięgu reklamy.
+
+Jako reklamobiorca chcę mieć możliwość sprawdzenia zasięgu reklamy.
