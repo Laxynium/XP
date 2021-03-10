@@ -1,0 +1,19 @@
+1. Default formating option is the one coming from Intellij IDE.
+
+2. Each method in method chain should be in next line.
+
+3. We should follow the standard Java naming convention, bracing and folding.
+This means, we are following naming convension:
+ -camelCase for variable names, method names
+ -PascalCase for class names
+ -names of the file are same as class name
+
+Following brackets layout:
+ -opening bracket is in the same line as method or class declaration
+ -closing bracket is in the new line after given scope.
+
+4. Code variable, methods, comments, etc. are in english language.
+
+5. We are using 4 spaces for code indentation.
+
+6. Each class is in separate file
