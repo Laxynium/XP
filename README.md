@@ -11,3 +11,5 @@ Anna Nagi
 Rafal Mazur
 
 Lukasz Puton
+
+Adrianna Kopeć
