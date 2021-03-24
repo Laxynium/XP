@@ -5,11 +5,13 @@ import java.util.List;
 
 public class Calculator {
     public int add(String number) {
+        if (number.equals("")){
+            return 0;
+        }
         List<Integer> numbers = new LinkedList<>();
         for (String num: number.split(",") ){
             numbers.add(Integer.parseInt(num));
         }
-        int sum = numbers.stream().reduce(0, Integer::sum);
-        return sum;
+        return numbers.stream().reduce(0, Integer::sum);
     }
 }

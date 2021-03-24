@@ -15,6 +15,13 @@ class CalculatorTest {
         assertEquals(3, result);
     }
 
+    @Test
+    void testAddWhenEmptyString(){
+        Calculator calculator = new Calculator();
 
+        String numbersToAdd = "";
+        int result = calculator.add(numbersToAdd);
+        assertEquals(0, result);
+    }
 
 }
