@@ -1,5 +1,6 @@
 package pl.agh.xp.StringCalculator;
 
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -41,6 +42,17 @@ public class CalculatorTests {
 
         assertThat(result).isEqualTo(output);
     }
+
+    @Test
+    public void correctly_add_numbers_when_they_are_separated_by_newline(){
+        var calculator = new Calculator();
+
+        var result = calculator.add("2\n3");
+
+        assertThat(result).isEqualTo("5");
+    }
+
+
 
     private static Stream<Arguments> simpleTestData(){
         return Stream.of(
