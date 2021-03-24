@@ -24,5 +24,21 @@ class StringCalculatorTest {
         Assertions.assertEquals(output, result);
     }
 
+    @ParameterizedTest
+    @CsvSource(
+            value = {
+                    "1,2,3; 6",
+                    "2,3,5,10; 20",
+                    "1, 3, 5, 7; 16"
+            },
+            delimiter = ';'
+    )
+    void Add_addsUpToAnyNumbers_whenStringIsValid(String numbers, int output) {
+        // when
+        var result = stringCalculator.add(numbers);
+        // then
+        Assertions.assertEquals(output, result);
+    }
+
 
 }
