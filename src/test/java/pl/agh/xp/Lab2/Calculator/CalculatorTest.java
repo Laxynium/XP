@@ -11,8 +11,10 @@ class CalculatorTest {
         Calculator calculator = new Calculator();
 
         String numbersToAdd = "1,2";
-        String result = calculator.add(numbersToAdd);
-        assertEquals("3.0", result);
+        int result = calculator.add(numbersToAdd);
+        assertEquals(3, result);
     }
+
+
 
 }

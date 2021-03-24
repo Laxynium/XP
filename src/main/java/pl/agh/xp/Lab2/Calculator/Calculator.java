@@ -4,12 +4,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Calculator {
-    public String add(String number) {
-        List<Double> numbers = new LinkedList<>();
+    public int add(String number) {
+        List<Integer> numbers = new LinkedList<>();
         for (String num: number.split(",") ){
-            numbers.add(Double.parseDouble(num));
+            numbers.add(Integer.parseInt(num));
         }
-        Double sum = numbers.stream().reduce(0.0, Double::sum);
-        return String.valueOf(sum);
+        int sum = numbers.stream().reduce(0, Integer::sum);
+        return sum;
     }
 }
