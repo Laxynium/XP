@@ -12,7 +12,7 @@ public class CalculatorTests {
 
     @ParameterizedTest
     @MethodSource("simpleTestData")
-    public void correctly_adds_numbers_after_comma_when_input_string_is_valid(String input, String output){
+    public void correctly_adds_int_numbers_separated_by_comma_when_input_string_is_valid(String input, String output){
         var calculator = new Calculator();
 
         var result = calculator.add(input);
@@ -22,7 +22,18 @@ public class CalculatorTests {
 
     @ParameterizedTest
     @MethodSource("anyTestData")
-    public void correctly_add_any_numbers_when_input_string_is_valid(String input, String output)
+    public void correctly_add_any_int_numbers_when_input_string_is_valid(String input, String output)
+    {
+        var calculator = new Calculator();
+
+        var result = calculator.add(input);
+
+        assertThat(result).isEqualTo(output);
+    }
+
+    @ParameterizedTest
+    @MethodSource("floatTestData")
+    public void correctly_add_any_float_numbers_when_input_string_is_valid(String input, String output)
     {
         var calculator = new Calculator();
 
@@ -42,6 +53,13 @@ public class CalculatorTests {
         return Stream.of(
                 Arguments.arguments("1,2,3","6"),
                 Arguments.arguments("10,20,30,40","100")
+        );
+    }
+
+    private static Stream<Arguments> floatTestData(){
+        return Stream.of(
+                Arguments.arguments("1.1,2.2", "3.3"),
+                Arguments.arguments("10.9,20.1,30", "61")
         );
     }
 
