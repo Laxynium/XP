@@ -9,11 +9,14 @@ class StringCalculatorTest {
     StringCalculator stringCalculator = new StringCalculator();
 
     @ParameterizedTest
-    @CsvSource({
-            "\"\", 0",
-            "\"1\", 1",
-            "\"1,2\", 3"
-    })
+    @CsvSource(
+            value = {
+                    "''; 0",
+                    "1; 1",
+                    "1,2; 3"
+            },
+            delimiter = ';'
+    )
     void Add_addsUpToTwoNumbers_whenStringIsValid(String numbers, int output) {
         // when
         var result = stringCalculator.add(numbers);
