@@ -12,7 +12,7 @@ class CalculatorTest {
 
         String numbersToAdd = "1,2";
         String result = calculator.add(numbersToAdd);
-        assertEquals("3", result);
+        assertEquals("3.0", result);
     }
 
 }
