@@ -1,13 +1,13 @@
 package pl.agh.xp.StringCalculator;
 
+import java.util.Arrays;
+
 public class Calculator {
     public String add(String s) {
-       if(s.equals(""))
+       if(s == null || s.isBlank())
            return "0";
-       if(s.equals("1"))
-           return "1";
-       if(s.equals("1,1"))
-           return "2";
-       return "";
+       var splitted = s.split(",");
+       var numbers = Arrays.stream(splitted).map(Integer::parseInt);
+       return numbers.reduce(0, Integer::sum).toString();
     }
 }
