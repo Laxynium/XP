@@ -79,4 +79,22 @@ public class BitsCounterTest {
         int result = bitsCounter.noOfBits(numberToCount);
         assertEquals(resultCount, result);
     }
+
+    private static Stream<Arguments> countWhiteSpaceDelimiterProvider() {
+        return Stream.of(
+                Arguments.of("8;9", 3),
+                Arguments.of("8 9\t8", 4),
+                Arguments.of("8  \t\n  9\t\t\t  \n\n\t8", 4)
+        );
+    }
+
+    @ParameterizedTest(name="{index} => numberToCount={0}, resultCount={1}")
+    @MethodSource("countWhiteSpaceDelimiterProvider")
+    void testSumBitsWithWhiteSpacesDelimiters(String numberToCount, int resultCount){
+        BitsCounter bitsCounter = new BitsCounter();
+
+
+        int result = bitsCounter.noOfBits(numberToCount);
+        assertEquals(resultCount, result);
+    }
 }

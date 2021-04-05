@@ -3,7 +3,7 @@ package pl.agh.xp.Lab2.BitsCounter;
 public class BitsCounter {
     public int noOfBits(String numbers) {
 
-        String splitRegex = "[; ]";
+        String splitRegex = ";|\\s+";
 
         if (numbers.trim().equals("")){
             return 0;
