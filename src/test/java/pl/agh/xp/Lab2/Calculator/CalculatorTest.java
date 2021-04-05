@@ -15,10 +15,10 @@ class CalculatorTest {
     private static Stream<Arguments> sumTwoValuesProvider() {
         return Stream.of(
                 Arguments.of("1,2", 3),
-                Arguments.of("-1,3", 2),
+                Arguments.of("1,3", 4),
                 Arguments.of("1", 1),
                 Arguments.of(" ", 0),
-                Arguments.of("-1    ,3", 2)
+                Arguments.of("1    ,3", 4)
         );
     }
 
@@ -84,5 +84,23 @@ class CalculatorTest {
 
         int result = calculator.add(numbersToAdd);
         assertEquals(sum, result);
+    }
+
+    private static Stream<Arguments> sumNegativeInputProvider() {
+        return Stream.of(
+                Arguments.of("1,2,-3", "-3"),
+                Arguments.of("//;\n1;-2;-4", "-2, -4")
+        );
+    }
+
+    @ParameterizedTest(name="{index} => numbersToAdd={0}, negatives={1}")
+    @MethodSource("sumNegativeInputProvider")
+    void testAddShouldThrowExceptionWhenNegativeInput(String numbersToAdd, String negatives){
+        Calculator calculator = new Calculator();
+
+        Exception exception = assertThrows(RuntimeException.class, ()-> calculator.add(numbersToAdd));
+
+        String expectedMessage = "Negatives not allowed: " + negatives;
+        assertEquals(expectedMessage, exception.getMessage());
     }
 }

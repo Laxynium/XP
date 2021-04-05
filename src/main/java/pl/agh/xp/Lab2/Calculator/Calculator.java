@@ -3,6 +3,7 @@ package pl.agh.xp.Lab2.Calculator;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Calculator {
     public int add(String number) {
@@ -31,9 +32,19 @@ public class Calculator {
         regex.append("]");
 
         List<Integer> numbers = new LinkedList<>();
+        List<Integer> negatives;
+
         for (String num: number.trim().split(regex.toString()) ){
             numbers.add(Integer.parseInt(num.trim()));
         }
+
+        negatives = numbers.stream().filter(i -> i < 0)
+                .collect(Collectors.toList());
+
+        if (! negatives.isEmpty()){
+            throw new RuntimeException("Negatives not allowed: " + negatives.toString().replaceAll("[\\[\\]]", ""));
+        }
+
         return numbers.stream().reduce(0, Integer::sum);
     }
 }
