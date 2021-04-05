@@ -65,7 +65,8 @@ public class BitsCounterTest {
     private static Stream<Arguments> countSeveralDecimalProvider() {
         return Stream.of(
                 Arguments.of("8;9", 3),
-                Arguments.of("8;9;8", 4)
+                Arguments.of("8;9;8", 4),
+                Arguments.of("8;9 8", 4)
         );
     }
 
