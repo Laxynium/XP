@@ -70,4 +70,19 @@ class CalculatorTest {
         int result = calculator.add(numbersToAdd);
         assertEquals(sum, result);
     }
+
+    private static Stream<Arguments> sumNDifferentDelimiterProvider() {
+        return Stream.of(
+                Arguments.of("//;\n1;2", 3)
+        );
+    }
+
+    @ParameterizedTest(name="{index} => numbersToAdd={0}, sum={1}")
+    @MethodSource("sumNDifferentDelimiterProvider")
+    void testAddNDifferentDelimiterProviderWhenStringValid(String numbersToAdd, int sum){
+        Calculator calculator = new Calculator();
+
+        int result = calculator.add(numbersToAdd);
+        assertEquals(sum, result);
+    }
 }
