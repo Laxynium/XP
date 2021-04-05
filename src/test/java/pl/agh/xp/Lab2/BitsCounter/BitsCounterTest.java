@@ -97,4 +97,15 @@ public class BitsCounterTest {
         int result = bitsCounter.noOfBits(numberToCount);
         assertEquals(resultCount, result);
     }
+
+    @ParameterizedTest(name="{index} => numberToCount={0}, resultCount={1}")
+    @ValueSource(strings = { "4))2", "3&&  \t\t24"})
+    void testSumBitsThrowsWhenInvalidDelimiters(String numberToCount){
+        BitsCounter bitsCounter = new BitsCounter();
+
+
+        Exception exception = assertThrows(IllegalArgumentException.class, ()-> bitsCounter.noOfBits(numberToCount));
+
+        assertEquals("Invalid delimiters", exception.getMessage());
+    }
 }
