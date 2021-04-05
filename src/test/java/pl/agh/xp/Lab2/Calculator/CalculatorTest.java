@@ -103,4 +103,6 @@ class CalculatorTest {
         String expectedMessage = "Negatives not allowed: " + negatives;
         assertEquals(expectedMessage, exception.getMessage());
     }
+
+
 }

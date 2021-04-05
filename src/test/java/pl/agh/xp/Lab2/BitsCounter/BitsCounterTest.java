@@ -61,4 +61,21 @@ public class BitsCounterTest {
 
         assertEquals("Number out of range 0-255", exception.getMessage());
     }
+
+    private static Stream<Arguments> countSeveralDecimalProvider() {
+        return Stream.of(
+                Arguments.of("8;9", 3),
+                Arguments.of("8;9;8", 4)
+        );
+    }
+
+    @ParameterizedTest(name="{index} => numberToCount={0}, resultCount={1}")
+    @MethodSource("countSeveralDecimalProvider")
+    void testSumBitsUpToSeveralNumbers(String numberToCount, int resultCount){
+        BitsCounter bitsCounter = new BitsCounter();
+
+
+        int result = bitsCounter.noOfBits(numberToCount);
+        assertEquals(resultCount, result);
+    }
 }
