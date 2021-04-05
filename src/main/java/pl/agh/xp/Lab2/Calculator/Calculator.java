@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Calculator {
     public int add(String number) {
-        if (number.equals("")){
+        if (number.trim().equals("")){
             return 0;
         }
         List<Integer> numbers = new LinkedList<>();
