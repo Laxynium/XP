@@ -4,7 +4,7 @@ public class BitsCounter {
     public int noOfBits(String numbers) {
 
         String splitRegex = ";|\\s+";
-        String numberRange = "[-]?[0-9][0-9]*";
+        String numberRange = "[#-]?(([0-9][0-9]*)|[0-9A-F]+)";
 
         if (numbers.trim().equals("")){
             return 0;
@@ -17,7 +17,15 @@ public class BitsCounter {
             if (!number.matches(numberRange)){
                 throw new IllegalArgumentException("Invalid delimiters");
             }
-            int parsedNumber = Integer.parseInt(number);
+            int parsedNumber;
+            if (number.charAt(0)=='#'){
+                number = number.substring(1);
+                parsedNumber = Integer.parseInt(number, 16);
+            }
+            else {
+                parsedNumber = Integer.parseInt(number);
+            }
+
 
             if (parsedNumber<0 || parsedNumber > 255){
                 throw new IllegalArgumentException("Number out of range 0-255");

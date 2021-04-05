@@ -108,4 +108,22 @@ public class BitsCounterTest {
 
         assertEquals("Invalid delimiters", exception.getMessage());
     }
+
+    private static Stream<Arguments> countWithHexadecimalProvider() {
+        return Stream.of(
+                Arguments.of("8;#9", 3),
+                Arguments.of("8;#1A", 4),
+                Arguments.of("#FF;#1A", 11)
+        );
+    }
+
+    @ParameterizedTest(name="{index} => numberToCount={0}, resultCount={1}")
+    @MethodSource("countWithHexadecimalProvider")
+    void testSumBitsWithHexadecimal(String numberToCount, int resultCount){
+        BitsCounter bitsCounter = new BitsCounter();
+
+
+        int result = bitsCounter.noOfBits(numberToCount);
+        assertEquals(resultCount, result);
+    }
 }
