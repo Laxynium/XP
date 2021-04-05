@@ -7,6 +7,11 @@ public class BitsCounter {
         }
 
         int parsedNumber = Integer.parseInt(number);
+
+        if (parsedNumber<0 || parsedNumber > 255){
+            throw new IllegalArgumentException("Number out of range 0-255");
+        }
+
         String binaryNumber = Integer.toBinaryString(parsedNumber);
 
         return (int) binaryNumber.chars()
