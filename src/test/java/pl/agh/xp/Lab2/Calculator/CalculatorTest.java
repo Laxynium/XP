@@ -40,4 +40,34 @@ class CalculatorTest {
         assertEquals(0, result);
     }
 
+    private static Stream<Arguments> sumManyValuesProvider() {
+        return Stream.of(
+                Arguments.of("1,2,3", 6)
+        );
+    }
+
+    @ParameterizedTest(name="{index} => numbersToAdd={0}, sum={1}")
+    @MethodSource("sumManyValuesProvider")
+    void testAddUpAnyNumberWhenStringValid(String numbersToAdd, int sum){
+        Calculator calculator = new Calculator();
+
+        int result = calculator.add(numbersToAdd);
+        assertEquals(sum, result);
+    }
+
+    private static Stream<Arguments> sumNewLineDelimiterProvider() {
+        return Stream.of(
+                Arguments.of("1\n2,3", 6),
+                Arguments.of("1\n3\n3", 7)
+        );
+    }
+
+    @ParameterizedTest(name="{index} => numbersToAdd={0}, sum={1}")
+    @MethodSource("sumNewLineDelimiterProvider")
+    void testAddNewLineDelimiterWhenStringValid(String numbersToAdd, int sum){
+        Calculator calculator = new Calculator();
+
+        int result = calculator.add(numbersToAdd);
+        assertEquals(sum, result);
+    }
 }
