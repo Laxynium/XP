@@ -17,7 +17,8 @@ class CalculatorTest {
                 Arguments.of("1,2", 3),
                 Arguments.of("-1,3", 2),
                 Arguments.of("1", 1),
-                Arguments.of(" ", 0)
+                Arguments.of(" ", 0),
+                Arguments.of("-1    ,3", 2)
         );
     }
 

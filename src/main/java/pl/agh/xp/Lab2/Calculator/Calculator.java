@@ -9,8 +9,8 @@ public class Calculator {
             return 0;
         }
         List<Integer> numbers = new LinkedList<>();
-        for (String num: number.split(",") ){
-            numbers.add(Integer.parseInt(num));
+        for (String num: number.trim().split(",") ){
+            numbers.add(Integer.parseInt(num.trim()));
         }
         return numbers.stream().reduce(0, Integer::sum);
     }
