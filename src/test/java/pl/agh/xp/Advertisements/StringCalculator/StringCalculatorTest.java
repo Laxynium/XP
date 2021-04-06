@@ -75,4 +75,37 @@ class StringCalculatorTest {
         Assertions.assertEquals(output, result);
     }
 
+    @Test
+    void Add_addsUpToAnyNumbers_whenStringHasCustomDelimiterAndIsSeparatedByComasAndNewLinesAndValid1() {
+        // given
+        var numbers = "//;\n1\n2;3";
+        var output = 6;
+        // when
+        var result = stringCalculator.add(numbers);
+        // then
+        Assertions.assertEquals(output, result);
+    }
+
+    @Test
+    void Add_addsUpToAnyNumbers_whenStringHasCustomDelimiterAndIsSeparatedByComasAndNewLinesAndValid2() {
+        // given
+        var numbers = "2,3\n5\n10";
+        var output = 20;
+        // when
+        var result = stringCalculator.add(numbers);
+        // then
+        Assertions.assertEquals(output, result);
+    }
+
+    @Test
+    void Add_addsUpToAnyNumbers_whenStringHasCustomDelimiterAndIsSeparatedByComasAndNewLinesAndValid3() {
+        // given
+        var numbers = "//,\n1,\n\n 3, 5\n 7";
+        var output = 16;
+        // when
+        var result = stringCalculator.add(numbers);
+        // then
+        Assertions.assertEquals(output, result);
+    }
+
 }
