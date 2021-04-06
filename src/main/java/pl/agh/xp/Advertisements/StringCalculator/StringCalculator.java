@@ -7,12 +7,12 @@ public class StringCalculator {
 
     public int add(String numbers) {
         var splitNumbers = numbers.split(",");
-        if(splitNumbers[0].isBlank()){
-            return 0;
+        int sum = 0;
+        for (String s : splitNumbers) {
+            if (!s.isEmpty()) {
+                sum += Integer.parseInt(s.trim());
+            }
         }
-        if(splitNumbers.length == 1){
-            return Integer.parseInt(splitNumbers[0]);
-        }
-        return Integer.parseInt(splitNumbers[0]) + Integer.parseInt(splitNumbers[1]);
+        return sum;
     }
 }
