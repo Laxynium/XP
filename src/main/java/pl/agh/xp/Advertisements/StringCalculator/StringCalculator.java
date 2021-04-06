@@ -3,7 +3,12 @@ package pl.agh.xp.Advertisements.StringCalculator;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.groupingBy;
 
 @Service
 public class StringCalculator {
@@ -13,30 +18,27 @@ public class StringCalculator {
         var processedNumbers = numbers;
 
         if (numbers.startsWith("//")) {
-            delimiters = delimiters + "|" + numbers.substring(2, numbers.indexOf('\n'));
-            processedNumbers = numbers.substring(numbers.indexOf('\n'));
+            int firstNewLine = numbers.indexOf('\n');
+            delimiters = delimiters + "|" + numbers.substring(2, firstNewLine);
+            processedNumbers = numbers.substring(firstNewLine);
         }
 
-        var splitNumbers = processedNumbers.split(delimiters);
-        int sum = 0;
-        var toThrow = new ArrayList<>();
-        for (String s : splitNumbers) {
-            if (!s.isEmpty()) {
-                int value = Integer.parseInt(s.trim());
-                sum += value;
-                if (value < 0) {
-                    toThrow.add(value);
-                }
+        Map<Boolean, List<Integer>> integers = Arrays.stream(processedNumbers.split(delimiters))
+                .filter(s1 -> !s1.isEmpty())
+                .map(String::trim)
+                .map(Integer::parseInt)
+                .collect(groupingBy(x -> x < 0));
 
-            }
-        }
-        if (!toThrow.isEmpty()) {
-            throw new RuntimeException(toThrow.stream()
+        if (!integers.getOrDefault(true, List.of()).isEmpty()) {
+            throw new RuntimeException(integers
+                    .get(true).stream()
                     .map(x -> Integer.toString((int) x))
                     .collect(Collectors.joining(", "))
             );
         }
-
-        return sum;
+        return integers.getOrDefault(false, List.of())
+                .stream()
+                .mapToInt(x -> x)
+                .sum();
     }
 }
