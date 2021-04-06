@@ -1,6 +1,7 @@
 package pl.agh.xp.Advertisements.StringCalculator;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -40,5 +41,38 @@ class StringCalculatorTest {
         Assertions.assertEquals(output, result);
     }
 
+
+    @Test
+    void Add_addsUpToAnyNumbers_whenStringIsSeparatedByComasAndNewLinesAndValid1() {
+        // given
+        var numbers = "1\n2,3";
+        var output = 6;
+        // when
+        var result = stringCalculator.add(numbers);
+        // then
+        Assertions.assertEquals(output, result);
+    }
+
+    @Test
+    void Add_addsUpToAnyNumbers_whenStringIsSeparatedByComasAndNewLinesAndValid2() {
+        // given
+        var numbers = "2,3\n5\n10";
+        var output = 20;
+        // when
+        var result = stringCalculator.add(numbers);
+        // then
+        Assertions.assertEquals(output, result);
+    }
+
+    @Test
+    void Add_addsUpToAnyNumbers_whenStringIsSeparatedByComasAndNewLinesAndValid3() {
+        // given
+        var numbers = "1,\n\n 3, 5\n 7";
+        var output = 16;
+        // when
+        var result = stringCalculator.add(numbers);
+        // then
+        Assertions.assertEquals(output, result);
+    }
 
 }
