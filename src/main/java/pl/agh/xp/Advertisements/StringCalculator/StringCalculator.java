@@ -27,16 +27,18 @@ public class StringCalculator {
                 .filter(s1 -> !s1.isEmpty())
                 .map(String::trim)
                 .map(Integer::parseInt)
-                .collect(groupingBy(x -> x < 0));
+                .collect(groupingBy(x -> x > 0));
 
-        if (!integers.getOrDefault(true, List.of()).isEmpty()) {
+        boolean negative = false;
+        if (!integers.getOrDefault(negative, List.of()).isEmpty()) {
             throw new RuntimeException(integers
-                    .get(true).stream()
+                    .get(negative).stream()
                     .map(x -> Integer.toString((int) x))
                     .collect(Collectors.joining(", "))
             );
         }
-        return integers.getOrDefault(false, List.of())
+        boolean positive = true;
+        return integers.getOrDefault(positive, List.of())
                 .stream()
                 .mapToInt(x -> x)
                 .sum();
