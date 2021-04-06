@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 public class StringCalculator {
 
     public int add(String numbers) {
-        var splitNumbers = numbers.split(",");
+        var splitNumbers = numbers.split("[,\n]");
         int sum = 0;
         for (String s : splitNumbers) {
             if (!s.isEmpty()) {
