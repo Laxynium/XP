@@ -65,6 +65,14 @@ public class CalculatorTests {
         assertThat(result.getLeft()).isEqualTo("One of the numbers is invalid.");
     }
 
+    @Test
+    public void fails_when_numbers_are_negative(){
+        var result = calculator.add("1.0,-2.0,3.0,-4.0");
+
+        assertThat(result.isLeft()).isTrue();
+        assertThat(result.getLeft()).isEqualTo("Negative not allowed : -2, -4");
+    }
+
     private static Stream<Arguments> simpleTestData(){
         return Stream.of(
                 Arguments.arguments("","0"),
