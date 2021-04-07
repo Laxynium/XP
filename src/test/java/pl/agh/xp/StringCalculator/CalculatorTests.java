@@ -11,10 +11,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class CalculatorTests {
 
+    private Calculator calculator = new Calculator();
+
     @ParameterizedTest
     @MethodSource("simpleTestData")
     public void correctly_adds_int_numbers_separated_by_comma_when_input_string_is_valid(String input, String output){
-        var calculator = new Calculator();
+        calculator = new Calculator();
 
         var result = calculator.add(input);
 
@@ -25,8 +27,6 @@ public class CalculatorTests {
     @MethodSource("anyTestData")
     public void correctly_add_any_int_numbers_when_input_string_is_valid(String input, String output)
     {
-        var calculator = new Calculator();
-
         var result = calculator.add(input);
 
         assertThat(result).isEqualTo(output);
@@ -36,8 +36,6 @@ public class CalculatorTests {
     @MethodSource("floatTestData")
     public void correctly_add_any_float_numbers_when_input_string_is_valid(String input, String output)
     {
-        var calculator = new Calculator();
-
         var result = calculator.add(input);
 
         assertThat(result).isEqualTo(output);
@@ -45,14 +43,17 @@ public class CalculatorTests {
 
     @Test
     public void correctly_add_numbers_when_they_are_separated_by_newline(){
-        var calculator = new Calculator();
-
         var result = calculator.add("2\n3");
 
         assertThat(result).isEqualTo("5");
     }
 
+    @Test
+    public void correctly_add_numbers_when_custom_separator_is_used(){
+        var result = calculator.add("//;\n1;2;3");
 
+        assertThat(result).isEqualTo("6");
+    }
 
     private static Stream<Arguments> simpleTestData(){
         return Stream.of(
