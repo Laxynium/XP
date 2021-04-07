@@ -4,29 +4,20 @@ import java.text.DecimalFormat;
 import java.util.Arrays;
 
 public class Calculator {
-    public String add(String s) {
-        var customDelimiter = detectCustomDelimiter(s);
+    public String add(String input) {
         var separator = "[,\\n]";
-        if(customDelimiter != null){
-            separator = customDelimiter;
-            s = s.split("\n",2)[1];
+        if(input.startsWith("//")){
+            String[] split = input.split("\n", 2);
+            var beforeFirstLine = split[0];
+            separator = beforeFirstLine.replace("//", "");
+            input = split[1];
         }
 
-        if (s == null || s.isBlank())
+        if (input == null || input.isBlank())
             return "0";
-        var splitted = s.split(separator);
-        var numbers = Arrays.stream(splitted).map(Float::parseFloat);
+        var split = input.split(separator);
+        var numbers = Arrays.stream(split).map(Float::parseFloat);
         var sum = numbers.reduce(0f, Float::sum);
         return new DecimalFormat("0.#").format(sum);
-    }
-
-    private String detectCustomDelimiter(String input){
-        if(input.startsWith("//")){
-            var beforeFirstLine = input.split("\n",2)[0];
-            var separator = beforeFirstLine.replace("//","");
-            return separator;
-        }else{
-            return null;
-        }
     }
 }
