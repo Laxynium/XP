@@ -56,6 +56,15 @@ public class CalculatorTests {
         assertThat(result.get()).isEqualTo("6");
     }
 
+    @ParameterizedTest
+    @MethodSource("invalidNumberTestData")
+    public void fails_when_number_after_separator_is_invalid(String input){
+        var result = calculator.add(input);
+
+        assertThat(result.isLeft()).isTrue();
+        assertThat(result.getLeft()).isEqualTo("One of the numbers is invalid.");
+    }
+
     private static Stream<Arguments> simpleTestData(){
         return Stream.of(
                 Arguments.arguments("","0"),
@@ -74,6 +83,14 @@ public class CalculatorTests {
         return Stream.of(
                 Arguments.arguments("1.1,2.2", "3.3"),
                 Arguments.arguments("10.9,20.1,30", "61")
+        );
+    }
+
+    private static Stream<Arguments> invalidNumberTestData(){
+        return Stream.of(
+                Arguments.arguments("1.9,\n2.1"),
+                Arguments.arguments("1,2,"),
+                Arguments.arguments("1,2;,")
         );
     }
 }
