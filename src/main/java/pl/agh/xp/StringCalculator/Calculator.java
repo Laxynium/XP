@@ -4,6 +4,8 @@ import io.vavr.control.Either;
 
 import java.text.DecimalFormat;
 import java.util.Arrays;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 public class Calculator {
     public Either<String, String> add(String input) {
@@ -17,9 +19,24 @@ public class Calculator {
 
         if (input == null || input.isBlank())
             return Either.right("0");
-        var split = input.split(separator);
-        var numbers = Arrays.stream(split).map(Float::parseFloat);
-        var sum = numbers.reduce(0f, Float::sum);
+        var split = input.split(separator,-1);
+        Supplier<Stream<Either<String,Float>>> parsedNumbers = () -> Arrays.stream(split).map(this::tryParseFloat);
+
+        if(parsedNumbers.get().anyMatch(Either::isLeft)){
+            return Either.left("One of the numbers is invalid.");
+        }
+
+        var sum = parsedNumbers.get().map(Either::get).reduce(0f, Float::sum);
+
         return Either.right(new DecimalFormat("0.#").format(sum));
+    }
+
+    private Either<String,Float> tryParseFloat(String input){
+        try{
+            float value = Float.parseFloat(input);
+            return Either.right(value);
+        }catch (NumberFormatException e){
+            return Either.left(e.getMessage());
+        }
     }
 }
