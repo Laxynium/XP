@@ -10,14 +10,31 @@ public class StringCalculatorTests {
 
     @ParameterizedTest
     @CsvSource(
+            value = {
+                    "''; 0",
+                    "1; 1",
+                    "1,2; 3"
+            },
+            delimiter = ';'
+    )
+    void addUpToTwoNumbersWhenStringIsValid(String numbers, int expectedOutput)
+    {
+        int result = stringCalculator.add(numbers);
+        Assertions.assertEquals(expectedOutput, result);
+    }
+
+    @ParameterizedTest
+    @CsvSource(
         value = {
             "''; 0",
             "13; 13",
-            "12,20,14; 46"
+            "12,20,14; 46",
+            "12,200,14; 226",
+            "12,20,143,15; 190"
         },
         delimiter = ';'
     )
-    void addUpToThreeValidNumbers(String numbers, int expectedOutput)
+    void addUpToAnyNumbersWhenStringIsValid(String numbers, int expectedOutput)
     {
         int result = stringCalculator.add(numbers);
         Assertions.assertEquals(expectedOutput, result);
