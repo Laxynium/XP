@@ -57,4 +57,13 @@ public class StringCalculatorTests {
         int result = stringCalculator.add(numbers);
         Assertions.assertEquals(expectedOutput, result);
     }
+
+    @Test
+    void addUpToAnyNumbersUsingCustomDelimiterWhenStringIsValid()
+    {
+        String numbers = "//;\n1;2";
+        int expectedOutput = 3;
+        int result = stringCalculator.add(numbers);
+        Assertions.assertEquals(expectedOutput, result);
+    }
 }
