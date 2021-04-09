@@ -65,19 +65,15 @@ public class StringCalculatorTests {
 
     @Test
     void addShouldThrowAnExceptionWhenNegativeNumbersAreUsed1() {
-        String numbers = "1;2;-1;-2";
-        int expectedOutput = 3;
+        String numbers = "1;2;-1;";
         Executable result = () -> stringCalculator.add(numbers);
-        Assertions.assertEquals(expectedOutput, result);
-        Assertions.assertThrows(Exception.class, result, "-1, -2");
+        Assertions.assertThrows(Exception.class, result, "-1");
     }
 
     @Test
     void addShouldThrowAnExceptionWhenNegativeNumbersAreUsed2() {
         String numbers = "1;2;-1;-2";
-        int expectedOutput = 3;
         Executable result = () -> stringCalculator.add(numbers);
-        Assertions.assertEquals(expectedOutput, result);
         Assertions.assertThrows(Exception.class, result, "-1, -2");
     }
 }

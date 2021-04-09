@@ -14,13 +14,23 @@ public class StringCalculator {
             numbers = numbers.substring(endOfLine);
         }
 
-        List<String> splitNumbers = new ArrayList<>();
-        Arrays.stream(numbers.split(delimiters)).filter(number -> !number.isEmpty()).forEach(splitNumbers::add);
+        List<Integer> splitNumbers = new ArrayList<>();
+        List<Integer> negativeNumbers = new ArrayList<>();
+        Arrays.stream(numbers.split(delimiters))
+                .filter(number -> !number.isEmpty())
+                .map(Integer::parseInt)
+                .forEach(number -> {
+                    if(number<0){
+                        negativeNumbers.add(number);
+                    }
+                    splitNumbers.add(number);
+                });
 
-        int sum= 0;
-        for(String number : splitNumbers) {
-            sum+=Integer.parseInt(number);
+        if(!negativeNumbers.isEmpty()){
+            throw new RuntimeException(negativeNumbers.toString());
         }
+
+        Integer sum= splitNumbers.stream().reduce(0,Integer::sum);
         return sum;
     }
 }
