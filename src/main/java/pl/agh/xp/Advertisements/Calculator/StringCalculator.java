@@ -1,0 +1,8 @@
+package pl.agh.xp.Advertisements.Calculator;
+
+public class StringCalculator {
+
+    public int add(String numbers) {
+        return -1;
+    }
+}
