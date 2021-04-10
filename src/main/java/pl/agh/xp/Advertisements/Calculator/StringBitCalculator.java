@@ -7,7 +7,9 @@ public class StringBitCalculator {
             if (number.length() > 8) {
                 throw new RuntimeException(number);
             }
-
+            if (!number.matches("[0-9a-fA-F]+")){
+                throw new RuntimeException(number);
+            }
 
             for (int i = 0; i < number.length(); ++i) {
                 char c = number.charAt(i);
