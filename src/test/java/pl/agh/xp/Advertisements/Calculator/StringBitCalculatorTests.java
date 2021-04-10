@@ -12,7 +12,7 @@ public class StringBitCalculatorTests {
     void countBitsNoNegativeNoDelimiters1(){
         String number = "";
         var result = stringBitCalculator.noOfBits1(number);
-        var expected = 1;
+        var expected = 0;
         Assertions.assertEquals(expected,result);
     }
 
