@@ -3,7 +3,7 @@ package pl.agh.xp.Advertisements.Calculator;
 public class StringBitCalculator {
     int noOfBits1(String numbers){
         int sum = 0;
-        for(String number : numbers.split(";")) {
+        for(String number : numbers.split("[;\s+]")) {
             if (number.length() > 8) {
                 throw new RuntimeException(number);
             }

@@ -77,4 +77,12 @@ public class StringBitCalculatorTests {
         var expected = 7;
         Assertions.assertEquals(expected,result);
     }
+
+    @Test
+    void countBitsNoNegativeDelimitersTab2(){
+        String number = "01010101   010101";
+        var result = stringBitCalculator.noOfBits1(number);
+        var expected = 7;
+        Assertions.assertEquals(expected,result);
+    }
 }
