@@ -85,4 +85,11 @@ public class StringBitCalculatorTests {
         var expected = 7;
         Assertions.assertEquals(expected,result);
     }
+
+    @Test
+    void countBitsNoNegativeIllegalDelimiter(){
+        String number = "010101[]";
+        Executable result = () -> stringBitCalculator.noOfBits1(number);
+        Assertions.assertThrows(Exception.class, result);    }
+
 }
