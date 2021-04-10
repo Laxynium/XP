@@ -90,6 +90,13 @@ public class StringBitCalculatorTests {
     void countBitsNoNegativeIllegalDelimiter(){
         String number = "010101[]";
         Executable result = () -> stringBitCalculator.noOfBits1(number);
-        Assertions.assertThrows(Exception.class, result);    }
-
+        Assertions.assertThrows(Exception.class, result);
+    }
+    @Test
+    void countBitsNoNegativeHexValue(){
+        String number = "$ff";
+        var result = stringBitCalculator.noOfBits1(number);
+        var expected = 7;
+        Assertions.assertEquals(expected,result);
+    }
 }
