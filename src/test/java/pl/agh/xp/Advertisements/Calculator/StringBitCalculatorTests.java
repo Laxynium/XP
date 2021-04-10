@@ -92,11 +92,20 @@ public class StringBitCalculatorTests {
         Executable result = () -> stringBitCalculator.noOfBits1(number);
         Assertions.assertThrows(Exception.class, result);
     }
+
     @Test
     void countBitsNoNegativeHexValue(){
         String number = "$ff";
         var result = stringBitCalculator.noOfBits1(number);
-        var expected = 7;
+        var expected = 8;
+        Assertions.assertEquals(expected,result);
+    }
+
+    @Test
+    void countBitsNoNegativeHexValueAndBinary(){
+        String number = "$ff 0111";
+        var result = stringBitCalculator.noOfBits1(number);
+        var expected = 11;
         Assertions.assertEquals(expected,result);
     }
 }
