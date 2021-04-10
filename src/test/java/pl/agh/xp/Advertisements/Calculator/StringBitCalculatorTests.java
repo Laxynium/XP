@@ -69,4 +69,12 @@ public class StringBitCalculatorTests {
         Executable result = () -> stringBitCalculator.noOfBits1(number);
         Assertions.assertThrows(Exception.class, result);
     }
+
+    @Test
+    void countBitsNoNegativeDelimitersWhitespace2(){
+        String number = "01010101 010101";
+        var result = stringBitCalculator.noOfBits1(number);
+        var expected = 7;
+        Assertions.assertEquals(expected,result);
+    }
 }
