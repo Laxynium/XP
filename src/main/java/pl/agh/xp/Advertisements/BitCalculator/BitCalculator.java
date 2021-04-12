@@ -1,8 +1,17 @@
 package pl.agh.xp.Advertisements.BitCalculator;
 
+import java.util.Arrays;
+
 public class BitCalculator {
 
     public int noOfBits1(String numbers) {
+        return Arrays.stream(numbers.split(";"))
+                .map(this::noOfBits1InOneNumber)
+                .mapToInt(Integer::valueOf)
+                .sum();
+    }
+
+    private int noOfBits1InOneNumber(String numbers) {
         if (numbers.isEmpty()) {
             return 0;
         }
