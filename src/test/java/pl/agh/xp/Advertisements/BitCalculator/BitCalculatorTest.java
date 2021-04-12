@@ -49,7 +49,7 @@ class BitCalculatorTest {
                     "3;2;1, 4",
                     "128;1, 2",
                     "3 2;1, 4",
-                    "128 1, 2"
+                    "128 \t\t\n1, 2"
             },
             delimiter = ','
     )
