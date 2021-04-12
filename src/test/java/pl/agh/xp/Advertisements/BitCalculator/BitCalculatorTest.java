@@ -15,8 +15,8 @@ class BitCalculatorTest {
     @CsvSource(
             value = {
                     "0;0",
-                    "; 0",
-                    "3; 1",
+                    "''; 0",
+                    "3; 2",
                     "4; 1",
                     "255; 8",
                     "1; 1"
