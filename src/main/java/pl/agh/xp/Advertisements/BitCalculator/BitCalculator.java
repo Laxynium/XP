@@ -11,11 +11,18 @@ public class BitCalculator {
                 .sum();
     }
 
-    private int noOfBits1InOneNumber(String numbers) {
-        if (numbers.isEmpty()) {
+    private int noOfBits1InOneNumber(String number) {
+        if (number.isEmpty()) {
             return 0;
         }
-        var parsedNumber = Integer.parseInt(numbers);
+        var base = 10;
+        if (number.startsWith("$")) {
+            number = number.substring(1);
+            base = 16;
+        }
+        var parsedNumber = Integer.parseInt(number, base);
+
+
         if (parsedNumber < 0 || parsedNumber > 255) {
             throw new NumberFormatException();
         }
