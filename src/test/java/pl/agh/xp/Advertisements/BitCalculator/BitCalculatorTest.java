@@ -15,16 +15,16 @@ class BitCalculatorTest {
     @ParameterizedTest
     @CsvSource(
             value = {
-                    "0;0",
-                    "''; 0",
-                    "3; 2",
-                    "4; 1",
-                    "255; 8",
-                    "1; 1"
+                    "0,0",
+                    "'', 0",
+                    "3, 2",
+                    "4, 1",
+                    "255, 8",
+                    "1, 1"
             },
-            delimiter = ';'
+            delimiter = ','
     )
-    void Add_addsUpToTwoNumbers_whenStringIsValid(String number, int output) {
+    void numOfBits1_countsNUmOf1Bits_whenNumberIsValid(String number, int output) {
         // when
         var result = bitCalculator.noOfBits1(number);
         // then
@@ -39,6 +39,23 @@ class BitCalculatorTest {
         Executable executable = () -> bitCalculator.noOfBits1(number);
         // then
         Assertions.assertThrows(Exception.class, executable);
+    }
+
+    @ParameterizedTest
+    @CsvSource(
+            value = {
+                    "0;0;0,0",
+                    "'';1;0, 1",
+                    "3;2;1, 4",
+                    "128;1, 2",
+            },
+            delimiter = ','
+    )
+    void numOfBits1_countsNumOf1Bits_whenNumbersHasMultipleValidNumbers(String number, int output) {
+        // when
+        var result = bitCalculator.noOfBits1(number);
+        // then
+        Assertions.assertEquals(output, result);
     }
 
 }
