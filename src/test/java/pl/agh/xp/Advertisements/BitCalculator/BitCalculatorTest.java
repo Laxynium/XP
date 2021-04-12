@@ -2,6 +2,7 @@ package pl.agh.xp.Advertisements.BitCalculator;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -23,11 +24,21 @@ class BitCalculatorTest {
             },
             delimiter = ';'
     )
-    void Add_addsUpToTwoNumbers_whenStringIsValid(String numbers, int output) {
+    void Add_addsUpToTwoNumbers_whenStringIsValid(String number, int output) {
         // when
-        var result = bitCalculator.noOfBits1(numbers);
+        var result = bitCalculator.noOfBits1(number);
         // then
         Assertions.assertEquals(output, result);
+    }
+
+    @Test
+    void Add_shouldThrowAnException_whenNegativeNumbersAreUsedAndCustomSeparator() {
+        // given
+        var number = "-1";
+        // when
+        Executable executable = () -> bitCalculator.noOfBits1(number);
+        // then
+        Assertions.assertThrows(Exception.class, executable);
     }
 
 }
