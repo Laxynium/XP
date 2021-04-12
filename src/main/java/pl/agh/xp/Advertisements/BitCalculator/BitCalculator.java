@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class BitCalculator {
 
     public int noOfBits1(String numbers) {
-        return Arrays.stream(numbers.split("[; ]"))
+        return Arrays.stream(numbers.split("[;\\s]"))
                 .map(this::noOfBits1InOneNumber)
                 .mapToInt(Integer::valueOf)
                 .sum();
