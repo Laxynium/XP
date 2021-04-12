@@ -48,6 +48,8 @@ class BitCalculatorTest {
                     ";;1;0, 1",
                     "3;2;1, 4",
                     "128;1, 2",
+                    "3 2;1, 4",
+                    "128 1, 2"
             },
             delimiter = ','
     )
