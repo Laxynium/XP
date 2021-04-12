@@ -32,7 +32,7 @@ class BitCalculatorTest {
     }
 
     @Test
-    void Add_shouldThrowAnException_whenNegativeNumbersAreUsedAndCustomSeparator() {
+    void numOfBits1_throwsException_whenNumberInWrongInterval() {
         // given
         var number = "-1";
         // when
@@ -58,6 +58,21 @@ class BitCalculatorTest {
         var result = bitCalculator.noOfBits1(number);
         // then
         Assertions.assertEquals(output, result);
+    }
+
+    @ParameterizedTest
+    @CsvSource(
+            value = {
+                    "0;0x0",
+                    ";;1d0",
+            },
+            delimiter = ','
+    )
+    void numOfBits1_throwsException_whenSeparatorIsNotCoMaOrWhitespace(String number) {
+        // when
+        Executable executable = () -> bitCalculator.noOfBits1(number);
+        // then
+        Assertions.assertThrows(Exception.class, executable);
     }
 
 }
