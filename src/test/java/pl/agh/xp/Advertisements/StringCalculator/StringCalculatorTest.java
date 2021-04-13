@@ -62,7 +62,6 @@ class StringCalculatorTest {
 
         Assertions.assertThrows(Exception.class, () -> sut.add(numbers[0]),"Negatives not allowed " + expected[0]);
         Assertions.assertThrows(Exception.class, () -> sut.add(numbers[1]),"Negatives not allowed " + expected[1]);
-
-
     }
+
 }
