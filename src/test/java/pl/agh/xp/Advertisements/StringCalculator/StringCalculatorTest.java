@@ -33,7 +33,7 @@ class StringCalculatorTest {
         StringCalculator sut = new StringCalculator();
         String[] numbers = {"1\n2,3","10\n90,10\n20"};
         int[] expected = {6,130};
-        for (int i=0; i>numbers.length; i++) {
+        for (int i=0; i<numbers.length; i++) {
             int result = sut.add(numbers[i]);
             Assertions.assertEquals(expected[i], result);
         }
@@ -60,11 +60,8 @@ class StringCalculatorTest {
         String[] numbers = {"1,2,-1","//;\n;-2;-4"};
         String[] expected = {"-1","-2,-4"};
 
-        Exception exception = Assertions.assertThrows(RuntimeException.class, () -> sut.add(numbers[0]));
-        Assertions.assertEquals(exception.getMessage(),"Negatives not allowed " + expected[0]);
-
-        exception = Assertions.assertThrows(RuntimeException.class, () -> sut.add(numbers[1]));
-        Assertions.assertEquals(exception.getMessage(),"Negatives not allowed " + expected[1]);
+        Assertions.assertThrows(Exception.class, () -> sut.add(numbers[0]),"Negatives not allowed " + expected[0]);
+        Assertions.assertThrows(Exception.class, () -> sut.add(numbers[1]),"Negatives not allowed " + expected[1]);
 
 
     }
