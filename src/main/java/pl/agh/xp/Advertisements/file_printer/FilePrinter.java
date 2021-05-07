@@ -3,7 +3,12 @@ package pl.agh.xp.Advertisements.file_printer;
 import java.io.*;
 import java.util.stream.Stream;
 
-public class ConsolePrinter {
+public class FilePrinter {
+    private PrintStream printStream;
+
+    public FilePrinter(PrintStream printStream) {
+        this.printStream = printStream;
+    }
 
     public void print(String file_name) {
         File inputFile = new File(file_name);
@@ -14,10 +19,12 @@ public class ConsolePrinter {
             Stream<String> inputFileStreamWithoutDelimiter = bufferedInputFileReader.lines()
                     .map(line -> line.replaceAll(",", "\t"));
 
-            inputFileStreamWithoutDelimiter.forEach(System.out::println);
+            inputFileStreamWithoutDelimiter.forEach(printStream::println);
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
 }
+
+
