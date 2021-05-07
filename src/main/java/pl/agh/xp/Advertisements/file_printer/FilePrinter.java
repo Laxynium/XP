@@ -1,29 +1,35 @@
 package pl.agh.xp.Advertisements.file_printer;
 
 import java.io.*;
+import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 public class FilePrinter {
-    private PrintStream printStream;
+    private final PrintStream printStream;
+    private final FileReader fileReader;
 
-    public FilePrinter(PrintStream printStream) {
+    public FilePrinter(PrintStream printStream, FileReader fileReader) {
         this.printStream = printStream;
+        this.fileReader = fileReader;
     }
 
-    public void print(String file_name) {
-        File inputFile = new File(file_name);
+    public void print(String fileName, Supplier<Function<String, String >> lineConverter) {
+
         try {
-            InputStream inputStream = new FileInputStream(inputFile);
-            BufferedReader bufferedInputFileReader = new BufferedReader(new InputStreamReader(inputStream));
-
-            Stream<String> inputFileStreamWithoutDelimiter = bufferedInputFileReader.lines()
-                    .map(line -> line.replaceAll(",", "\t"));
-
-            inputFileStreamWithoutDelimiter.forEach(printStream::println);
+            Stream<String> inputFileStream = fileReader.readFile(fileName);
+            inputFileStream.map(lineConverter.get()).forEach(printStream::println);
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+}
+
+class CSVLineConverter {
+    public Function<String, String> convertLine() {
+        return line -> line.replaceAll(",", "\t");
+
     }
 }
 

@@ -3,6 +3,7 @@ package pl.agh.xp.Advertisements.file_printer;
 import org.junit.jupiter.api.*;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
 import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -28,9 +29,11 @@ class FilePrinterTest {
     @Test
     void printFileTest() {
         PrintStream printStream = new PrintStream(System.out);
-        FilePrinter filePrinter = new FilePrinter(printStream);
+        FileReader fileReader = new CSVFileReader();
+        FilePrinter filePrinter = new FilePrinter(printStream, fileReader);
         var file_name = "src/test/resources/file_to_print.csv";
-        filePrinter.print(file_name);
+        CSVLineConverter csvLineConverter = new CSVLineConverter();
+        filePrinter.print(file_name, csvLineConverter::convertLine);
 
         var expected = "a\tb\tc\n" +
                 "aa\tab\tac\n";
