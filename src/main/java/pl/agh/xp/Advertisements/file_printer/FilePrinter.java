@@ -15,7 +15,6 @@ public class FilePrinter {
     }
 
     public void print(String fileName, Supplier<Function<String, String >> lineConverter) {
-
         try {
             Stream<String> inputFileStream = fileReader.readFile(fileName);
             inputFileStream.map(lineConverter.get()).forEach(printStream::println);
