@@ -1,4 +1,4 @@
-package pl.agh.xp.Advertisements.file_printer;
+package pl.edu.agh.xp.advertisements.printer;
 
 import java.io.FileNotFoundException;
 import java.util.stream.Stream;

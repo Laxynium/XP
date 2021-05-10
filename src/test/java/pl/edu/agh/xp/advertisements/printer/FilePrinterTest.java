@@ -1,12 +1,13 @@
-package pl.agh.xp.Advertisements.file_printer;
+package pl.edu.agh.xp.advertisements.printer;
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
 import java.io.PrintStream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class FilePrinterTest {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();

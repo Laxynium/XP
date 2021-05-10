@@ -1,11 +1,17 @@
+package pl.edu.agh.xp.advertisements.csv;
+
+import pl.edu.agh.xp.advertisements.model.Advertisement;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
-class CSVReader {
+public class CSVReader {
 
-    static List<Advertisement> read(String fileName){
+    static List<Advertisement> read(String fileName) {
         int index = fileName.lastIndexOf('.');
 
         if (index > 0) {
@@ -28,7 +34,7 @@ class CSVReader {
             while ((row = csvReader.readLine()) != null) {
                 String[] data = row.split(",");
                 String row_data = Arrays.stream(data)
-                        .map(s -> s.substring(1,s.length()-1))
+                        .map(s -> s.substring(1, s.length() - 1))
                         .collect(Collectors.joining(","));
 
                 ad = new Advertisement(row_data.split(","));

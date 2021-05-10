@@ -1,7 +1,6 @@
-package pl.agh.xp.Advertisements.file_printer;
+package pl.edu.agh.xp.advertisements.printer;
 
 import java.io.*;
-import java.util.function.Function;
 import java.util.stream.Stream;
 
 class CSVFileReader implements FileReader {

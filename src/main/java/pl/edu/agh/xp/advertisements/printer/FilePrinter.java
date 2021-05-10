@@ -1,13 +1,14 @@
-package pl.agh.xp.Advertisements.file_printer;
+package pl.edu.agh.xp.advertisements.printer;
 
-import java.io.*;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 public class FilePrinter {
     private final PrintStream printStream;
-    private final FileReader fileReader;
+    private final pl.edu.agh.xp.advertisements.printer.FileReader fileReader;
 
     public FilePrinter(PrintStream printStream, FileReader fileReader) {
         this.printStream = printStream;

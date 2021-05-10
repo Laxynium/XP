@@ -1,8 +1,10 @@
+package pl.edu.agh.xp.advertisements.csv;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
-class CSVReaderTests {
+public class CSVReaderTest {
 
     @Test
     void read_shouldThrowAnException_whenWrongFileType() {
