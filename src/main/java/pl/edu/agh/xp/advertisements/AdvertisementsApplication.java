@@ -1,4 +1,4 @@
-package pl.agh.xp.Advertisements;
+package pl.edu.agh.xp.advertisements;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,4 +1,4 @@
-package pl.agh.xp.Advertisements.StringCalculator;
+package pl.edu.agh.xp.stringcalculator;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

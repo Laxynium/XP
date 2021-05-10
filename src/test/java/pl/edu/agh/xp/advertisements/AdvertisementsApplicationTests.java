@@ -1,4 +1,4 @@
-package pl.agh.xp.Advertisements;
+package pl.edu.agh.xp.advertisements;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

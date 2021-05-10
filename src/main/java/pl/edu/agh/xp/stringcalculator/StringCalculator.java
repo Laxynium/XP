@@ -1,4 +1,4 @@
-package pl.agh.xp.Advertisements.StringCalculator;
+package pl.edu.agh.xp.stringcalculator;
 
 import org.springframework.stereotype.Service;
 
