@@ -39,7 +39,7 @@ public class CSVWriter {
                 advertisement.getFormat(),
                 advertisement.getAdvertiser(),
                 advertisement.getPrice(),
-                advertisement.getPrice_type(),
+                advertisement.getPriceType(),
                 advertisement.getUrl(),
                 advertisement.getTitle(),
                 advertisement.getDetails()
