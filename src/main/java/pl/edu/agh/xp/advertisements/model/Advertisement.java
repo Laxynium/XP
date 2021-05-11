@@ -1,10 +1,12 @@
 package pl.edu.agh.xp.advertisements.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Advertisement {
@@ -14,7 +16,7 @@ public class Advertisement {
     private String format;
     private String advertiser;
     private String price;
-    private String price_type;
+    private String priceType;
     private String url;
     private String title;
     private String details;
@@ -25,7 +27,7 @@ public class Advertisement {
         this.format = params[2];
         this.advertiser = params[3];
         this.price = params[4];
-        this.price_type = params[5];
+        this.priceType = params[5];
         this.url = params[6];
         this.title = params[7];
         this.details = params[8];
