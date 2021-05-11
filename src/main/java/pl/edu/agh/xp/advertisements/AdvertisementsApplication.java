@@ -1,13 +1,46 @@
 package pl.edu.agh.xp.advertisements;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import pl.edu.agh.xp.advertisements.console.ConsoleReader;
+import pl.edu.agh.xp.advertisements.csv.CSVReader;
+import pl.edu.agh.xp.advertisements.printer.AdvertisementsPrinter;
+import pl.edu.agh.xp.advertisements.writer.CSVWriter;
 
-@SpringBootApplication
+import java.util.Scanner;
+
 public class AdvertisementsApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(AdvertisementsApplication.class, args);
-	}
 
+    public static void main(String... args) {
+        AdvertisementsPrinter advertisementsPrinter = new AdvertisementsPrinter(System.out);
+        AdvertisementCreator advertisementCreator = new AdvertisementCreator();
+        ConsoleReader console = new ConsoleReader();
+        CSVWriter writer = new CSVWriter();
+        String fileName = "data/advertisements.csv";
+        var advertisements = CSVReader.read(fileName);
+        var scanner = new Scanner(System.in);
+
+        System.out.println("Hello in Advertisement app!");
+
+
+        String input;
+        while (true) {
+            System.out.println("Select action: (write number and press enter)");
+            System.out.println("1. Show advertisements");
+            System.out.println("2. Add advertisement");
+            System.out.println("3. Exit");
+            input = scanner.nextLine();
+            if (input != null) {
+                switch (input) {
+                    case "1" -> advertisementsPrinter.print(advertisements);
+                    case "2" -> {
+                        var ad = advertisementCreator.createFromConsole(console);
+                        advertisements.add(ad);
+                        writer.write(fileName, ad);
+                    }
+                    case "3" -> System.exit(0);
+                    default -> System.out.println("Wrong number!");
+                }
+            }
+        }
+    }
 }

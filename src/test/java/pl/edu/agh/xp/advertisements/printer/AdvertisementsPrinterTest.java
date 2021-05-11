@@ -1,6 +1,5 @@
 package pl.edu.agh.xp.advertisements.printer;
 
-import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import pl.edu.agh.xp.advertisements.model.Advertisement;
 
@@ -10,7 +9,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@Log4j2
 class AdvertisementsPrinterTest {
 
     @Test
@@ -24,7 +22,7 @@ class AdvertisementsPrinterTest {
                 .id(1)
                 .type("image")
                 .format("medium")
-                .advertiser("Example comapany")
+                .advertiserMail("Example comapany")
                 .price("0.5 USD")
                 .priceType("PER_VIEW")
                 .url("https://example.ads.com")
@@ -36,7 +34,7 @@ class AdvertisementsPrinterTest {
                 .id(1)
                 .type("image")
                 .format("medium")
-                .advertiser("Example comapany")
+                .advertiserMail("Example comapany")
                 .price("0.5 USD")
                 .priceType("PER_VIEW")
                 .url("https://example.ads.com")
@@ -78,7 +76,6 @@ class AdvertisementsPrinterTest {
                 """;
 
         assertEquals(result, actual);
-
     }
 
 }

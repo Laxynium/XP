@@ -14,7 +14,7 @@ public class Advertisement {
     private Integer id;
     private String type;
     private String format;
-    private String advertiser;
+    private String advertiserMail;
     private String price;
     private String priceType;
     private String url;
@@ -25,7 +25,7 @@ public class Advertisement {
         this.id = Integer.valueOf(params[0]);
         this.type = params[1];
         this.format = params[2];
-        this.advertiser = params[3];
+        this.advertiserMail = params[3];
         this.price = params[4];
         this.priceType = params[5];
         this.url = params[6];

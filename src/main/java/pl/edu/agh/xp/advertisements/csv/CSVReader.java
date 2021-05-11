@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class CSVReader {
 
-    static List<Advertisement> read(String fileName) {
+    public static List<Advertisement> read(String fileName) {
         int index = fileName.lastIndexOf('.');
 
         if (index > 0) {

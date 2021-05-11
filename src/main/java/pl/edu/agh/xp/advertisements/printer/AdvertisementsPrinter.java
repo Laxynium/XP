@@ -23,7 +23,7 @@ public class AdvertisementsPrinter {
 
     private void printAdvertisement(Advertisement a) {
         if (a != null) {
-            printStream.format("|%s|%s|%s|%s|%s|%s|%s|%s|%s|\n", a.getId(), a.getType(), a.getFormat(), a.getAdvertiser(), a.getPrice(), a.getPriceType(), a.getUrl(), a.getTitle(), a.getDetails());
+            printStream.format("|%s|%s|%s|%s|%s|%s|%s|%s|%s|\n", a.getId(), a.getType(), a.getFormat(), a.getAdvertiserMail(), a.getPrice(), a.getPriceType(), a.getUrl(), a.getTitle(), a.getDetails());
         }
     }
 
