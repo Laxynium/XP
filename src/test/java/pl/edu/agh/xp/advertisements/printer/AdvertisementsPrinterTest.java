@@ -22,7 +22,7 @@ class AdvertisementsPrinterTest {
                 .id(1)
                 .type("image")
                 .format("medium")
-                .advertiserMail("Example comapany")
+                .advertiserMail("Example company")
                 .price("0.5 USD")
                 .priceType("PER_VIEW")
                 .url("https://example.ads.com")
@@ -31,10 +31,10 @@ class AdvertisementsPrinterTest {
                 .build();
 
         var advertisement2 = Advertisement.builder()
-                .id(1)
+                .id(2)
                 .type("image")
                 .format("medium")
-                .advertiserMail("Example comapany")
+                .advertiserMail("Example company")
                 .price("0.5 USD")
                 .priceType("PER_VIEW")
                 .url("https://example.ads.com")
@@ -50,9 +50,9 @@ class AdvertisementsPrinterTest {
         var result = """
                 |ID|TYPE|FORMAT|ADVERTISER|PRICE|PRICE TYPE|URL|TITLE|DETAILS|
                 |1|image|medium|Example comapany|0.5 USD|PER_VIEW|https://example.ads.com|Title|details|
+                |2|image|medium|Example comapany|0.5 USD|PER_VIEW|https://example.ads.com|Title|details|
                 |1|image|medium|Example comapany|0.5 USD|PER_VIEW|https://example.ads.com|Title|details|
-                |1|image|medium|Example comapany|0.5 USD|PER_VIEW|https://example.ads.com|Title|details|
-                |1|image|medium|Example comapany|0.5 USD|PER_VIEW|https://example.ads.com|Title|details|
+                |2|image|medium|Example comapany|0.5 USD|PER_VIEW|https://example.ads.com|Title|details|
                 End of Advertisements
                 """;
         assertEquals(result, actual);
