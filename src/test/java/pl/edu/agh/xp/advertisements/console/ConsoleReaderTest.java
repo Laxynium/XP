@@ -92,7 +92,7 @@ public class ConsoleReaderTest {
                 Arguments.arguments("123", "123"),
                 Arguments.arguments("5.1", "5.1"),
                 Arguments.arguments("test string", "test string"),
-                Arguments.arguments("test123 5.1 cokolwiek", "test123 5.1 cokolwiek")
+                Arguments.arguments("test123 5.1 string", "test123 5.1 string")
         );
     }
 

@@ -9,18 +9,16 @@ import java.util.Scanner;
 
 public class AdvertisementsApplication {
 
-
     public static void main(String... args) {
-        AdvertisementsPrinter advertisementsPrinter = new AdvertisementsPrinter(System.out);
-        AdvertisementCreator advertisementCreator = new AdvertisementCreator();
-        ConsoleReader console = new ConsoleReader();
-        CSVWriter writer = new CSVWriter();
-        String fileName = "data/advertisements.csv";
+        var advertisementsPrinter = new AdvertisementsPrinter(System.out);
+        var console = new ConsoleReader();
+        var advertisementCreator = new AdvertisementCreator(console);
+        var writer = new CSVWriter();
+        var fileName = "data/advertisements.csv";
         var advertisements = CSVReader.read(fileName);
         var scanner = new Scanner(System.in);
 
         System.out.println("Hello in Advertisement app!");
-
 
         String input;
         while (true) {
@@ -33,7 +31,7 @@ public class AdvertisementsApplication {
                 switch (input) {
                     case "1" -> advertisementsPrinter.print(advertisements);
                     case "2" -> {
-                        var ad = advertisementCreator.createFromConsole(console);
+                        var ad = advertisementCreator.createFromConsole();
                         advertisements.add(ad);
                         writer.write(fileName, ad);
                     }

@@ -1,11 +1,15 @@
 package pl.edu.agh.xp.advertisements;
 
+import lombok.RequiredArgsConstructor;
 import pl.edu.agh.xp.advertisements.console.ConsoleReader;
 import pl.edu.agh.xp.advertisements.model.Advertisement;
 
+@RequiredArgsConstructor
 public class AdvertisementCreator {
 
-    public Advertisement createFromConsole(ConsoleReader reader) {
+    private final ConsoleReader reader;
+
+    public Advertisement createFromConsole() {
 
         try {
             Integer id = reader.readInteger("Please enter id:");

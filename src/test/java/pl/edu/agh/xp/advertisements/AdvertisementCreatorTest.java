@@ -33,12 +33,12 @@ public class AdvertisementCreatorTest {
     @MethodSource("correctAdvertisementInput")
     void createAdvertisement_shouldReturnCorrectAdvertisementObject_whenCorrectInput(Object[] params, Advertisement expected) {
         // given
-        var sut = new AdvertisementCreator();
+        var sut = new AdvertisementCreator(consoleReader);
         doReturn(params[0]).when(consoleReader).readInteger(any());
         doReturn(params[1].toString(), Arrays.copyOfRange(params, 2, params.length)).when(consoleReader).readString(any());
 
         // when
-        var result = sut.createFromConsole(consoleReader);
+        var result = sut.createFromConsole();
 
         // then
         assertEquals(expected, result);
@@ -47,11 +47,11 @@ public class AdvertisementCreatorTest {
     @Test
     void createAdvertisement_shouldReturnNull_whenIncorrectInput() {
         // given
-        var sut = new AdvertisementCreator();
+        var sut = new AdvertisementCreator(consoleReader);
         doThrow(new RuntimeException("Incorrect input")).when(consoleReader).readInteger(any());
 
         // when
-        var result = sut.createFromConsole(consoleReader);
+        var result = sut.createFromConsole();
 
         // then
         assertNull(result);

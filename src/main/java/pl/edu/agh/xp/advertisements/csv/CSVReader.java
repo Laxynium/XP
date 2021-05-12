@@ -4,6 +4,7 @@ import pl.edu.agh.xp.advertisements.model.Advertisement;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -12,41 +13,49 @@ import java.util.stream.Collectors;
 public class CSVReader {
 
     public static List<Advertisement> read(String fileName) {
-        int index = fileName.lastIndexOf('.');
-
-        if (index > 0) {
-            String extension = fileName.substring(index + 1);
-            if (!extension.equals("csv")) {
-                throw new RuntimeException("Wrong file format!");
-            }
+        if (fileName == null || fileName.isEmpty()) {
+            throw new RuntimeException("Incorrect filename");
         }
+        validateExtension(fileName, "csv");
 
-        BufferedReader csvReader;
         List<Advertisement> advertisements = new ArrayList<>();
 
-        try {
-            csvReader = new BufferedReader(new FileReader(fileName));
-            String headers = csvReader.readLine();
+        try (BufferedReader csvReader = new BufferedReader(new FileReader(fileName))) {
+            skipHeadersRow(csvReader);
 
             String row;
-            Advertisement ad;
-
             while ((row = csvReader.readLine()) != null) {
-                String[] data = row.split(",");
-                String row_data = Arrays.stream(data)
-                        .map(s -> s.substring(1, s.length() - 1))
-                        .collect(Collectors.joining(","));
-
-                ad = new Advertisement(row_data.split(","));
-                advertisements.add(ad);
+                advertisements.add(readAdvertisementFromRow(row));
             }
-
-            csvReader.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException("Unable to read file");
         }
 
         return advertisements;
+    }
+
+    private static void skipHeadersRow(BufferedReader csvReader) throws IOException {
+        csvReader.readLine();
+    }
+
+    private static void validateExtension(String fileName, String extension) {
+        int index = fileName.lastIndexOf('.');
+
+        if (index > 0) {
+            String ext = fileName.substring(index + 1);
+            if (!ext.equals(extension)) {
+                throw new RuntimeException("Wrong file format!");
+            }
+        }
+    }
+
+    private static Advertisement readAdvertisementFromRow(String row) {
+        String[] data = row.split(",");
+        String rowData = Arrays.stream(data)
+                .map(s -> s.substring(1, s.length() - 1))
+                .collect(Collectors.joining(","));
+
+        return new Advertisement(rowData.split(","));
     }
 
 }
