@@ -17,7 +17,11 @@ import java.io.PrintStream;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ShowAvailableAds {
-
+    
+    private ByteArrayOutputStream outputStream;
+    
+    private AdvertisementFacade sut;
+   
     @Given("there are ads available")
     public void thereAreAdsAvailable() {
         var ad = createAdInput("1",
@@ -42,11 +46,6 @@ public class ShowAvailableAds {
         var output = outputStream.toString();
         assertThat(output).isNotBlank();
     }
-
-    private ByteArrayOutputStream outputStream;
-
-    private AdvertisementFacade sut;
-
 
     private void createSutWithData(String ad){
         this.outputStream = new ByteArrayOutputStream();
