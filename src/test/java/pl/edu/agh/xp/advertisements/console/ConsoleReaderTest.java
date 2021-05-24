@@ -20,7 +20,7 @@ public class ConsoleReaderTest {
         InputStream in = getInputStream(input);
         System.setIn(in);
 
-        var sut = new ConsoleReader();
+        var sut = new ConsoleReader(System.in);
 
         var message = "Please enter an integer:";
 
@@ -38,7 +38,7 @@ public class ConsoleReaderTest {
         InputStream in = getInputStream(input);
         System.setIn(in);
 
-        var sut = new ConsoleReader();
+        var sut = new ConsoleReader(System.in);
 
         var message = "Please enter an integer:";
 
@@ -56,7 +56,7 @@ public class ConsoleReaderTest {
         InputStream in = getInputStream(input);
         System.setIn(in);
 
-        var sut = new ConsoleReader();
+        var sut = new ConsoleReader(System.in);
 
         var message = "Please enter a String value:";
 

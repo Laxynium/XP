@@ -2,14 +2,14 @@ package pl.edu.agh.xp.advertisements.console;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 
 public class ConsoleReader {
 
     private final BufferedReader reader;
-
-    public ConsoleReader() {
-        this(new BufferedReader(new InputStreamReader(System.in)));
+    public ConsoleReader(InputStream inputStream) {
+        this(new BufferedReader(new InputStreamReader(inputStream)));
     }
 
     public ConsoleReader(BufferedReader reader) {

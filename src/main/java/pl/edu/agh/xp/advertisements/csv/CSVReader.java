@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 public class CSVReader {
 
-    public static List<Advertisement> read(String fileName) {
+    public List<Advertisement> read(String fileName) {
         if (fileName == null || fileName.isEmpty()) {
             throw new RuntimeException("Incorrect filename");
         }
@@ -34,10 +34,6 @@ public class CSVReader {
         return advertisements;
     }
 
-    private static void skipHeadersRow(BufferedReader csvReader) throws IOException {
-        csvReader.readLine();
-    }
-
     private static void validateExtension(String fileName, String extension) {
         int index = fileName.lastIndexOf('.');
 
@@ -49,6 +45,10 @@ public class CSVReader {
         }
     }
 
+    private static void skipHeadersRow(BufferedReader csvReader) throws IOException {
+        csvReader.readLine();
+    }
+
     private static Advertisement readAdvertisementFromRow(String row) {
         String[] data = row.split(",");
         String rowData = Arrays.stream(data)
@@ -57,5 +57,4 @@ public class CSVReader {
 
         return new Advertisement(rowData.split(","));
     }
-
 }
