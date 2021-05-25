@@ -39,7 +39,7 @@ public class DeleteAds {
         });
     }
 
-    @When("I delete ad with chosen ID")
+    @When("I delete ad with chosen ID {word}")
     public void iDeleteExistingAdd(String id) {
         inputStream.write(id);
         sut.deleteAdvertisement();
@@ -54,7 +54,7 @@ public class DeleteAds {
     //endregion
 
     // region scenario 3
-    @When("I delete ad with ID not in presented ads")
+    @When("I delete ad with ID {word} not in presented ads")
     public void iDeleteNotExistingAdd(String id) {
         sut.printAdvertisement();
         var output = outputStream.toString();
@@ -81,7 +81,7 @@ public class DeleteAds {
         });
     }
 
-    @When("I delete last ad")
+    @When("I delete last ad with id {word}")
     public void iDeleteLastAd(String id) {
         inputStream.write(id);
         sut.deleteAdvertisement();
