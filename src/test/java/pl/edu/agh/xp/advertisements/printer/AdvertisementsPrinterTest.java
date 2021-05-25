@@ -7,7 +7,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class AdvertisementsPrinterTest {
 
@@ -55,7 +55,7 @@ class AdvertisementsPrinterTest {
                 |2|image|medium|Example company|0.5 USD|PER_VIEW|https://example.ads.com|Title|details|
                 End of Advertisements
                 """;
-        assertEquals(result, actual);
+        assertThat(result).isEqualToIgnoringNewLines(actual);
     }
 
     @Test
@@ -75,7 +75,7 @@ class AdvertisementsPrinterTest {
                 End of Advertisements
                 """;
 
-        assertEquals(result, actual);
+        assertThat(result).isEqualToIgnoringNewLines(actual);
     }
 
 }
