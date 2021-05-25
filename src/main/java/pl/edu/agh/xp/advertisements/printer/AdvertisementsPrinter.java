@@ -28,7 +28,7 @@ public class AdvertisementsPrinter {
     }
 
     private void printFooter() {
-        printStream.println("End of Advertisements\n\n");
+        printStream.println("End of Advertisements");
     }
 }
 

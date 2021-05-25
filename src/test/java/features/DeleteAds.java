@@ -49,7 +49,7 @@ public class DeleteAds {
     public void thisAddNoLongerExists(String expected) {
         sut.printAdvertisement();
         var output = outputStream.toString();
-        assertThat(output).isEqualTo(expected);
+        assertThat(output).isEqualToIgnoringNewLines(expected);
     }
     //endregion
 
@@ -58,6 +58,7 @@ public class DeleteAds {
     public void iDeleteNotExistingAdd(String id) {
         sut.printAdvertisement();
         var output = outputStream.toString();
+        outputStream.reset();
         assertThat(output).doesNotContain("|" + id + "|");
         inputStream.write(id);
         sut.deleteAdvertisement();
@@ -67,7 +68,7 @@ public class DeleteAds {
     public void nothingIsDeleted(String expected) {
         sut.printAdvertisement();
         var output = outputStream.toString();
-        assertThat(output).isEqualTo(expected);
+        assertThat(output).isEqualToIgnoringNewLines(expected);
     }
     //endregion
 
