@@ -35,15 +35,48 @@ public class ShowAvailableAds {
             this.sut.addAdvertisement();
         });
     }
+    @Given("there are no ads available")
+    public void thereAreNoAdsAvailable() {
+        //Since there are no ads do nothing
+    }
+
+    @Given("there is one ad available")
+    public void thereIsOneAdAvailable(AdTestItem ad) {
+        this.inputStream.write(ad.toStringInput());
+        this.sut.addAdvertisement();
+    }
+
     @When("I ask to show in console")
     public void iAskToShowInConsole() {
         sut.printAdvertisement();
     }
+
+    @When("I add new ad and ask to show in console")
+    public void iAddNewAdAndAskToShowInConsole(AdTestItem ad) {
+        this.inputStream.write(ad.toStringInput());
+        sut.addAdvertisement();
+        sut.printAdvertisement();
+    }
+
     @Then("I can see them in console")
     public void iCanSeeThemInConsole(String expectedOutput) {
         var output = outputStream.toString();
         assertThat(output).isEqualToIgnoringNewLines(expectedOutput);
+        assertThat(output).isNotBlank();
     }
+
+    @Then("I can see zero ads")
+    public void iCanSeeZeroAds(String expected) {
+        var output = outputStream.toString();
+        assertThat(output).isEqualToIgnoringNewLines(expected);
+    }
+
+    @Then("I can see two ads")
+    public void iCanSeeTwoAds(String expected) {
+        var output = outputStream.toString();
+        assertThat(output).isEqualToIgnoringNewLines(expected);
+    }
+
 
     private final File file = new File("testData");
     @Before

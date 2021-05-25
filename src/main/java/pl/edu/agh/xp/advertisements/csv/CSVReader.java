@@ -3,6 +3,7 @@ package pl.edu.agh.xp.advertisements.csv;
 import pl.edu.agh.xp.advertisements.model.Advertisement;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,7 +28,11 @@ public class CSVReader {
             while ((row = csvReader.readLine()) != null) {
                 advertisements.add(readAdvertisementFromRow(row));
             }
-        } catch (Exception e) {
+        }
+        catch (FileNotFoundException e){
+            return new ArrayList<>();
+        }
+        catch (Exception e) {
             throw new RuntimeException("Unable to read file");
         }
 
