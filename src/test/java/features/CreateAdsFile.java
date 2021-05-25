@@ -9,14 +9,26 @@ import org.springframework.util.FileSystemUtils;
 import pl.edu.agh.xp.advertisements.AdvertisementConfiguration;
 import pl.edu.agh.xp.advertisements.AdvertisementFacade;
 
-import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.PrintStream;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class CreateAdsFile {
 
-    private AdvertisementFacade sut;
+    private final InputStreamFake inputStream = new InputStreamFake();
+    private final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+    private final AdvertisementFacade sut;
+    private final File file = new File("testData");
+
+    public CreateAdsFile() {
+        this.sut = new AdvertisementConfiguration().create(
+                inputStream,
+                new PrintStream(this.outputStream),
+                file.getPath() + "/advertisements.csv");
+    }
+
 
     @Given("There is no ads file")
     public void thereIsNoAdsFile() {
@@ -25,17 +37,9 @@ public class CreateAdsFile {
     }
 
     @When("I add new ad")
-    public void iAddNewAd() {
-        var ad = createAdInput("1",
-                "video",
-                "small",
-                "example company",
-                "1USD",
-                "PER_VIEW",
-                "http://test.com",
-                "title",
-                "details");
-        createSutWithData(ad);
+    public void iAddNewAd(AdTestItem ad) {
+        this.inputStream.write(ad.toStringInput());
+        sut.addAdvertisement();
     }
 
     @Then("Ads file exists")
@@ -43,29 +47,6 @@ public class CreateAdsFile {
         var adsFile = new File(file.getPath() + "/advertisements.csv");
         assertThat(adsFile.exists()).isEqualTo(true);
     }
-
-    private void createSutWithData(String ad){
-        this.sut = new AdvertisementConfiguration().create(
-                new ByteArrayInputStream(ad.getBytes()),
-                System.out,
-                file.getPath() + "/advertisements.csv");
-        this.sut.addAdvertisement();
-    }
-
-    private String createAdInput(String id,
-                                 String type,
-                                 String format,
-                                 String advertiser,
-                                 String price,
-                                 String price_type,
-                                 String url,
-                                 String title,
-                                 String details) {
-        return String.format("%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n",
-                id, type, format, advertiser, price, price_type, url, title, details);
-    }
-
-    private final File file = new File("testData");
 
     @Before
     public void createDir(){
