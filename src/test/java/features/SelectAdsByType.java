@@ -16,31 +16,34 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ShowAvailableAds {
+public class SelectAdsByType {
     private final InputStreamFake inputStream = new InputStreamFake();
     private final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
     private final AdvertisementFacade sut;
 
-    public ShowAvailableAds() {
+    public SelectAdsByType() {
         this.sut = new AdvertisementConfiguration().create(
                 inputStream,
                 new PrintStream(this.outputStream),
                 file.getPath() + "/advertisements.csv");
     }
 
-    @Given("there are ads available")
-    public void thereAreAdsAvailable(List<AdTestItem> ads) {
+
+    @Given("there are following ads")
+    public void thereAreAdsWithDifferentTypes(List<AdTestItem> ads) {
         ads.forEach(ad ->{
             this.inputStream.write(ad.toStringInput());
             this.sut.addAdvertisement();
         });
     }
-    @When("I ask to show in console")
-    public void iAskToShowInConsole() {
-        sut.printAdvertisement();
+
+    @When("I ask for ads of type {word}")
+    public void iAskForAdsOfTypeType(String type) {
+        this.sut.printAdvertisementWithType(type);
     }
-    @Then("I can see them in console")
-    public void iCanSeeThemInConsole(String expectedOutput) {
+
+    @Then("only ads with selected type are returned")
+    public void onlyAdsWithSelectedTypeAreReturned(String expectedOutput) {
         var output = outputStream.toString();
         assertThat(output).isEqualToIgnoringNewLines(expectedOutput);
     }
