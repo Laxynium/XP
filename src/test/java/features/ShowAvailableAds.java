@@ -14,7 +14,7 @@ import java.io.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ShowAvailableAds {
-    
+
     private ByteArrayOutputStream outputStream;
     
     private AdvertisementFacade sut;
@@ -42,9 +42,28 @@ public class ShowAvailableAds {
         }
     }
 
+    @Given("there is one ad available")
+    public void thereIsOneAdAvailable() {
+        var ad = createDualAdInput("1",
+                "video",
+                "small",
+                "example company",
+                "1USD",
+                "PER_VIEW",
+                "http://test.com",
+                "title",
+                "details");
+        createSutWithData(ad);
+    }
 
     @When("I ask to show in console")
     public void iAskToShowInConsole() {
+        sut.printAdvertisement();
+    }
+
+    @When("I add new ad and ask to show in console")
+    public void iAddNewAdAndAskToShowInConsole() {
+        sut.addAdvertisement();
         sut.printAdvertisement();
     }
 
@@ -61,6 +80,16 @@ public class ShowAvailableAds {
                 |ID|TYPE|FORMAT|ADVERTISER|PRICE|PRICE TYPE|URL|TITLE|DETAILS|
                 End of Advertisements
                 """;
+        var output = outputStream.toString();
+        assertThat(output).isEqualTo(expected);
+    }
+
+    @Then("I can see two ads")
+    public void iCanSeeTwoAds() {
+        var expected = "|ID|TYPE|FORMAT|ADVERTISER|PRICE|PRICE TYPE|URL|TITLE|DETAILS|\n" +
+                "|1|video|small|example company|1USD|PER_VIEW|http://test.com|title|details|\n" +
+                "|12|video|small|example company|1USD|PER_VIEW|http://test.com|title|details|\n" +
+                "End of Advertisements\n";
         var output = outputStream.toString();
         assertThat(output).isEqualTo(expected);
     }
@@ -99,7 +128,6 @@ public class ShowAvailableAds {
         FileSystemUtils.deleteRecursively(file);
     }
 
-
     private void createEmptySut() throws IOException {
         this.outputStream = new ByteArrayOutputStream();
         String advertisementCsvPath = file.getPath() + "/advertisements.csv";
@@ -112,4 +140,11 @@ public class ShowAvailableAds {
                 advertisementCsvPath);
 
     }
+
+    private String createDualAdInput(String s, String video, String small, String example_company, String s1, String per_view, String s2, String title, String details) {
+        var firstAdd = this.createAdInput(s, video, small, example_company, s1, per_view, s2, title, details);
+        var secondAdd = this.createAdInput(s+"2", video, small, example_company, s1, per_view, s2, title, details);
+        return firstAdd + secondAdd;
+    }
+
 }
