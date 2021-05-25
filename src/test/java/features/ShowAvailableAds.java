@@ -9,10 +9,7 @@ import org.springframework.util.FileSystemUtils;
 import pl.edu.agh.xp.advertisements.AdvertisementConfiguration;
 import pl.edu.agh.xp.advertisements.AdvertisementFacade;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.PrintStream;
+import java.io.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -36,6 +33,16 @@ public class ShowAvailableAds {
         createSutWithData(ad);
     }
 
+    @Given("there are no ads available")
+    public void thereAreNoAdsAvailable() {
+        try {
+            createEmptySut();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     @When("I ask to show in console")
     public void iAskToShowInConsole() {
         sut.printAdvertisement();
@@ -45,6 +52,17 @@ public class ShowAvailableAds {
     public void iCanSeeThemInConsole() {
         var output = outputStream.toString();
         assertThat(output).isNotBlank();
+    }
+
+    @Then("I can see zero ads")
+    public void iCanSeeZeroAds() {
+
+        var expected = """
+                |ID|TYPE|FORMAT|ADVERTISER|PRICE|PRICE TYPE|URL|TITLE|DETAILS|
+                End of Advertisements
+                """;
+        var output = outputStream.toString();
+        assertThat(output).isEqualTo(expected);
     }
 
     private void createSutWithData(String ad){
@@ -79,5 +97,19 @@ public class ShowAvailableAds {
     @After
     public void removeDir(){
         FileSystemUtils.deleteRecursively(file);
+    }
+
+
+    private void createEmptySut() throws IOException {
+        this.outputStream = new ByteArrayOutputStream();
+        String advertisementCsvPath = file.getPath() + "/advertisements.csv";
+        boolean exists = this.file.exists();
+        var injectedEmptyFile = new File(advertisementCsvPath);
+        var createdFile = injectedEmptyFile.createNewFile();
+        this.sut = new AdvertisementConfiguration().create(
+                new ByteArrayInputStream("".getBytes()),
+                new PrintStream(this.outputStream),
+                advertisementCsvPath);
+
     }
 }

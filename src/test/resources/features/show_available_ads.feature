@@ -5,3 +5,8 @@ Feature: Show available ads
     Given there are ads available
     When I ask to show in console
     Then I can see them in console
+
+  Scenario: There are no ads available
+    Given there are no ads available
+    When I ask to show in console
+    Then I can see zero ads
