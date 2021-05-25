@@ -12,15 +12,15 @@ public class AdvertisementCreator {
     public Advertisement createFromConsole() {
 
         try {
-            Integer id = reader.readInteger("Please enter id:");
-            String type = reader.readString("Please enter type:");
-            String format = reader.readString("Please enter format:");
-            String advertiser = reader.readString("Please enter advertiser:");
-            String price = reader.readString("Please enter price:");
-            String price_type = reader.readString("Please enter price type:");
-            String url = reader.readString("Please enter url:");
-            String title = reader.readString("Please enter title:");
-            String details = reader.readString("Please enter details:");
+            var id = reader.readInteger("Please enter id:");
+            var type = reader.readString("Please enter type:");
+            var format = reader.readString("Please enter format:");
+            var advertiser = reader.readString("Please enter advertiser:");
+            var price = reader.readString("Please enter price:");
+            var price_type = reader.readString("Please enter price type:");
+            var url = reader.readString("Please enter url:");
+            var title = reader.readString("Please enter title:");
+            var details = reader.readString("Please enter details:");
 
             return new Advertisement(id, type, format, advertiser, price, price_type, url, title, details);
         } catch (RuntimeException e) {

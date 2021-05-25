@@ -18,7 +18,7 @@ public class CSVWriter {
             try {
                 newFile = fileToWrite.createNewFile();
             } catch (IOException e) {
-                throw new RuntimeException("Couldn't create a file.");
+                throw new RuntimeException("Couldn't create a file.", e);
             }
         }
 
@@ -28,7 +28,7 @@ public class CSVWriter {
             }
             pw.println(rowToWrite);
         } catch (FileNotFoundException e) {
-            throw new RuntimeException("File has not been found.");
+            throw new RuntimeException("File has not been found.", e);
         }
     }
 
@@ -48,4 +48,15 @@ public class CSVWriter {
         return "\"" + String.join("\",\"", fields) + "\"";
     }
 
+    public void delete(String filePath) {
+        var file = new File(filePath);
+
+        file.delete();
+        try (PrintWriter pw = new PrintWriter(new FileOutputStream(filePath, true))) {
+            file.createNewFile();
+            pw.println(headersRow);
+        } catch (IOException e) {
+            throw new RuntimeException("Could not delete file.", e);
+        }
+    }
 }

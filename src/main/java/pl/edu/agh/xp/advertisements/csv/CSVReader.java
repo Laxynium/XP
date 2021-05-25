@@ -33,7 +33,7 @@ public class CSVReader {
             return new ArrayList<>();
         }
         catch (Exception e) {
-            throw new RuntimeException("Unable to read file");
+            throw new RuntimeException("Unable to read file", e);
         }
 
         return advertisements;

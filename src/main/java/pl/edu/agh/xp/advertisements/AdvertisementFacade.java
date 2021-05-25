@@ -1,29 +1,21 @@
 package pl.edu.agh.xp.advertisements;
 
+import lombok.AllArgsConstructor;
+import pl.edu.agh.xp.advertisements.console.ConsoleReader;
 import pl.edu.agh.xp.advertisements.csv.CSVReader;
 import pl.edu.agh.xp.advertisements.printer.AdvertisementsPrinter;
 import pl.edu.agh.xp.advertisements.writer.CSVWriter;
 
 import java.util.stream.Collectors;
 
+@AllArgsConstructor
 public class AdvertisementFacade {
-    private final AdvertisementsPrinter advertisementsPrinter;
-    private final CSVWriter csvWriter;
-    private final AdvertisementCreator advertisementCreator;
     private final CSVReader csvReader;
+    private final CSVWriter csvWriter;
+    private final AdvertisementsPrinter advertisementsPrinter;
+    private final AdvertisementCreator advertisementCreator;
+    private final ConsoleReader consoleReader;
     private final String advertisementsCsvPath;
-
-    public AdvertisementFacade(CSVReader csvReader,
-                               CSVWriter csvWriter,
-                               AdvertisementsPrinter advertisementsPrinter,
-                               AdvertisementCreator advertisementCreator,
-                               String advertisementsCsvPath) {
-        this.advertisementsPrinter = advertisementsPrinter;
-        this.csvWriter = csvWriter;
-        this.advertisementCreator = advertisementCreator;
-        this.csvReader = csvReader;
-        this.advertisementsCsvPath = advertisementsCsvPath;
-    }
 
     public void addAdvertisement() {
         var ad = advertisementCreator.createFromConsole();
@@ -41,5 +33,15 @@ public class AdvertisementFacade {
         var onlyOfType = advertisements.stream().filter(x -> x.getType().equals(type))
                 .collect(Collectors.toList());
         advertisementsPrinter.print(onlyOfType);
+    }
+
+    public void deleteAdvertisement() {
+        var id = consoleReader.readInteger("Please enter id od advertisement to delete:");
+        var advertisements = csvReader.read(advertisementsCsvPath)
+                .stream()
+                .filter(it -> !it.getId().equals(id))
+                .collect(Collectors.toList());
+        csvWriter.delete(advertisementsCsvPath);
+        advertisements.forEach(it -> csvWriter.write(advertisementsCsvPath, it));
     }
 }

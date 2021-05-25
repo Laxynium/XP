@@ -10,10 +10,13 @@ import java.io.PrintStream;
 
 public class AdvertisementConfiguration {
     public AdvertisementFacade create(InputStream inputStream, PrintStream printStream, String advertisementCsvPath) {
+        var reader = new ConsoleReader(inputStream);
         return new AdvertisementFacade(
                 new CSVReader(),
-                new CSVWriter(), new AdvertisementsPrinter(printStream),
-                new AdvertisementCreator(new ConsoleReader(inputStream)),
+                new CSVWriter(),
+                new AdvertisementsPrinter(printStream),
+                new AdvertisementCreator(reader),
+                reader,
                 advertisementCsvPath);
     }
 }

@@ -16,15 +16,15 @@ public class AdvertisementsApplication {
             System.out.println("Select action: (write number and press enter)");
             System.out.println("1. Show advertisements");
             System.out.println("2. Add advertisement");
-            System.out.println("3. Exit");
+            System.out.println("3. Delete advertisement");
+            System.out.println("4. Exit");
             input = scanner.nextLine();
             if (input != null) {
                 switch (input) {
                     case "1" -> adsFacade.printAdvertisement();
-                    case "2" -> {
-                        adsFacade.addAdvertisement();
-                    }
-                    case "3" -> System.exit(0);
+                    case "2" -> adsFacade.addAdvertisement();
+                    case "3" -> adsFacade.deleteAdvertisement();
+                    case "4" -> System.exit(0);
                     default -> System.out.println("Wrong number!");
                 }
             }
