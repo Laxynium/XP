@@ -9,9 +9,9 @@ import java.io.InputStream;
 import java.io.PrintStream;
 
 public class AdvertisementConfiguration {
-    public AdvertisementService create(InputStream inputStream, PrintStream printStream, String advertisementCsvPath) {
+    public AdvertisementFacade create(InputStream inputStream, PrintStream printStream, String advertisementCsvPath) {
         var reader = new ConsoleReader(inputStream);
-        return new AdvertisementService(
+        return new AdvertisementFacade(
                 new CSVReader(),
                 new CSVWriter(),
                 new AdvertisementsPrinter(printStream),

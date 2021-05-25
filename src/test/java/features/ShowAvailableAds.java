@@ -20,6 +20,7 @@ public class ShowAvailableAds {
     private final InputStreamFake inputStream = new InputStreamFake();
     private final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
     private final AdvertisementFacade sut;
+    private final File file = new File("testData");
 
     public ShowAvailableAds() {
         this.sut = new AdvertisementConfiguration().create(
@@ -77,8 +78,6 @@ public class ShowAvailableAds {
         assertThat(output).isEqualToIgnoringNewLines(expected);
     }
 
-
-    private final File file = new File("testData");
     @Before
     public void createDir() {
         file.mkdir();
