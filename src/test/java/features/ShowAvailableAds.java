@@ -86,10 +86,12 @@ public class ShowAvailableAds {
 
     @Then("I can see two ads")
     public void iCanSeeTwoAds() {
-        var expected = "|ID|TYPE|FORMAT|ADVERTISER|PRICE|PRICE TYPE|URL|TITLE|DETAILS|\n" +
-                "|1|video|small|example company|1USD|PER_VIEW|http://test.com|title|details|\n" +
-                "|12|video|small|example company|1USD|PER_VIEW|http://test.com|title|details|\n" +
-                "End of Advertisements\n";
+        var expected = """
+                |ID|TYPE|FORMAT|ADVERTISER|PRICE|PRICE TYPE|URL|TITLE|DETAILS|
+                |1|video|small|example company|1USD|PER_VIEW|http://test.com|title|details|
+                |12|video|small|example company|1USD|PER_VIEW|http://test.com|title|details|
+                End of Advertisements
+                """;
         var output = outputStream.toString();
         assertThat(output).isEqualTo(expected);
     }
@@ -133,7 +135,7 @@ public class ShowAvailableAds {
         String advertisementCsvPath = file.getPath() + "/advertisements.csv";
         boolean exists = this.file.exists();
         var injectedEmptyFile = new File(advertisementCsvPath);
-        var createdFile = injectedEmptyFile.createNewFile();
+        injectedEmptyFile.createNewFile();
         this.sut = new AdvertisementConfiguration().create(
                 new ByteArrayInputStream("".getBytes()),
                 new PrintStream(this.outputStream),
@@ -141,7 +143,8 @@ public class ShowAvailableAds {
 
     }
 
-    private String createDualAdInput(String s, String video, String small, String example_company, String s1, String per_view, String s2, String title, String details) {
+    private String createDualAdInput(String s, String video, String small, String example_company, String s1,
+                                     String per_view, String s2, String title, String details) {
         var firstAdd = this.createAdInput(s, video, small, example_company, s1, per_view, s2, title, details);
         var secondAdd = this.createAdInput(s+"2", video, small, example_company, s1, per_view, s2, title, details);
         return firstAdd + secondAdd;
