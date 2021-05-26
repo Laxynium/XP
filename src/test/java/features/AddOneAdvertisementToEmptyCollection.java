@@ -9,21 +9,25 @@ import org.springframework.util.FileSystemUtils;
 import pl.edu.agh.xp.advertisements.AdvertisementConfiguration;
 import pl.edu.agh.xp.advertisements.AdvertisementFacade;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.PrintStream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class AddOneAdvertisementToEmptyCollection {
 
-    private ByteArrayOutputStream outputStream;
-
-    private AdvertisementFacade sut;
-
+    private final InputStreamFake inputStream = new InputStreamFake();
+    private final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+    private final AdvertisementFacade sut;
     private final File file = new File("testData");
+
+    public AddOneAdvertisementToEmptyCollection() {
+        this.sut = new AdvertisementConfiguration().create(
+                inputStream,
+                new PrintStream(this.outputStream),
+                file.getPath() + "/advertisements.csv");
+    }
 
     @Before
     public void createDir() {
@@ -35,52 +39,27 @@ public class AddOneAdvertisementToEmptyCollection {
         FileSystemUtils.deleteRecursively(file);
     }
 
-    @Given("there are no ads available")
-    public void thereAreNoAdsAvailable() {
-        var ad = createAdInput("1",
-                "video",
-                "small",
-                "example company",
-                "1USD",
-                "PER_VIEW",
-                "http://test.com",
-                "title",
-                "details");
-
-        this.outputStream = new ByteArrayOutputStream();
-        this.sut = new AdvertisementConfiguration().create(
-                new ByteArrayInputStream(ad.getBytes()),
-                new PrintStream(this.outputStream),
-                file.getPath() + "/advertisements.csv"
-        );
-
-        assertEquals("", this.outputStream.toString());
+    @Given("there are zero ads available")
+    public void thereAreNoAdsAvailable(String expectedOutput) {
+        sut.printAdvertisement();
+        var output = outputStream.toString();
+        outputStream.reset();
+        assertThat(output).isEqualToIgnoringNewLines(expectedOutput);
     }
 
     @When("I add one advertisement")
-    public void iAddOneAdvertisement() {
+    public void iAddOneAdvertisement(AdTestItem ad) {
+        this.inputStream.write(ad.toStringInput());
         sut.addAdvertisement();
-
         sut.printAdvertisement();
     }
 
     @Then("I can see one advertisement")
-    public void iCanSeeOneAdvertisement() {
-        var output = this.outputStream.toString();
-        assertNotEquals("", output);
-    }
-
-    private String createAdInput(String id,
-                                 String type,
-                                 String format,
-                                 String advertiser,
-                                 String price,
-                                 String price_type,
-                                 String url,
-                                 String title,
-                                 String details) {
-        return String.format("%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n",
-                id, type, format, advertiser, price, price_type, url, title, details);
+    public void iCanSeeOneAdvertisement(String expectedOutput) {
+        outputStream.reset();
+        sut.printAdvertisement();
+        var output = outputStream.toString();
+        assertThat(output).isEqualToIgnoringNewLines(expectedOutput);
     }
 
 }
