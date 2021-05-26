@@ -1,0 +1,14 @@
+Jak reklamobiorca: 
+- chcę mieć możliwość wyświetlenia dostępnych reklam, dzięki czemu mogę wybrać, które reklamy emitować;
+- chcę mieć możliwość rozplanowania emisji reklam, aby dostosować reklamy do odpowiedniego dla nich czasu emisji;
+- chcę mieć możliwość wyboru formatu reklamy, aby dostosować je do danego medium;
+- chcę widzieć ceny za daną reklamę, aby znać zysk z emisji danej reklamy;
+- chcę mieć możliwość sprawdzenia szczegółów dotyczących reklamy, dzięki czemu mogę dostosować reklamę do naszych odbiorców.
+
+
+Jako reklamodawca:
+- chcę mieć możliwość sprawdzenia zasięgu reklamy dla nośników dla których ejst to osiągalne, aby znać liczbę odbiorców;
+- chcę mieć możliwość dodania reklamy do serwisu, aby mogła być zaprezentowana przez reklamobiorcę;
+- chcę mieć możliwość opisania swojej reklamy, dzięki czemu reklamobiorca może poznać szczegóły bez potrzeby dodatkowego kontaktu;
+- chcę mieć możliwość ustalenia grupy docelowej dla danej reklamy, aby reklama trafiła do najodpowiedniejszej grupy odbiorców;
+- chcę mieć możliwość zapłaty za emisję moich reklam, aby rozliczyć się z reklamobiorcami. 
