@@ -1,42 +1,44 @@
 package pl.edu.agh.xp.advertisements.csv;
 
-import pl.edu.agh.xp.advertisements.model.Advertisement;
+import com.fasterxml.jackson.databind.MapperFeature;
+import com.fasterxml.jackson.databind.MappingIterator;
+import com.fasterxml.jackson.databind.ObjectReader;
+import com.fasterxml.jackson.dataformat.csv.CsvMapper;
+import pl.edu.agh.xp.advertisements.model.*;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class CSVReader {
+    private final ObjectReader advertisementReader;
 
-    public List<Advertisement> read(String fileName) {
-        if (fileName == null || fileName.isEmpty()) {
-            throw new RuntimeException("Incorrect filename");
-        }
-        validateExtension(fileName, "csv");
+    public CSVReader(){
+        var mapper = new CsvMapper();
+        mapper.disable(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY);
+        var schema = mapper.schemaFor(Advertisement.class).withHeader();
+        advertisementReader =  mapper.readerFor(Advertisement.class).with(schema);
+    }
 
-        List<Advertisement> advertisements = new ArrayList<>();
-
-        try (BufferedReader csvReader = new BufferedReader(new FileReader(fileName))) {
-            skipHeadersRow(csvReader);
-
-            String row;
-            while ((row = csvReader.readLine()) != null) {
-                advertisements.add(readAdvertisementFromRow(row));
+    public List<Advertisement> read(FileName fileName) {
+        try{
+            if(!Files.exists(Path.of(fileName.getValue()))){
+                return new ArrayList<>();
             }
-        }
-        catch (FileNotFoundException e){
-            return new ArrayList<>();
-        }
-        catch (Exception e) {
-            throw new RuntimeException("Unable to read file", e);
-        }
 
-        return advertisements;
+            var fileContent = Files.readString(Path.of(fileName.getValue()));
+            MappingIterator<Advertisement> it = advertisementReader
+                    .readValues(fileContent);
+
+            return it.readAll();
+        }catch (IOException exception){
+            throw new RuntimeException("Unable to read file", exception);
+        }
     }
 
     private static void validateExtension(String fileName, String extension) {
@@ -59,7 +61,7 @@ public class CSVReader {
         String rowData = Arrays.stream(data)
                 .map(s -> s.substring(1, s.length() - 1))
                 .collect(Collectors.joining(","));
-
-        return new Advertisement(rowData.split(","));
+        String[] split = rowData.split(",");
+        return new Advertisement(Integer.parseInt(split[0]), AdvertisementType.create(split[1]), AdvertisementFormat.create(split[2]), split[3], Price.create(split[4]), PricingMethod.create(split[5]), split[6],split[7], split[8]);
     }
 }

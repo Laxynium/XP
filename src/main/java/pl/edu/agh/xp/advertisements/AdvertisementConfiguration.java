@@ -2,6 +2,7 @@ package pl.edu.agh.xp.advertisements;
 
 import pl.edu.agh.xp.advertisements.console.ConsoleReader;
 import pl.edu.agh.xp.advertisements.csv.CSVReader;
+import pl.edu.agh.xp.advertisements.csv.FileName;
 import pl.edu.agh.xp.advertisements.printer.AdvertisementsPrinter;
 import pl.edu.agh.xp.advertisements.writer.CSVWriter;
 
@@ -17,6 +18,6 @@ public class AdvertisementConfiguration {
                 new AdvertisementsPrinter(printStream),
                 new AdvertisementCreator(reader),
                 reader,
-                advertisementCsvPath);
+                FileName.create(advertisementCsvPath));
     }
 }

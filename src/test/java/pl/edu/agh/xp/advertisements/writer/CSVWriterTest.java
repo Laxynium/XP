@@ -4,7 +4,8 @@ import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import pl.edu.agh.xp.advertisements.model.Advertisement;
+import pl.edu.agh.xp.advertisements.csv.FileName;
+import pl.edu.agh.xp.advertisements.model.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,7 +36,7 @@ public class CSVWriterTest {
         var sut = new CSVWriter();
 
         // when
-        sut.write(data.getAbsolutePath(), advertisement);
+        sut.write(FileName.create(data.getAbsolutePath()), advertisement);
         var allLines = Files.readAllLines(data.toPath());
 
         // then
@@ -53,7 +54,7 @@ public class CSVWriterTest {
         var sut = new CSVWriter();
 
         // when
-        sut.write(data.getAbsolutePath(), advertisement);
+        sut.write(FileName.create(data.getAbsolutePath()), advertisement);
 
         // then
         assertThat(data).exists();
@@ -66,12 +67,12 @@ public class CSVWriterTest {
     private static Stream<Arguments> correctAdvertisementInput() {
         return Stream.of(
                 Arguments.arguments(
-                        new Advertisement(new String[]{"1", "type1", "format1", "advertiser1", "price1", "price_type1", "url1", "title1", "details1"}),
-                        "\"1\",\"type1\",\"format1\",\"advertiser1\",\"price1\",\"price_type1\",\"url1\",\"title1\",\"details1\""
+                        new Advertisement(1, AdvertisementType.create("type1"), AdvertisementFormat.create("format1"), "advertiser1", Price.create("1.0 USD"), PricingMethod.create("price_type1"), "url1", "title1", "details1"),
+                        "\"1\",\"type1\",\"format1\",\"advertiser1\",\"1 USD\",\"price_type1\",\"url1\",\"title1\",\"details1\""
                 ),
                 Arguments.arguments(
-                        new Advertisement(new String[]{"2", "type2", "format2", "advertiser2", "price2", "price_type2", "url2", "title2", "details2"}),
-                        "\"2\",\"type2\",\"format2\",\"advertiser2\",\"price2\",\"price_type2\",\"url2\",\"title2\",\"details2\""
+                        new Advertisement(2, AdvertisementType.create("type2"), AdvertisementFormat.create("format2"), "advertiser2", Price.create("2.0 USD"), PricingMethod.create("price_type2"), "url2", "title2", "details2"),
+                        "\"2\",\"type2\",\"format2\",\"advertiser2\",\"2 USD\",\"price_type2\",\"url2\",\"title2\",\"details2\""
                 )
         );
     }
