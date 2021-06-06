@@ -5,7 +5,6 @@ import java.util.Scanner;
 public class AdvertisementsApplication {
 
     public static void main(String... args) {
-
         var adsFacade = new AdvertisementConfiguration().create(System.in, System.out, "data/advertisements.csv");
 
         var scanner = new Scanner(System.in);
