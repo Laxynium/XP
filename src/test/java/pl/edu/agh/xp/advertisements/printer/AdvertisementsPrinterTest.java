@@ -1,7 +1,7 @@
 package pl.edu.agh.xp.advertisements.printer;
 
 import org.junit.jupiter.api.Test;
-import pl.edu.agh.xp.advertisements.model.Advertisement;
+import pl.edu.agh.xp.advertisements.model.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -20,11 +20,11 @@ class AdvertisementsPrinterTest {
 
         var advertisement1 = Advertisement.builder()
                 .id(1)
-                .type("image")
-                .format("medium")
+                .type(AdvertisementType.create("image"))
+                .format(AdvertisementFormat.create("medium"))
                 .advertiserMail("Example company")
-                .price("0.5 USD")
-                .priceType("PER_VIEW")
+                .price(Price.create("0.5 USD"))
+                .priceType(PricingMethod.create("PER_VIEW"))
                 .url("https://example.ads.com")
                 .title("Title")
                 .details("details")
@@ -32,11 +32,11 @@ class AdvertisementsPrinterTest {
 
         var advertisement2 = Advertisement.builder()
                 .id(2)
-                .type("image")
-                .format("medium")
+                .type(AdvertisementType.create("image"))
+                .format(AdvertisementFormat.create("medium"))
                 .advertiserMail("Example company")
-                .price("0.5 USD")
-                .priceType("PER_VIEW")
+                .price(Price.create("0.5 USD"))
+                .priceType(PricingMethod.create("PER_VIEW"))
                 .url("https://example.ads.com")
                 .title("Title")
                 .details("details")

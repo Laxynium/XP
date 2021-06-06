@@ -9,10 +9,10 @@ Feature: Add one advertisement to the empty collection
     """
     When I add one advertisement
       | id | type  | format | advertiser      | price | price_type | url             | title | details |
-      | 1  | video | small  | example company | 1USD  | PER_VIEW   | http://test.com | title | details |
+      | 1  | video | small  | example company | 1 USD  | PER_VIEW   | http://test.com | title | details |
     Then I can see one advertisement
     """
     |ID|TYPE|FORMAT|ADVERTISER|PRICE|PRICE TYPE|URL|TITLE|DETAILS|
-    |1|video|small|example company|1USD|PER_VIEW|http://test.com|title|details|
+    |1|video|small|example company|1 USD|PER_VIEW|http://test.com|title|details|
     End of Advertisements
     """

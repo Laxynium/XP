@@ -2,7 +2,7 @@ package pl.edu.agh.xp.advertisements;
 
 import lombok.RequiredArgsConstructor;
 import pl.edu.agh.xp.advertisements.console.ConsoleReader;
-import pl.edu.agh.xp.advertisements.model.Advertisement;
+import pl.edu.agh.xp.advertisements.model.*;
 
 @RequiredArgsConstructor
 public class AdvertisementCreator {
@@ -22,7 +22,7 @@ public class AdvertisementCreator {
             var title = reader.readString("Please enter title:");
             var details = reader.readString("Please enter details:");
 
-            return new Advertisement(id, type, format, advertiser, price, price_type, url, title, details);
+            return new Advertisement(id, AdvertisementType.create(type), AdvertisementFormat.create(format), advertiser, Price.create(price), PricingMethod.create(price_type), url, title, details);
         } catch (RuntimeException e) {
             return null;
         }
