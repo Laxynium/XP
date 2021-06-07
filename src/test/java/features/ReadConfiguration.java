@@ -10,9 +10,7 @@ import org.json.JSONObject;
 import org.springframework.util.FileSystemUtils;
 import pl.edu.agh.xp.advertisements.AdvertisementFacade;
 import pl.edu.agh.xp.advertisements.configuration.AdvertisementConfiguration;
-
 import java.io.*;
-
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class ReadConfiguration {
@@ -44,18 +42,30 @@ public class ReadConfiguration {
 
     @When("I start the program")
     public void iStartTheProgram() {
-        sut.readConfiguration();
+        sut.readConfiguration(file.getPath() + "/configuration.json");
 
     }
 
     @Then("Parameter values are loaded")
     public void parameterValuesAreLoaded() throws JSONException {
-        //assertThat(AdvertisementConfiguration.INSTANCE.pathToAdvertisements).isEqualTo(json.getString("pathToAdvertisements"));
-
+        assertThat(AdvertisementConfiguration.INSTANCE.pathToAdvertisements)
+                .isEqualTo(json.getString("pathToAdvertisements"));
+        assertThat(AdvertisementConfiguration.INSTANCE.availableAdvertisementTypes.toString())
+                .isEqualTo(json.getString("availableAdvertisementTypes")
+                        .replace("\"","").replace(",", ", "));
+        assertThat(AdvertisementConfiguration.INSTANCE.availableAdvertisementFormats.toString())
+                .isEqualTo(json.getString("availableAdvertisementFormats")
+                        .replace("\"","").replace(",", ", "));
+        assertThat(AdvertisementConfiguration.INSTANCE.availableCurrencies.toString())
+                .isEqualTo(json.getString("availableCurrencies")
+                        .replace("\"","").replace(",", ", "));
+        assertThat(AdvertisementConfiguration.INSTANCE.availablePricingMethods.toString())
+                .isEqualTo(json.getString("availablePricingMethods")
+                        .replace("\"","").replace(",", ", "));
     }
 
     @Before
-    public void createDir() throws IOException, JSONException {
+    public void createDir() {
         file.mkdir();
     }
 
