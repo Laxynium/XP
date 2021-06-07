@@ -1,14 +1,17 @@
 package pl.edu.agh.xp.advertisements.csv;
 
-import lombok.Value;
+import lombok.Getter;
 
-@Value
+@Getter
 public class FileName {
+
     String value;
-    private FileName(String value){
+
+    private FileName(String value) {
         this.value = value;
     }
-    public static FileName create(String value){
+
+    public static FileName create(String value) {
         if (value == null || value.isEmpty()) {
             throw new RuntimeException("Incorrect filename");
         }

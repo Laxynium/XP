@@ -8,16 +8,28 @@ import pl.edu.agh.xp.advertisements.model.AdvertisementType;
 import pl.edu.agh.xp.advertisements.printer.AdvertisementsPrinter;
 import pl.edu.agh.xp.advertisements.writer.CSVWriter;
 
+import java.io.InputStream;
+import java.io.PrintStream;
 import java.util.stream.Collectors;
 
-@AllArgsConstructor
 public class AdvertisementFacade {
+
     private final CSVReader csvReader;
     private final CSVWriter csvWriter;
     private final AdvertisementsPrinter advertisementsPrinter;
     private final AdvertisementCreator advertisementCreator;
     private final ConsoleReader consoleReader;
     private final FileName advertisementsCsvPath;
+
+    public AdvertisementFacade(InputStream inputStream, PrintStream printStream, String advertisementCsvPath) {
+        var reader = new ConsoleReader(inputStream);
+        csvReader = new CSVReader();
+        csvWriter = new CSVWriter();
+        advertisementsPrinter = new AdvertisementsPrinter(printStream);
+        advertisementCreator = new AdvertisementCreator(reader);
+        consoleReader = reader;
+        advertisementsCsvPath = FileName.create(advertisementCsvPath);
+    }
 
     public void addAdvertisement() {
         var ad = advertisementCreator.createFromConsole();

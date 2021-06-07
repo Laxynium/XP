@@ -13,33 +13,34 @@ import java.util.Locale;
 @Value
 public class Price {
     BigDecimal amount;
-    String currency;
+    Currency currency;
 
     @JsonCreator()
-    public static Price create(String price){
-        if(price == null || price.trim().isEmpty()){
+    public static Price create(String price) {
+        if (price == null || price.trim().isEmpty()) {
             throw new RuntimeException("Given price cannot be empty.");
         }
         var split = price.split(" ");
-        if(split.length != 2){
+        if (split.length != 2) {
             throw new RuntimeException("Give price is in invalid format");
         }
 
         var amount = parseAmount(split[0]);
-        var currency = split[1];
+        var currency = Currency.create(split[1]);
 
         return new Price(amount, currency);
     }
 
-    private static BigDecimal  parseAmount(String value){
-        try{
-            var format=  NumberFormat.getInstance(Locale.ENGLISH);
+    private static BigDecimal parseAmount(String value) {
+        try {
+            var format = NumberFormat.getInstance(Locale.ENGLISH);
             var asDouble = format.parse(value).doubleValue();
             return BigDecimal.valueOf(asDouble).setScale(2, RoundingMode.DOWN);
-        }catch (ParseException e){
+        } catch (ParseException e) {
             throw new RuntimeException("Given price is in invalid format");
         }
     }
+
     @Override
     public String toString() {
         var df = new DecimalFormat();

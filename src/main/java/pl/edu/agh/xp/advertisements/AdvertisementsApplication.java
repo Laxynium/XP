@@ -8,11 +8,11 @@ public class AdvertisementsApplication {
         var adsFacade = new AdvertisementConfiguration().create(System.in, System.out, "data/advertisements.csv");
 
         var scanner = new Scanner(System.in);
-        System.out.println("Hello in Advertisement app!");
+        System.out.println("Hello in Advertisement Management System!");
 
         String input;
         while (true) {
-            System.out.println("Select action: (write number and press enter)");
+            System.out.println("\nSelect action: (write number and press enter)");
             System.out.println("1. Show advertisements");
             System.out.println("2. Add advertisement");
             System.out.println("3. Delete advertisement");
