@@ -6,7 +6,6 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.springframework.util.FileSystemUtils;
-import pl.edu.agh.xp.advertisements.AdvertisementConfiguration;
 import pl.edu.agh.xp.advertisements.AdvertisementFacade;
 
 import java.io.ByteArrayOutputStream;
@@ -23,7 +22,7 @@ public class CreateAdsFile {
     private final File file = new File("testData");
 
     public CreateAdsFile() {
-        this.sut = new AdvertisementConfiguration().create(
+        this.sut = new AdvertisementFacade(
                 inputStream,
                 new PrintStream(this.outputStream),
                 file.getPath() + "/advertisements.csv");
@@ -49,12 +48,12 @@ public class CreateAdsFile {
     }
 
     @Before
-    public void createDir(){
+    public void createDir() {
         file.mkdir();
     }
 
     @After
-    public void removeDir(){
+    public void removeDir() {
         FileSystemUtils.deleteRecursively(file);
     }
 }

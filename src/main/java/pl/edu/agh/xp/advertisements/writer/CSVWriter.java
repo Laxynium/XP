@@ -1,5 +1,6 @@
 package pl.edu.agh.xp.advertisements.writer;
 
+import pl.edu.agh.xp.advertisements.csv.FileName;
 import pl.edu.agh.xp.advertisements.model.Advertisement;
 
 import java.io.*;
@@ -9,11 +10,11 @@ public class CSVWriter {
 
     private static final String headersRow = "\"id\",\"type\",\"format\",\"advertiser\",\"price\",\"price_type\",\"url\",\"title\",\"details\"";
 
-    public void write(String filePath, Advertisement advertisement) {
+    public void write(FileName filePath, Advertisement advertisement) {
         var rowToWrite = convertToCsvRow(advertisement);
 
         var newFile = false;
-        var fileToWrite = new File(filePath);
+        var fileToWrite = new File(filePath.getValue());
         if (!fileToWrite.exists()) {
             try {
                 newFile = fileToWrite.createNewFile();
@@ -22,7 +23,7 @@ public class CSVWriter {
             }
         }
 
-        try (PrintWriter pw = new PrintWriter(new FileOutputStream(filePath, true))) {
+        try (PrintWriter pw = new PrintWriter(new FileOutputStream(filePath.getValue(), true))) {
             if (newFile) {
                 pw.println(headersRow);
             }
@@ -35,11 +36,11 @@ public class CSVWriter {
     private String convertToCsvRow(Advertisement advertisement) {
         var fields = Arrays.asList(
                 advertisement.getId().toString(),
-                advertisement.getType(),
-                advertisement.getFormat(),
+                advertisement.getType().toString(),
+                advertisement.getFormat().toString(),
                 advertisement.getAdvertiserMail(),
-                advertisement.getPrice(),
-                advertisement.getPriceType(),
+                advertisement.getPrice().toString(),
+                advertisement.getPriceType().toString(),
                 advertisement.getUrl(),
                 advertisement.getTitle(),
                 advertisement.getDetails()
@@ -48,11 +49,11 @@ public class CSVWriter {
         return "\"" + String.join("\",\"", fields) + "\"";
     }
 
-    public void delete(String filePath) {
-        var file = new File(filePath);
+    public void delete(FileName filePath) {
+        var file = new File(filePath.getValue());
 
         file.delete();
-        try (PrintWriter pw = new PrintWriter(new FileOutputStream(filePath, true))) {
+        try (PrintWriter pw = new PrintWriter(new FileOutputStream(filePath.getValue(), true))) {
             file.createNewFile();
             pw.println(headersRow);
         } catch (IOException e) {

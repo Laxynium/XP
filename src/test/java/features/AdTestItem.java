@@ -3,9 +3,10 @@ package features;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Arrays;
 import java.util.Map;
 
-@RequiredArgsConstructor()
+@RequiredArgsConstructor
 @Getter
 class AdTestItem {
     private final String id;
@@ -33,5 +34,21 @@ class AdTestItem {
     public String toStringInput() {
         return String.format("%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n",
                 getId(), getType(), getFormat(), getAdvertiser(), getPrice(), getPrice_type(), getUrl(), getTitle(), getDetails());
+    }
+
+    public String convertToPipeRow() {
+        var fields = Arrays.asList(
+                this.getId(),
+                this.getType(),
+                this.getFormat(),
+                this.getAdvertiser(),
+                this.getPrice(),
+                this.getPrice_type(),
+                this.getUrl(),
+                this.getTitle(),
+                this.getDetails()
+        );
+
+        return String.join("|", fields);
     }
 }
