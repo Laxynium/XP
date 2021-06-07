@@ -63,7 +63,7 @@ public class AdvertisementFacade {
     }
 
     public void generateConfiguration() {
-        configurationService.save("configuration.json");
+        configurationService.save(consoleReader.readString("In which directory do you want to save configuration?\nPlease enter relative path: ") + "/configuration.json");
     }
 
     public void readConfiguration() {
