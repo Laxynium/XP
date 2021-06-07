@@ -10,6 +10,8 @@ import java.nio.file.Path;
 
 public class ConfigurationService {
 
+    private static final String configurationFileDefaultLocation = "configuration.json";
+
     private final ObjectWriter writer;
     private final ObjectReader reader;
 
@@ -33,9 +35,9 @@ public class ConfigurationService {
         }
     }
 
-    public void read(String path) {
+    public void read() {
         try {
-            var configurationFile = Path.of(path).toFile();
+            var configurationFile = Path.of(configurationFileDefaultLocation).toFile();
             if (configurationFile.exists()) {
                 AdvertisementConfiguration.INSTANCE = reader.readValue(configurationFile, AdvertisementConfiguration.class);
             }

@@ -31,18 +31,18 @@ public class ReadConfiguration {
     @Given("There is a configuration file")
     public void thereIsAConfigurationFile(String jsonString) throws JSONException, IOException {
         json = new JSONObject(jsonString);
-        FileWriter fileWriter = new FileWriter(file.getPath() + "/configuration.json");
+        FileWriter fileWriter = new FileWriter("configuration.json");
         fileWriter.write(json.toString());
         fileWriter.close();
 
-        var configurationFile = new File(file.getPath() + "/configuration.json");
+        var configurationFile = new File("configuration.json");
         assertThat(configurationFile.exists()).isEqualTo(true);
     }
 
 
     @When("I start the program")
     public void iStartTheProgram() {
-        sut.readConfiguration(file.getPath() + "/configuration.json");
+        sut.readConfiguration();
 
     }
 

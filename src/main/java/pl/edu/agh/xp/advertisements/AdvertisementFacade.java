@@ -66,8 +66,8 @@ public class AdvertisementFacade {
         configurationService.save("configuration.json");
     }
 
-    public void readConfiguration(String path) {
-        configurationService.read(path);
+    public void readConfiguration() {
+        configurationService.read();
 
         String newPath = AdvertisementConfiguration.INSTANCE.pathToAdvertisements;
         if (!advertisementsCsvPath.getValue().equals(newPath)) {
