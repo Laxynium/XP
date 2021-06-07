@@ -1,7 +1,6 @@
 package features;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +14,7 @@ class InputStreamFake extends InputStream {
     }
 
     @Override
-    public int read() throws IOException {
+    public int read() {
         if (inputStreams.isEmpty()) {
             throw new RuntimeException("Nothing has been written to stream.");
         }
