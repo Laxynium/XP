@@ -24,37 +24,17 @@ public class AdvertisementsApplication {
             System.out.println("5. Exit");
             input = scanner.nextLine();
             if (input != null) {
-                switch (input) {
-                    case "1" -> {
-                        try {
-                            adsFacade.printAdvertisement();
-                        } catch (RuntimeException e) {
-                            System.out.println("Error! " + e.getMessage());
-                        }
+                try {
+                    switch (input) {
+                        case "1" -> adsFacade.printAdvertisement();
+                        case "2" -> adsFacade.addAdvertisement();
+                        case "3" -> adsFacade.deleteAdvertisement();
+                        case "4" -> adsFacade.generateConfiguration();
+                        case "5" -> System.exit(0);
+                        default -> System.out.println("Wrong number!");
                     }
-                    case "2" -> {
-                        try {
-                            adsFacade.addAdvertisement();
-                        } catch (RuntimeException e) {
-                            System.out.println("Error! " + e.getMessage());
-                        }
-                    }
-                    case "3" -> {
-                        try {
-                            adsFacade.deleteAdvertisement();
-                        } catch (RuntimeException e) {
-                            System.out.println("Error! " + e.getMessage());
-                        }
-                    }
-                    case "4" -> {
-                        try {
-                            adsFacade.generateConfiguration();
-                        } catch (RuntimeException e) {
-                            System.out.println("Error! " + e.getMessage());
-                        }
-                    }
-                    case "5" -> System.exit(0);
-                    default -> System.out.println("Wrong number!");
+                } catch (RuntimeException e) {
+                    System.out.println("Error! " + e.getMessage());
                 }
             }
         }
