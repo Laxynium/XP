@@ -1,6 +1,6 @@
 package pl.edu.agh.xp.advertisements;
 
-import lombok.AllArgsConstructor;
+import pl.edu.agh.xp.advertisements.configuration.ConfigurationService;
 import pl.edu.agh.xp.advertisements.console.ConsoleReader;
 import pl.edu.agh.xp.advertisements.csv.CSVReader;
 import pl.edu.agh.xp.advertisements.csv.FileName;
@@ -20,6 +20,7 @@ public class AdvertisementFacade {
     private final AdvertisementCreator advertisementCreator;
     private final ConsoleReader consoleReader;
     private final FileName advertisementsCsvPath;
+    private final ConfigurationService configurationService;
 
     public AdvertisementFacade(InputStream inputStream, PrintStream printStream, String advertisementCsvPath) {
         var reader = new ConsoleReader(inputStream);
@@ -29,6 +30,7 @@ public class AdvertisementFacade {
         advertisementCreator = new AdvertisementCreator(reader);
         consoleReader = reader;
         advertisementsCsvPath = FileName.create(advertisementCsvPath);
+        configurationService = new ConfigurationService();
     }
 
     public void addAdvertisement() {
@@ -57,5 +59,9 @@ public class AdvertisementFacade {
                 .collect(Collectors.toList());
         csvWriter.delete(advertisementsCsvPath);
         advertisements.forEach(it -> csvWriter.write(advertisementsCsvPath, it));
+    }
+
+    public void generateConfiguration() {
+        configurationService.save(consoleReader.readString("In which folder you want to save configuration?") + "/configuration.json");
     }
 }
