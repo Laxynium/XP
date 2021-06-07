@@ -67,12 +67,12 @@ public class CSVWriterTest {
     private static Stream<Arguments> correctAdvertisementInput() {
         return Stream.of(
                 Arguments.arguments(
-                        new Advertisement(1, AdvertisementType.create("type1"), AdvertisementFormat.create("format1"), "advertiser1", Price.create("1.0 USD"), PricingMethod.create("price_type1"), "url1", "title1", "details1"),
-                        "\"1\",\"type1\",\"format1\",\"advertiser1\",\"1 USD\",\"price_type1\",\"url1\",\"title1\",\"details1\""
+                        new Advertisement(1, AdvertisementType.create("IMAGE"), AdvertisementFormat.create("SMALL"), "advertiser1", Price.create("1.0 EUR"), PricingMethod.create("PER_VIEW"), "url1", "title1", "details1"),
+                        "\"1\",\"IMAGE\",\"SMALL\",\"advertiser1\",\"1 EUR\",\"PER_VIEW\",\"url1\",\"title1\",\"details1\""
                 ),
                 Arguments.arguments(
-                        new Advertisement(2, AdvertisementType.create("type2"), AdvertisementFormat.create("format2"), "advertiser2", Price.create("2.0 USD"), PricingMethod.create("price_type2"), "url2", "title2", "details2"),
-                        "\"2\",\"type2\",\"format2\",\"advertiser2\",\"2 USD\",\"price_type2\",\"url2\",\"title2\",\"details2\""
+                        new Advertisement(2, AdvertisementType.create("VIDEO"), AdvertisementFormat.create("MEDIUM"), "advertiser2", Price.create("2.0 USD"), PricingMethod.create("PER_CLICK"), "url2", "title2", "details2"),
+                        "\"2\",\"VIDEO\",\"MEDIUM\",\"advertiser2\",\"2 USD\",\"PER_CLICK\",\"url2\",\"title2\",\"details2\""
                 )
         );
     }

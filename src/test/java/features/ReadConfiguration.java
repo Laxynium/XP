@@ -99,5 +99,6 @@ public class ReadConfiguration {
     @After
     public void removeDir() {
         FileSystemUtils.deleteRecursively(file);
+        AdvertisementConfiguration.INSTANCE = new AdvertisementConfiguration();
     }
 }
