@@ -1,5 +1,6 @@
 package pl.edu.agh.xp.advertisements;
 
+import pl.edu.agh.xp.advertisements.configuration.AdvertisementConfiguration;
 import pl.edu.agh.xp.advertisements.configuration.ConfigurationService;
 import pl.edu.agh.xp.advertisements.console.ConsoleReader;
 import pl.edu.agh.xp.advertisements.csv.CSVReader;
@@ -19,7 +20,7 @@ public class AdvertisementFacade {
     private final AdvertisementsPrinter advertisementsPrinter;
     private final AdvertisementCreator advertisementCreator;
     private final ConsoleReader consoleReader;
-    private final FileName advertisementsCsvPath;
+    private FileName advertisementsCsvPath;
     private final ConfigurationService configurationService;
 
     public AdvertisementFacade(InputStream inputStream, PrintStream printStream, String advertisementCsvPath) {
@@ -62,6 +63,16 @@ public class AdvertisementFacade {
     }
 
     public void generateConfiguration() {
-        configurationService.save(consoleReader.readString("In which folder you want to save configuration?") + "/configuration.json");
+        configurationService.save("configuration.json");
     }
+
+    public void readConfiguration() {
+        configurationService.read("configuration.json");
+
+        String newPath = AdvertisementConfiguration.INSTANCE.pathToAdvertisements;
+        if (!advertisementsCsvPath.getValue().equals(newPath)) {
+            advertisementsCsvPath = FileName.create(newPath);
+        }
+    }
+
 }

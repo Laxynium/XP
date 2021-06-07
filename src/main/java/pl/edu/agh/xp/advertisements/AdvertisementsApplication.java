@@ -7,7 +7,9 @@ import java.util.Scanner;
 public class AdvertisementsApplication {
 
     public static void main(String... args) {
+
         var adsFacade = new AdvertisementFacade(System.in, System.out, AdvertisementConfiguration.INSTANCE.pathToAdvertisements);
+        adsFacade.readConfiguration();
 
         var scanner = new Scanner(System.in);
         System.out.println("Hello in Advertisement Management System!");
