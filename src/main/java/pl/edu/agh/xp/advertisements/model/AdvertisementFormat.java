@@ -5,11 +5,12 @@ import lombok.Value;
 
 @Value
 public class AdvertisementFormat {
+
     String value;
 
-    @JsonCreator()
-    public static AdvertisementFormat create(String value){
-        if(value == null || value.trim().isEmpty()){
+    @JsonCreator
+    public static AdvertisementFormat create(String value) {
+        if (value == null || value.trim().isEmpty()) {
             throw new RuntimeException("Given advertisement format cannot be empty.");
         }
         return new AdvertisementFormat(value);

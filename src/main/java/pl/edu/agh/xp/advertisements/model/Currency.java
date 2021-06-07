@@ -5,11 +5,12 @@ import lombok.Value;
 
 @Value
 public class Currency {
+
     String currency;
 
-    @JsonCreator()
+    @JsonCreator
     public static Currency create(String value) {
-        if(value == null || value.trim().isEmpty()){
+        if (value == null || value.trim().isEmpty()) {
             throw new RuntimeException("Currency cannot be empty.");
         }
         return new Currency(value);

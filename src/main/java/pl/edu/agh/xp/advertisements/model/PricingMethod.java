@@ -5,9 +5,10 @@ import lombok.Value;
 
 @Value
 public class PricingMethod {
+
     String value;
 
-    @JsonCreator()
+    @JsonCreator
     public static PricingMethod create(String value) {
         if (value == null || value.trim().isEmpty()) {
             throw new RuntimeException("Given pricing method cannot be empty.");

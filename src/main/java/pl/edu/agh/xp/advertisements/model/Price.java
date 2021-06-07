@@ -12,17 +12,18 @@ import java.util.Locale;
 
 @Value
 public class Price {
+
     BigDecimal amount;
     Currency currency;
 
-    @JsonCreator()
+    @JsonCreator
     public static Price create(String price) {
         if (price == null || price.trim().isEmpty()) {
             throw new RuntimeException("Given price cannot be empty.");
         }
         var split = price.split(" ");
         if (split.length != 2) {
-            throw new RuntimeException("Give price is in invalid format");
+            throw new RuntimeException("Given price is in invalid format");
         }
 
         var amount = parseAmount(split[0]);

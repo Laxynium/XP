@@ -14,7 +14,7 @@ import java.util.Arrays;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
@@ -45,16 +45,32 @@ public class AdvertisementCreatorTest {
     }
 
     @Test
-    void createAdvertisement_shouldReturnNull_whenIncorrectInput() {
+    void createAdvertisement_shouldThrowRuntimeException_whenConsoleReaderThrowsException() {
         // given
         var sut = new AdvertisementCreator(consoleReader);
         doThrow(new RuntimeException("Incorrect input")).when(consoleReader).readInteger(any());
 
         // when
-        var result = sut.createFromConsole();
+        var exception = assertThrows(RuntimeException.class, sut::createFromConsole);
 
         // then
-        assertNull(result);
+        assertEquals("Incorrect input", exception.getMessage());
+    }
+
+    @ParameterizedTest
+    @MethodSource("incorrectAdvertisementInput")
+    void createAdvertisement_shouldThrowRuntimeException_whenIncorrectInputGiven(Object[] params, String exceptionMessage) {
+        // given
+        var sut = new AdvertisementCreator(consoleReader);
+        doReturn(params[0]).when(consoleReader).readInteger(any());
+        doReturn(params[1] != null ? params[1].toString() : null, Arrays.copyOfRange(params, 2, params.length))
+                .when(consoleReader).readString(any());
+
+        // when
+        var exception = assertThrows(RuntimeException.class, sut::createFromConsole);
+
+        // then
+        assertEquals(exceptionMessage, exception.getMessage());
     }
 
     private static Stream<Arguments> correctAdvertisementInput() {
@@ -67,6 +83,59 @@ public class AdvertisementCreatorTest {
                         new Object[]{2, "type2", "format2", "advertiser2", "2.0 USD", "price_type2", "url2", "title2", "details2"},
                         new Advertisement(2, AdvertisementType.create("type2"), AdvertisementFormat.create("format2"), "advertiser2", Price.create("2.0 USD"), PricingMethod.create("price_type2"), "url2", "title2", "details2"
                         ))
+        );
+    }
+
+    private static Stream<Arguments> incorrectAdvertisementInput() {
+        return Stream.of(
+                Arguments.arguments(
+                        new Object[]{1, null, "format1", "advertiser1", "1.0 USD", "price_type1", "url1", "title1", "details1"},
+                        "Given advertisement type cannot be empty."
+                ),
+                Arguments.arguments(
+                        new Object[]{1, " ", "format1", "advertiser1", "1.0 USD", "price_type1", "url1", "title1", "details1"},
+                        "Given advertisement type cannot be empty."
+                ),
+                Arguments.arguments(
+                        new Object[]{1, "type1", null, "advertiser1", "1.0 USD", "price_type1", "url1", "title1", "details1"},
+                        "Given advertisement format cannot be empty."
+                ),
+                Arguments.arguments(
+                        new Object[]{1, "type1", " ", "advertiser1", "1.0 USD", "price_type1", "url1", "title1", "details1"},
+                        "Given advertisement format cannot be empty."
+                ),
+                Arguments.arguments(
+                        new Object[]{1, "type1", "format1", "advertiser1", null, "price_type1", "url1", "title1", "details1"},
+                        "Given price cannot be empty."
+                ),
+                Arguments.arguments(
+                        new Object[]{1, "type1", "format1", "advertiser1", " ", "price_type1", "url1", "title1", "details1"},
+                        "Given price cannot be empty."
+                ),
+                Arguments.arguments(
+                        new Object[]{1, "type1", "format1", "advertiser1", "1 U SD", "price_type1", "url1", "title1", "details1"},
+                        "Given price is in invalid format"
+                ),
+                Arguments.arguments(
+                        new Object[]{1, "type1", "format1", "advertiser1", "1", "price_type1", "url1", "title1", "details1"},
+                        "Given price is in invalid format"
+                ),
+                Arguments.arguments(
+                        new Object[]{1, "type1", "format1", "advertiser1", "$ USD", "price_type1", "url1", "title1", "details1"},
+                        "Given price is in invalid format"
+                ),
+                Arguments.arguments(
+                        new Object[]{1, "type1", "format1", "advertiser1", "X.5D USD", "price_type1", "url1", "title1", "details1"},
+                        "Given price is in invalid format"
+                ),
+                Arguments.arguments(
+                        new Object[]{1, "type1", "format1", "advertiser1", "1.0 USD", null, "url1", "title1", "details1"},
+                        "Given pricing method cannot be empty."
+                ),
+                Arguments.arguments(
+                        new Object[]{1, "type1", "format1", "advertiser1", "1.0 USD", " ", "url1", "title1", "details1"},
+                        "Given pricing method cannot be empty."
+                )
         );
     }
 
