@@ -38,7 +38,8 @@ public class SelectAdsByType {
 
     @When("I ask for ads of type {word}")
     public void iAskForAdsOfTypeType(String type) {
-        this.sut.printAdvertisementWithType(type);
+        this.inputStream.write(type);
+        this.sut.printAdvertisementWithType();
     }
 
     @Then("only ads with selected type are returned")

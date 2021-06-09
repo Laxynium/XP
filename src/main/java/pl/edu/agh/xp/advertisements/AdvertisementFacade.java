@@ -12,6 +12,7 @@ import pl.edu.agh.xp.advertisements.service.csv.FileName;
 
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.util.Arrays;
 import java.util.stream.Collectors;
 
 public class AdvertisementFacade {
@@ -46,7 +47,9 @@ public class AdvertisementFacade {
         advertisementsPrinter.print(advertisements);
     }
 
-    public void printAdvertisementWithType(String type) {
+    public void printAdvertisementWithType() {
+        var types = Arrays.toString(AdvertisementConfiguration.INSTANCE.availableAdvertisementTypes.toArray());
+        var type = consoleReader.readString("Write advertisement type and press Enter. Available types are: " + types);
         var advertisements = csvReader.read(advertisementsCsvPath);
         var onlyOfType = advertisements.stream().filter(x -> x.getType().equals(AdvertisementType.create(type)))
                 .collect(Collectors.toList());

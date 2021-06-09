@@ -29,6 +29,10 @@ public class ConfigurationService {
             if (resultFile.exists()) {
                 resultFile.delete();
             }
+            var parent = resultFile.getParentFile();
+            if(!parent.exists()){
+                parent.mkdirs();
+            }
             resultFile.createNewFile();
             writer.writeValue(resultFile, AdvertisementConfiguration.INSTANCE);
         } catch (IOException e) {

@@ -16,6 +16,10 @@ public class CSVWriter {
         var fileToWrite = new File(filePath.getValue());
         if (!fileToWrite.exists()) {
             try {
+                var parent = fileToWrite.getParentFile();
+                if(!parent.exists()){
+                    parent.mkdirs();
+                }
                 newFile = fileToWrite.createNewFile();
             } catch (IOException e) {
                 throw new RuntimeException("Couldn't create a file.", e);
