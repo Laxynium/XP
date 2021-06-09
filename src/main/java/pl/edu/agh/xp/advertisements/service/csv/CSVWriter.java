@@ -17,7 +17,7 @@ public class CSVWriter {
         if (!fileToWrite.exists()) {
             try {
                 var parent = fileToWrite.getParentFile();
-                if(!parent.exists()){
+                if (!parent.exists()) {
                     parent.mkdirs();
                 }
                 newFile = fileToWrite.createNewFile();

@@ -30,7 +30,7 @@ public class ConfigurationService {
                 resultFile.delete();
             }
             var parent = resultFile.getParentFile();
-            if(!parent.exists()){
+            if (!parent.exists()) {
                 parent.mkdirs();
             }
             resultFile.createNewFile();
