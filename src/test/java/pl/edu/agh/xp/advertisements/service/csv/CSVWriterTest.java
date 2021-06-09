@@ -1,10 +1,9 @@
-package pl.edu.agh.xp.advertisements.writer;
+package pl.edu.agh.xp.advertisements.service.csv;
 
 import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import pl.edu.agh.xp.advertisements.csv.FileName;
 import pl.edu.agh.xp.advertisements.model.*;
 
 import java.io.File;

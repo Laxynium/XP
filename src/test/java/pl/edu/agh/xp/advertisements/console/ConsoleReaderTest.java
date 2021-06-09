@@ -3,6 +3,7 @@ package pl.edu.agh.xp.advertisements.console;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import pl.edu.agh.xp.advertisements.service.console.ConsoleReader;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;

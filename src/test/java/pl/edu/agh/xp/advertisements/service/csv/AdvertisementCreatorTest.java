@@ -1,4 +1,4 @@
-package pl.edu.agh.xp.advertisements;
+package pl.edu.agh.xp.advertisements.service.csv;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,8 +9,9 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import pl.edu.agh.xp.advertisements.configuration.AdvertisementConfiguration;
-import pl.edu.agh.xp.advertisements.console.ConsoleReader;
 import pl.edu.agh.xp.advertisements.model.*;
+import pl.edu.agh.xp.advertisements.service.advertisement.AdvertisementCreator;
+import pl.edu.agh.xp.advertisements.service.console.ConsoleReader;
 
 import java.util.Arrays;
 import java.util.List;

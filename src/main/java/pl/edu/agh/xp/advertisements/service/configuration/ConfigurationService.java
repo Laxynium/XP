@@ -1,9 +1,10 @@
-package pl.edu.agh.xp.advertisements.configuration;
+package pl.edu.agh.xp.advertisements.service.configuration;
 
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.json.JsonMapper;
+import pl.edu.agh.xp.advertisements.configuration.AdvertisementConfiguration;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -27,6 +28,10 @@ public class ConfigurationService {
             var resultFile = Path.of(path).toFile();
             if (resultFile.exists()) {
                 resultFile.delete();
+            }
+            var parent = resultFile.getParentFile();
+            if (!parent.exists()) {
+                parent.mkdirs();
             }
             resultFile.createNewFile();
             writer.writeValue(resultFile, AdvertisementConfiguration.INSTANCE);

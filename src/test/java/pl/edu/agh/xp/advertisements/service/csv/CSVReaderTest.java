@@ -1,4 +1,4 @@
-package pl.edu.agh.xp.advertisements.csv;
+package pl.edu.agh.xp.advertisements.service.csv;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;

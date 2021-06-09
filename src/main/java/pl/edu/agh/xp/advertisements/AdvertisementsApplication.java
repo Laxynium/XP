@@ -17,20 +17,22 @@ public class AdvertisementsApplication {
         String input;
         while (true) {
             System.out.println("\nSelect action: (write number and press enter)");
-            System.out.println("1. Show advertisements");
-            System.out.println("2. Add advertisement");
-            System.out.println("3. Delete advertisement");
-            System.out.println("4. Generate system configuration");
-            System.out.println("5. Exit");
+            System.out.println("1. Show all advertisements");
+            System.out.println("2. Show advertisements with type");
+            System.out.println("3. Add advertisement");
+            System.out.println("4. Delete advertisement");
+            System.out.println("5. Generate system configuration");
+            System.out.println("6. Exit");
             input = scanner.nextLine();
             if (input != null) {
                 try {
                     switch (input) {
                         case "1" -> adsFacade.printAdvertisement();
-                        case "2" -> adsFacade.addAdvertisement();
-                        case "3" -> adsFacade.deleteAdvertisement();
-                        case "4" -> adsFacade.generateConfiguration();
-                        case "5" -> System.exit(0);
+                        case "2" -> adsFacade.printAdvertisementWithType();
+                        case "3" -> adsFacade.addAdvertisement();
+                        case "4" -> adsFacade.deleteAdvertisement();
+                        case "5" -> adsFacade.generateConfiguration();
+                        case "6" -> System.exit(0);
                         default -> System.out.println("Wrong number!");
                     }
                 } catch (RuntimeException e) {

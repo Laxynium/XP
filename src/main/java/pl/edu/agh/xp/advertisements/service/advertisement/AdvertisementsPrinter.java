@@ -1,4 +1,4 @@
-package pl.edu.agh.xp.advertisements.printer;
+package pl.edu.agh.xp.advertisements.service.advertisement;
 
 import lombok.AllArgsConstructor;
 import pl.edu.agh.xp.advertisements.model.Advertisement;
