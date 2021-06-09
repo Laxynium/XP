@@ -1,8 +1,8 @@
-package pl.edu.agh.xp.advertisements;
+package pl.edu.agh.xp.advertisements.service.advertisement;
 
 import lombok.RequiredArgsConstructor;
-import pl.edu.agh.xp.advertisements.console.ConsoleReader;
 import pl.edu.agh.xp.advertisements.model.*;
+import pl.edu.agh.xp.advertisements.service.console.ConsoleReader;
 
 @RequiredArgsConstructor
 public class AdvertisementCreator {
@@ -21,7 +21,17 @@ public class AdvertisementCreator {
         var title = reader.readString("Please enter title:");
         var details = reader.readString("Please enter details:");
 
-        return new Advertisement(id, AdvertisementType.create(type), AdvertisementFormat.create(format), advertiser, Price.create(price), PricingMethod.create(priceType), url, title, details);
+        return Advertisement.builder()
+                .id(id)
+                .type(AdvertisementType.create(type))
+                .format(AdvertisementFormat.create(format))
+                .advertiserMail(advertiser)
+                .price(Price.create(price))
+                .priceType(PricingMethod.create(priceType))
+                .url(url)
+                .title(title)
+                .details(details)
+                .build();
     }
 
 }

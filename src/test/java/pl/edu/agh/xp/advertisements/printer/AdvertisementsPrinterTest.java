@@ -2,6 +2,7 @@ package pl.edu.agh.xp.advertisements.printer;
 
 import org.junit.jupiter.api.Test;
 import pl.edu.agh.xp.advertisements.model.*;
+import pl.edu.agh.xp.advertisements.service.advertisement.AdvertisementsPrinter;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;

@@ -1,4 +1,4 @@
-package pl.edu.agh.xp.advertisements.console;
+package pl.edu.agh.xp.advertisements.service.console;
 
 import java.io.BufferedReader;
 import java.io.IOException;

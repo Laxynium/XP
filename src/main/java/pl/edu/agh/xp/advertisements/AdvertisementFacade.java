@@ -1,13 +1,14 @@
 package pl.edu.agh.xp.advertisements;
 
 import pl.edu.agh.xp.advertisements.configuration.AdvertisementConfiguration;
-import pl.edu.agh.xp.advertisements.configuration.ConfigurationService;
-import pl.edu.agh.xp.advertisements.console.ConsoleReader;
-import pl.edu.agh.xp.advertisements.csv.CSVReader;
-import pl.edu.agh.xp.advertisements.csv.FileName;
 import pl.edu.agh.xp.advertisements.model.AdvertisementType;
-import pl.edu.agh.xp.advertisements.printer.AdvertisementsPrinter;
-import pl.edu.agh.xp.advertisements.writer.CSVWriter;
+import pl.edu.agh.xp.advertisements.service.advertisement.AdvertisementCreator;
+import pl.edu.agh.xp.advertisements.service.advertisement.AdvertisementsPrinter;
+import pl.edu.agh.xp.advertisements.service.configuration.ConfigurationService;
+import pl.edu.agh.xp.advertisements.service.console.ConsoleReader;
+import pl.edu.agh.xp.advertisements.service.csv.CSVReader;
+import pl.edu.agh.xp.advertisements.service.csv.CSVWriter;
+import pl.edu.agh.xp.advertisements.service.csv.FileName;
 
 import java.io.InputStream;
 import java.io.PrintStream;
