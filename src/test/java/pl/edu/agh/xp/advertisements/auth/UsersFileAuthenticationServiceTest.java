@@ -1,6 +1,7 @@
 package pl.edu.agh.xp.advertisements.auth;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -71,6 +72,52 @@ class UsersFileAuthenticationServiceTest {
 
         // then
         assertEquals(exceptionMessage, exception.getMessage());
+    }
+
+    @Test
+    void should_addNewUser() throws IOException {
+        // given
+        var originalPath = Paths.get("src/test/resources/users.csv");
+        var usersFile = new File(tempDir, "users.csv");
+        Files.copy(originalPath, usersFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+        assertThat(usersFile).exists();
+        assertEquals(Files.readAllLines(originalPath), Files.readAllLines(usersFile.toPath()));
+
+        var authenticationService = new UsersFileAuthenticationService(FileName.create(usersFile.getAbsolutePath()));
+
+        // when
+        authenticationService.addUser("new_user", "new_password", UserType.AD_OWNER);
+
+        // then
+        var allLines = Files.readAllLines(usersFile.toPath());
+        assertEquals(Files.readAllLines(originalPath).size() + 1, allLines.size());
+        assertEquals("\"username\",\"password\",\"userType\"", allLines.get(0));
+        assertEquals("\"new_user\",\"new_password\",\"AD_OWNER\"", allLines.get(allLines.size() - 1));
+    }
+
+    @Test
+    void should_deleteUser() throws IOException {
+        // given
+        var originalPath = Paths.get("src/test/resources/users.csv");
+        var usersFile = new File(tempDir, "users.csv");
+        Files.copy(originalPath, usersFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+        assertThat(usersFile).exists();
+        assertEquals(Files.readAllLines(originalPath), Files.readAllLines(usersFile.toPath()));
+
+        var authenticationService = new UsersFileAuthenticationService(FileName.create(usersFile.getAbsolutePath()));
+
+        // when
+        authenticationService.deleteUser("adowner");
+
+        // then
+        var allLines = Files.readAllLines(usersFile.toPath());
+
+        assertEquals(Files.readAllLines(originalPath).size() - 1, allLines.size());
+        assertEquals("\"username\",\"password\",\"userType\"", allLines.get(0));
+        assertEquals("\"admin\",\"admin\",\"ADMIN\"", allLines.get(1));
+        assertEquals("\"adpublisher\",\"adpublisher\",\"AD_PUBLISHER\"", allLines.get(2));
     }
 
     private static Stream<Arguments> correctCredentials() {
