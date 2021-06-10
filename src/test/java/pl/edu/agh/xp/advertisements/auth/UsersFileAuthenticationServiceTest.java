@@ -1,10 +1,10 @@
 package pl.edu.agh.xp.advertisements.auth;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import pl.edu.agh.xp.advertisements.model.User;
 import pl.edu.agh.xp.advertisements.model.UserType;
 import pl.edu.agh.xp.advertisements.service.csv.FileName;
 
@@ -13,18 +13,21 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 class UsersFileAuthenticationServiceTest {
 
     @TempDir
     File tempDir;
+
+    @BeforeEach
+    void beforeEach() {
+        // reset auth context so that it didn't affect other tests
+        AuthContext.setLoggedInUser(null);
+    }
 
     @ParameterizedTest
     @MethodSource("correctCredentials")
@@ -38,11 +41,14 @@ class UsersFileAuthenticationServiceTest {
         assertEquals(Files.readAllLines(originalPath), Files.readAllLines(usersFile.toPath()));
 
         var authenticationService = new UsersFileAuthenticationService(FileName.create(usersFile.getAbsolutePath()));
+        assertNull(AuthContext.getLoggedInUser());
 
         // when
         var actual = authenticationService.login(username, password);
 
         // then
+        assertNotNull(AuthContext.getLoggedInUser());
+        assertEquals(AuthContext.getLoggedInUser(), actual);
         assertEquals(username, actual.getUsername());
         assertEquals(userType, actual.getUserType());
     }
@@ -85,26 +91,6 @@ class UsersFileAuthenticationServiceTest {
                 Arguments.arguments("admin", "wrong_password", "Given password is incorrect"),
                 Arguments.arguments("adowner", "123n1ke", "Given password is incorrect"),
                 Arguments.arguments("adpublisher", "kas asdfoad asofdk", "Given password is incorrect")
-        );
-    }
-
-    private List<User> getUserList() {
-        return Arrays.asList(
-                User.builder()
-                        .username("admin")
-                        .password("admin")
-                        .userType(UserType.ADMIN)
-                        .build(),
-                User.builder()
-                        .username("adowner")
-                        .password("adowner")
-                        .userType(UserType.AD_OWNER)
-                        .build(),
-                User.builder()
-                        .username("adpublisher")
-                        .password("adpublisher")
-                        .userType(UserType.AD_PUBLISHER)
-                        .build()
         );
     }
 

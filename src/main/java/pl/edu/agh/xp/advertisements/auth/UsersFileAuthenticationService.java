@@ -29,10 +29,13 @@ public class UsersFileAuthenticationService implements AuthenticationService {
             throw new RuntimeException("Given password is incorrect");
         }
 
-        return LoggedInUser.builder()
+        var loggedInUser = LoggedInUser.builder()
                 .username(foundUser.getUsername())
                 .userType(foundUser.getUserType())
                 .build();
+
+        AuthContext.setLoggedInUser(loggedInUser);
+        return loggedInUser;
     }
 
     private void validateCredentials(String username, String password) {
