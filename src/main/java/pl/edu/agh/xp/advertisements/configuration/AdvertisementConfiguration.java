@@ -16,6 +16,7 @@ public class AdvertisementConfiguration {
 
     public AdvertisementConfiguration() {
         this.pathToAdvertisements = defaultPathToAdvertisements;
+        this.pathToUsers = defaultPathToUsers;
         this.availableAdvertisementTypes = defaultAvailableAdvertisementTypes;
         this.availableAdvertisementFormats = defaultAvailableAdvertisementFormats;
         this.availableCurrencies = defaultAvailableCurrencies;
@@ -23,6 +24,7 @@ public class AdvertisementConfiguration {
     }
 
     public String pathToAdvertisements;
+    public String pathToUsers;
     public List<String> availableAdvertisementTypes;
     public List<String> availableAdvertisementFormats;
     public List<String> availableCurrencies;
@@ -30,6 +32,7 @@ public class AdvertisementConfiguration {
 
     public static class Default {
         public static final String defaultPathToAdvertisements = "data/advertisements.csv";
+        public static final String defaultPathToUsers = "data/users.csv";
         public static final List<String> defaultAvailableAdvertisementTypes = new ArrayList<>(List.of("IMAGE", "GIF", "VIDEO"));
         public static final List<String> defaultAvailableAdvertisementFormats = new ArrayList<>(List.of("SMALL", "MEDIUM", "LARGE"));
         public static final List<String> defaultAvailableCurrencies = new ArrayList<>(List.of("USD", "PLN", "EUR"));
