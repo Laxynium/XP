@@ -1,16 +1,15 @@
 package pl.edu.agh.xp.advertisements.service.csv;
 
-import pl.edu.agh.xp.advertisements.model.Advertisement;
-
 import java.io.*;
-import java.util.Arrays;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class CSVWriter {
 
-    private static final String headersRow = "\"id\",\"type\",\"format\",\"advertiser\",\"price\",\"price_type\",\"url\",\"title\",\"details\"";
-
-    public void write(FileName filePath, Advertisement advertisement) {
-        var rowToWrite = convertToCsvRow(advertisement);
+    public <T> void write(FileName filePath, T object) {
+        var rowToWrite = convertToCsvRow(object);
 
         var newFile = false;
         var fileToWrite = new File(filePath.getValue());
@@ -28,7 +27,7 @@ public class CSVWriter {
 
         try (PrintWriter pw = new PrintWriter(new FileOutputStream(filePath.getValue(), true))) {
             if (newFile) {
-                pw.println(headersRow);
+                pw.println(createHeadersRow(object.getClass()));
             }
             pw.println(rowToWrite);
         } catch (FileNotFoundException e) {
@@ -36,31 +35,32 @@ public class CSVWriter {
         }
     }
 
-    private String convertToCsvRow(Advertisement advertisement) {
-        var fields = Arrays.asList(
-                advertisement.getId().toString(),
-                advertisement.getType().toString(),
-                advertisement.getFormat().toString(),
-                advertisement.getAdvertiserMail(),
-                advertisement.getPrice().toString(),
-                advertisement.getPriceType().toString(),
-                advertisement.getUrl(),
-                advertisement.getTitle(),
-                advertisement.getDetails()
-        );
+    public boolean delete(FileName filePath) {
+        var file = new File(filePath.getValue());
+        return file.delete();
+    }
+
+    private <T> String convertToCsvRow(T object) {
+        var fields = Stream.of(object.getClass().getMethods())
+                .filter(method -> method.getName().startsWith("get") && !"getClass".equals(method.getName()))
+                .map(method1 -> {
+                    try {
+                        return method1.invoke(object);
+                    } catch (IllegalAccessException | InvocationTargetException e) {
+                        throw new RuntimeException();
+                    }
+                })
+                .map(Object::toString)
+                .collect(Collectors.toList());
 
         return "\"" + String.join("\",\"", fields) + "\"";
     }
 
-    public void delete(FileName filePath) {
-        var file = new File(filePath.getValue());
+    private <T> String createHeadersRow(Class<T> clazz) {
+        var fields = Stream.of(clazz.getFields())
+                .map(Field::getName)
+                .collect(Collectors.toList());
 
-        file.delete();
-        try (PrintWriter pw = new PrintWriter(new FileOutputStream(filePath.getValue(), true))) {
-            file.createNewFile();
-            pw.println(headersRow);
-        } catch (IOException e) {
-            throw new RuntimeException("Could not delete file.", e);
-        }
+        return "\"" + String.join("\",\"", fields) + "\"";
     }
 }
