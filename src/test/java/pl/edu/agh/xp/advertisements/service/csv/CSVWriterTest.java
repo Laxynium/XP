@@ -32,7 +32,7 @@ public class CSVWriterTest {
         assertThat(data).exists();
         assertEquals(Files.readAllLines(originalPath), Files.readAllLines(data.toPath()));
 
-        var sut = new CSVWriter();
+        var sut = new CSVWriter<>(Advertisement.class, true);
 
         // when
         sut.write(FileName.create(data.getAbsolutePath()), advertisement);
@@ -50,7 +50,7 @@ public class CSVWriterTest {
         var data = new File(tempDir, "data.csv");
         assertThat(data).doesNotExist();
 
-        var sut = new CSVWriter();
+        var sut = new CSVWriter<>(Advertisement.class, true);
 
         // when
         sut.write(FileName.create(data.getAbsolutePath()), advertisement);

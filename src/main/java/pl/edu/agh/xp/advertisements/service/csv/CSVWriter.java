@@ -1,16 +1,59 @@
 package pl.edu.agh.xp.advertisements.service.csv;
 
-import java.io.*;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import com.fasterxml.jackson.databind.MapperFeature;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.dataformat.csv.CsvGenerator;
+import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 
-public class CSVWriter {
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
-    public <T> void write(FileName filePath, T object) {
-        var rowToWrite = convertToCsvRow(object);
+public class CSVWriter<T> {
 
+    private final ObjectWriter objectWriter;
+
+    public CSVWriter(Class<T> typeParameterClass, boolean withHeader) {
+        var mapper = getObjectMapper();
+        var schema = withHeader
+                ? mapper.schemaFor(typeParameterClass).withHeader()
+                : mapper.schemaFor(typeParameterClass).withoutHeader();
+        this.objectWriter = mapper.writerFor(typeParameterClass).with(schema);
+    }
+
+    public void write(FileName filePath, T object) {
+        boolean newFile = createFileIfNotExists(filePath);
+
+        try (FileOutputStream os = new FileOutputStream(filePath.getValue(), true)) {
+            var writer = objectWriter;
+            if (!newFile) {
+                var mapper = getObjectMapper();
+                var schema = mapper.schemaFor(object.getClass()).withoutHeader();
+                writer = mapper.writerFor(object.getClass()).with(schema);
+            }
+            writer.writeValues(os).write(object);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException("File has not been found.", e);
+        } catch (IOException e) {
+            throw new RuntimeException("Couldn't open a file.", e);
+        }
+    }
+
+    public boolean delete(FileName filePath) {
+        var file = new File(filePath.getValue());
+        return file.delete();
+    }
+
+    private CsvMapper getObjectMapper() {
+        var mapper = new CsvMapper();
+        mapper.disable(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY);
+        mapper.configure(CsvGenerator.Feature.ALWAYS_QUOTE_STRINGS, true);
+
+        return mapper;
+    }
+
+    private boolean createFileIfNotExists(FileName filePath) {
         var newFile = false;
         var fileToWrite = new File(filePath.getValue());
         if (!fileToWrite.exists()) {
@@ -24,43 +67,7 @@ public class CSVWriter {
                 throw new RuntimeException("Couldn't create a file.", e);
             }
         }
-
-        try (PrintWriter pw = new PrintWriter(new FileOutputStream(filePath.getValue(), true))) {
-            if (newFile) {
-                pw.println(createHeadersRow(object.getClass()));
-            }
-            pw.println(rowToWrite);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException("File has not been found.", e);
-        }
+        return newFile;
     }
 
-    public boolean delete(FileName filePath) {
-        var file = new File(filePath.getValue());
-        return file.delete();
-    }
-
-    private <T> String convertToCsvRow(T object) {
-        var fields = Stream.of(object.getClass().getMethods())
-                .filter(method -> method.getName().startsWith("get") && !"getClass".equals(method.getName()))
-                .map(method1 -> {
-                    try {
-                        return method1.invoke(object);
-                    } catch (IllegalAccessException | InvocationTargetException e) {
-                        throw new RuntimeException();
-                    }
-                })
-                .map(Object::toString)
-                .collect(Collectors.toList());
-
-        return "\"" + String.join("\",\"", fields) + "\"";
-    }
-
-    private <T> String createHeadersRow(Class<T> clazz) {
-        var fields = Stream.of(clazz.getFields())
-                .map(Field::getName)
-                .collect(Collectors.toList());
-
-        return "\"" + String.join("\",\"", fields) + "\"";
-    }
 }

@@ -13,14 +13,14 @@ import java.util.stream.Collectors;
 public class AdvertisementService {
 
     private final CSVReader<Advertisement> csvReader;
-    private final CSVWriter csvWriter;
+    private final CSVWriter<Advertisement> csvWriter;
     private final AdvertisementsPrinter advertisementsPrinter;
     private final AdvertisementCreator advertisementCreator;
     private FileName advertisementsCsvPath;
 
     public AdvertisementService(ConsoleReader reader, PrintStream printStream, FileName fileName) {
         csvReader = new CSVReader<>(Advertisement.class, true);
-        csvWriter = new CSVWriter();
+        csvWriter = new CSVWriter<>(Advertisement.class, true);
         advertisementsPrinter = new AdvertisementsPrinter(printStream);
         advertisementCreator = new AdvertisementCreator(reader);
         advertisementsCsvPath = fileName;
