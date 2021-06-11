@@ -6,6 +6,8 @@ import pl.edu.agh.xp.advertisements.model.*;
 import pl.edu.agh.xp.advertisements.service.console.ConsoleReader;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 @RequiredArgsConstructor
 public class AdvertisementCreator {
@@ -16,18 +18,20 @@ public class AdvertisementCreator {
 
         var id = reader.readInteger("Please enter id: (number)");
 
-        var types = Arrays.toString(AdvertisementConfiguration.INSTANCE.availableAdvertisementTypes.toArray());
-        var type = AdvertisementType.create(reader.readString("Please enter type: (Available types are " + types + ")"));
+        var types = listToNumberedMap(AdvertisementConfiguration.INSTANCE.availableAdvertisementTypes);
+        var type = AdvertisementType.create(types.get(reader.readInteger("Please enter type by number: (Available types are " + types.entrySet() + ")")));
 
-        var formats = Arrays.toString(AdvertisementConfiguration.INSTANCE.availableAdvertisementFormats.toArray());
-        var format = AdvertisementFormat.create(reader.readString("Please enter format:(Available formats are " + formats + ")"));
+        var formats = listToNumberedMap(AdvertisementConfiguration.INSTANCE.availableAdvertisementFormats);
+        var format = AdvertisementFormat.create(formats.get(reader.readInteger("Please enter format by number: (Available formats are " + formats.entrySet() + ")")));
+
         var advertiser = reader.readString("Please enter advertiser email: (email)");
 
         var currencies = Arrays.toString(AdvertisementConfiguration.INSTANCE.availableCurrencies.toArray());
-        var price = Price.create(reader.readString("Please enter price: (Available currencies are " + currencies + ")"));
+        var price = Price.create(reader.readString("Please enter price in format \"number currency\" for example 1.0 USD: (Available currencies are " + currencies + ")"));
 
-        var pricingMethods = Arrays.toString(AdvertisementConfiguration.INSTANCE.availablePricingMethods.toArray());
-        var priceType = PricingMethod.create(reader.readString("Please enter price type: (Available pricing methods are " + pricingMethods + ")"));
+        var pricingMethods = listToNumberedMap(AdvertisementConfiguration.INSTANCE.availablePricingMethods);
+        var priceType = PricingMethod.create(pricingMethods.get(reader.readInteger("Please enter price type by number: (Available pricing methods are " + pricingMethods.entrySet() + ")")));
+
         var url = reader.readString("Please enter url: (URL)");
         var title = reader.readString("Please enter title: (string)");
         var details = reader.readString("Please enter details: (string)");
@@ -43,6 +47,14 @@ public class AdvertisementCreator {
                 .title(title)
                 .details(details)
                 .build();
+    }
+
+    private HashMap<Integer, String> listToNumberedMap(List<String> list) {
+        var map = new HashMap<Integer, String>();
+        for (int i = 0; i < list.size(); i++) {
+            map.put(i, list.get(i));
+        }
+        return map;
     }
 
 }

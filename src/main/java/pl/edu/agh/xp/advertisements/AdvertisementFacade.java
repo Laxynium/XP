@@ -17,7 +17,7 @@ public class AdvertisementFacade {
     private final ConfigurationService configurationService;
 
     public AdvertisementFacade(InputStream inputStream, PrintStream printStream, String advertisementCsvPath) {
-        var reader = new ConsoleReader(inputStream);
+        var reader = new ConsoleReader(inputStream, printStream);
         advertisementService = new AdvertisementService(reader, printStream, FileName.create(advertisementCsvPath));
         consoleReader = reader;
         configurationService = new ConfigurationService();
@@ -47,7 +47,7 @@ public class AdvertisementFacade {
     }
 
     public void readConfiguration() {
-        configurationService.read();
+        configurationService.readConfiguration();
         advertisementService.setAdvertisementsCsvPath(AdvertisementConfiguration.INSTANCE.pathToAdvertisements);
     }
 

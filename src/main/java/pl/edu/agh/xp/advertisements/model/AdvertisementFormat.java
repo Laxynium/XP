@@ -11,7 +11,9 @@ public class AdvertisementFormat {
 
     @JsonCreator
     public static AdvertisementFormat create(String value) {
-        if (value == null || value.trim().isEmpty()) {
+        if (value == null) {
+            throw new RuntimeException("Selected not correct advertisement format.");
+        } else if (value.trim().isEmpty()) {
             throw new RuntimeException("Given advertisement format cannot be empty.");
         }
 

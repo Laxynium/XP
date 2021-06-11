@@ -40,7 +40,7 @@ public class ConfigurationService {
         }
     }
 
-    public void read() {
+    public void readConfiguration() {
         try {
             var configurationFile = Path.of(configurationFileDefaultLocation).toFile();
             if (configurationFile.exists()) {

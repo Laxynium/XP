@@ -1,42 +1,78 @@
 package pl.edu.agh.xp.advertisements;
 
+import pl.edu.agh.xp.advertisements.auth.AuthContext;
+import pl.edu.agh.xp.advertisements.auth.UsersFileAuthenticationService;
 import pl.edu.agh.xp.advertisements.configuration.AdvertisementConfiguration;
+import pl.edu.agh.xp.advertisements.context.ServiceProvider;
+import pl.edu.agh.xp.advertisements.menu.Login;
+import pl.edu.agh.xp.advertisements.menu.MainMenu;
+import pl.edu.agh.xp.advertisements.menu.MenuFactory;
+import pl.edu.agh.xp.advertisements.service.advertisement.AdvertisementService;
+import pl.edu.agh.xp.advertisements.service.configuration.ConfigurationService;
+import pl.edu.agh.xp.advertisements.service.console.ConsoleReader;
+import pl.edu.agh.xp.advertisements.service.csv.FileName;
 
+import java.io.InputStream;
+import java.io.PrintStream;
 import java.util.Scanner;
 
 public class AdvertisementsApplication {
 
     public static void main(String... args) {
+        var app = new AdvertisementsApplication();
+        app.setupContext();
+        app.login();
+        app.setupUserBasedContext();
+        app.start();
+    }
 
-        var adsFacade = new AdvertisementFacade(System.in, System.out, AdvertisementConfiguration.INSTANCE.pathToAdvertisements);
-        adsFacade.readConfiguration();
+    private void setupContext() {
+        var configurationService = new ConfigurationService();
+        ServiceProvider.addService(ConfigurationService.class, configurationService);
+        configurationService.readConfiguration();
 
-        var scanner = new Scanner(System.in);
-        System.out.println("Hello in Advertisement Management System!");
+        InputStream in = System.in;
+        PrintStream out = System.out;
 
+        ServiceProvider.addService(InputStream.class, in);
+        ServiceProvider.addService(PrintStream.class, out);
+
+        var reader = new ConsoleReader(in, out);
+        ServiceProvider.addService(ConsoleReader.class, reader);
+
+        var advertisementService = new AdvertisementService(reader, out, FileName.create(AdvertisementConfiguration.INSTANCE.pathToAdvertisements));
+        ServiceProvider.addService(AdvertisementService.class, advertisementService);
+    }
+
+    private void setupUserBasedContext() {
+        var user =         AuthContext.getLoggedInUser();
+        var menu = MenuFactory.createMenu(user.getUserType());
+        ServiceProvider.addService(MainMenu.class, menu);
+    }
+
+    private void login() {
+        // wywołane logowanie
+        var usersFileAuthenticationService = new UsersFileAuthenticationService( FileName.create(AdvertisementConfiguration.INSTANCE.pathToUsers));
+        ServiceProvider.addService(UsersFileAuthenticationService.class, usersFileAuthenticationService);
+        var reader = (ConsoleReader)ServiceProvider.getService(ConsoleReader.class);
+        Login.login(usersFileAuthenticationService, reader);
+    }
+
+    private void start() {
+        var menu = (MainMenu) ServiceProvider.getService(MainMenu.class);
+        var in = (InputStream) ServiceProvider.getService(InputStream.class);
+        var out = (PrintStream) ServiceProvider.getService(PrintStream.class);
+        out.println("Hello in Advertisement Management System!");
+        var scanner = new Scanner(in);
         String input;
         while (true) {
-            System.out.println("\nSelect action: (write number and press enter)");
-            System.out.println("1. Show all advertisements");
-            System.out.println("2. Show advertisements with type");
-            System.out.println("3. Add advertisement");
-            System.out.println("4. Delete advertisement");
-            System.out.println("5. Generate system configuration");
-            System.out.println("6. Exit");
+            menu.printMenu();
             input = scanner.nextLine();
             if (input != null) {
                 try {
-                    switch (input) {
-                        case "1" -> adsFacade.printAdvertisement();
-                        case "2" -> adsFacade.printAdvertisementWithType();
-                        case "3" -> adsFacade.addAdvertisement();
-                        case "4" -> adsFacade.deleteAdvertisement();
-                        case "5" -> adsFacade.generateConfiguration();
-                        case "6" -> System.exit(0);
-                        default -> System.out.println("Wrong number!");
-                    }
+                    menu.handleInput(input);
                 } catch (RuntimeException e) {
-                    System.out.println("Error! " + e.getMessage());
+                    out.println("Error! " + e.getMessage());
                 }
             }
         }

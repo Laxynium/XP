@@ -11,7 +11,9 @@ public class PricingMethod {
 
     @JsonCreator
     public static PricingMethod create(String value) {
-        if (value == null || value.trim().isEmpty()) {
+        if (value == null) {
+            throw new RuntimeException("Selected not correct pricing method.");
+        } else if (value.trim().isEmpty()) {
             throw new RuntimeException("Given pricing method cannot be empty.");
         }
 
