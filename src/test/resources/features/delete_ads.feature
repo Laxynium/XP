@@ -23,8 +23,8 @@ Feature: Delete ads
     Then Nothing is deleted
     """
     |ID|TYPE|FORMAT|ADVERTISER|PRICE|PRICE TYPE|URL|TITLE|DETAILS|
-    |1|VIDEO|SMALL|example company|1 USD|PER_VIEW|http://test.com|title|details|
-    |2|VIDEO|SMALL|example company|1 USD|PER_VIEW|http://test.com|title|details|
+    |1|GIF|SMALL|example company|1 USD|PER_VIEW|http://test.com|title|details|
+    |2|GIF|SMALL|example company|1 USD|PER_VIEW|http://test.com|title|details|
     End of Advertisements
     """
 

@@ -50,10 +50,10 @@ class AdvertisementsPrinterTest {
         var actual = outContent.toString();
         var result = """
                 |ID|TYPE|FORMAT|ADVERTISER|PRICE|PRICE TYPE|URL|TITLE|DETAILS|
-                |1|image|medium|Example company|0.5 USD|PER_VIEW|https://example.ads.com|Title|details|
-                |2|image|medium|Example company|0.5 USD|PER_VIEW|https://example.ads.com|Title|details|
-                |1|image|medium|Example company|0.5 USD|PER_VIEW|https://example.ads.com|Title|details|
-                |2|image|medium|Example company|0.5 USD|PER_VIEW|https://example.ads.com|Title|details|
+                |1|IMAGE|medium|Example company|0.5 USD|PER_VIEW|https://example.ads.com|Title|details|
+                |2|IMAGE|medium|Example company|0.5 USD|PER_VIEW|https://example.ads.com|Title|details|
+                |1|IMAGE|medium|Example company|0.5 USD|PER_VIEW|https://example.ads.com|Title|details|
+                |2|IMAGE|medium|Example company|0.5 USD|PER_VIEW|https://example.ads.com|Title|details|
                 End of Advertisements
                 """;
         assertThat(result).isEqualToIgnoringNewLines(actual);

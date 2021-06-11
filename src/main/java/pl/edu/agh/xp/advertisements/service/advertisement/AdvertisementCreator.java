@@ -36,7 +36,7 @@ public class AdvertisementCreator {
         var title = reader.readString("Please enter title: (string)");
         var details = reader.readString("Please enter details: (string)");
 
-        return Advertisement.builder()
+        Advertisement buildedAd = Advertisement.builder()
                 .id(id)
                 .type(type)
                 .format(format)
@@ -47,6 +47,7 @@ public class AdvertisementCreator {
                 .title(title)
                 .details(details)
                 .build();
+        return buildedAd;
     }
 
     private HashMap<Integer, String> listToNumberedMap(List<String> list) {

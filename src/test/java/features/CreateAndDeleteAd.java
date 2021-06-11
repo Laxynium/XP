@@ -35,13 +35,15 @@ public class CreateAndDeleteAd {
 
     @Given("There is one ad")
     public void thereIsOneAd(AdTestItem item) {
-        this.inputStream.write(item.toStringInput());
+        String stringInput = item.toStringInput();
+        this.inputStream.write(stringInput);
         this.sut.addAdvertisement();
 
         printAdvertisement();
         var output = outputStream.toString();
 
-        assertThat(output).contains(item.convertToPipeRow());
+        String convertToConsoleForm = item.convertToConsoleForm();
+        assertThat(output).contains(convertToConsoleForm);
         outputStream.reset();
     }
 
@@ -53,7 +55,7 @@ public class CreateAndDeleteAd {
         printAdvertisement();
         var output = outputStream.toString();
 
-        assertThat(output).contains(item.convertToPipeRow());
+        assertThat(output).contains(item.convertToConsoleForm());
         outputStream.reset();
     }
 

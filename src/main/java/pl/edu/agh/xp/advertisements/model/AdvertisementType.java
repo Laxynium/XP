@@ -16,10 +16,10 @@ public class AdvertisementType {
         } else if (value.trim().isEmpty()) {
             throw new RuntimeException("Given advertisement type cannot be empty.");
         }
+        var upCaseType = value.toUpperCase();
+        validate(upCaseType);
 
-        validate(value);
-
-        return new AdvertisementType(value);
+        return new AdvertisementType(upCaseType);
     }
 
     @Override

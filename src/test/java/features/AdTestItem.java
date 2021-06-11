@@ -2,6 +2,7 @@ package features;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import pl.edu.agh.xp.advertisements.configuration.AdvertisementConfiguration;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -49,6 +50,26 @@ class AdTestItem {
                 this.getDetails()
         );
 
+        return String.join("|", fields);
+    }
+
+    public String convertToConsoleForm() {
+        var types = AdvertisementConfiguration.INSTANCE.availableAdvertisementTypes;
+        var formats = AdvertisementConfiguration.INSTANCE.availableAdvertisementFormats;
+        var pricingMethods = AdvertisementConfiguration.INSTANCE.availablePricingMethods;
+
+
+        var fields = Arrays.asList(
+                this.getId(),
+                types.get(Integer.parseInt(this.getType())),
+                formats.get(Integer.parseInt(this.getFormat())),
+                this.getAdvertiser(),
+                this.getPrice(),
+                pricingMethods.get(Integer.parseInt(this.getPrice_type())),
+                this.getUrl(),
+                this.getTitle(),
+                this.getDetails()
+        );
         return String.join("|", fields);
     }
 }
