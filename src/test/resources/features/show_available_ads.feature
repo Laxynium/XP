@@ -3,13 +3,13 @@ Feature: Show available ads
 
   Scenario: There are ads available
     Given there are ads available
-      | id  | type  | format | advertiser      | price | price_type | url             | title | details |
-      | 1   | video | small  | example company | 1 USD  | PER_VIEW   | http://test.com | title | details |
+      | id | type | format | advertiser      | price | price_type | url             | title | details |
+      | 1  | 2    | 0      | example company | 1 USD | 0          | http://test.com | title | details |
     When I ask to show in console
     Then I can see them in console
     """
     |ID|TYPE|FORMAT|ADVERTISER|PRICE|PRICE TYPE|URL|TITLE|DETAILS|
-    |1|video|small|example company|1 USD|PER_VIEW|http://test.com|title|details|
+    |1|VIDEO|SMALL|example company|1 USD|PER_VIEW|http://test.com|title|details|
     End of Advertisements
     """
 
@@ -24,15 +24,15 @@ Feature: Show available ads
 
   Scenario: There is one ad available
     Given there is one ad available
-      | id  | type  | format | advertiser      | price | price_type | url             | title | details |
-      | 1   | video | small  | example company | 1 USD  | PER_VIEW   | http://test.com | title | details |
+      | id | type | format | advertiser      | price | price_type | url             | title | details |
+      | 1  | 2    | 0      | example company | 1 USD | 0          | http://test.com | title | details |
     When I add new ad and ask to show in console
-      | id    | type  | format | advertiser      | price | price_type | url             | title | details |
-      | 12    | video | small  | example company | 1 USD  | PER_VIEW   | http://test.com | title | details |
+      | id | type | format | advertiser      | price | price_type | url             | title | details |
+      | 12 | 2    | 0      | example company | 1 USD | 0          | http://test.com | title | details |
     Then  I can see two ads
     """
     |ID|TYPE|FORMAT|ADVERTISER|PRICE|PRICE TYPE|URL|TITLE|DETAILS|
-    |1|video|small|example company|1 USD|PER_VIEW|http://test.com|title|details|
-    |12|video|small|example company|1 USD|PER_VIEW|http://test.com|title|details|
+    |1|VIDEO|SMALL|example company|1 USD|PER_VIEW|http://test.com|title|details|
+    |12|VIDEO|SMALL|example company|1 USD|PER_VIEW|http://test.com|title|details|
     End of Advertisements
     """

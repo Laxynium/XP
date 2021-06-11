@@ -7,5 +7,5 @@ Feature: Create configuration file
     Then Configuration file exists
     And Has default configuration
     """
-    {"pathToAdvertisements":"data/advertisements.csv","availableAdvertisementTypes":["IMAGE","GIF","VIDEO"],"availableAdvertisementFormats":["SMALL","MEDIUM","LARGE"],"availableCurrencies":["USD","PLN","EUR"],"availablePricingMethods":["PER_VIEW","PER_CLICK"]}
+    {"pathToAdvertisements":"data/advertisements.csv","pathToUsers":"data/users.csv","availableAdvertisementTypes":["IMAGE","GIF","VIDEO"],"availableAdvertisementFormats":["SMALL","MEDIUM","LARGE"],"availableCurrencies":["USD","PLN","EUR"],"availablePricingMethods":["PER_VIEW","PER_CLICK"]}
     """

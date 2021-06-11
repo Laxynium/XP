@@ -1,5 +1,6 @@
 package pl.edu.agh.xp.advertisements.service.advertisement;
 
+import pl.edu.agh.xp.advertisements.model.Advertisement;
 import pl.edu.agh.xp.advertisements.model.AdvertisementType;
 import pl.edu.agh.xp.advertisements.service.console.ConsoleReader;
 import pl.edu.agh.xp.advertisements.service.csv.CSVReader;
@@ -11,15 +12,15 @@ import java.util.stream.Collectors;
 
 public class AdvertisementService {
 
-    private final CSVReader csvReader;
-    private final CSVWriter csvWriter;
+    private final CSVReader<Advertisement> csvReader;
+    private final CSVWriter<Advertisement> csvWriter;
     private final AdvertisementsPrinter advertisementsPrinter;
     private final AdvertisementCreator advertisementCreator;
     private FileName advertisementsCsvPath;
 
     public AdvertisementService(ConsoleReader reader, PrintStream printStream, FileName fileName) {
-        csvReader = new CSVReader();
-        csvWriter = new CSVWriter();
+        csvReader = new CSVReader<>(Advertisement.class, true);
+        csvWriter = new CSVWriter<>(Advertisement.class, true);
         advertisementsPrinter = new AdvertisementsPrinter(printStream);
         advertisementCreator = new AdvertisementCreator(reader);
         advertisementsCsvPath = fileName;

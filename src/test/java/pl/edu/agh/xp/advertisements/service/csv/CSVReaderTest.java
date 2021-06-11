@@ -27,7 +27,8 @@ public class CSVReaderTest {
 
     @Test
     void read_shouldThrowAnException_whenWrongFileType() {
-        Executable executable = () -> new CSVReader().read(FileName.create("test.txt"));
+        Executable executable = () -> new CSVReader<>(Advertisement.class, true)
+                .read(FileName.create("test.txt"));
 
         assertThrows(Exception.class, executable, "Wrong file format!");
     }
@@ -43,7 +44,8 @@ public class CSVReaderTest {
         assertEquals(Files.readAllLines(originalPath), Files.readAllLines(data.toPath()));
 
         // when
-        List<Advertisement> actual = new CSVReader().read(FileName.create(data.getAbsolutePath()));
+        List<Advertisement> actual = new CSVReader<>(Advertisement.class, true)
+                .read(FileName.create(data.getAbsolutePath()));
 
         // then
         assertEquals(Files.readAllLines(data.toPath()).size() - 1, actual.size());
@@ -55,7 +57,9 @@ public class CSVReaderTest {
         // given
 
         // when
-        Exception e = assertThrows(RuntimeException.class, () -> new CSVReader().read(FileName.create(filename)));
+        Exception e = assertThrows(RuntimeException.class,
+                () -> new CSVReader<>(Advertisement.class, true)
+                        .read(FileName.create(filename)));
 
         // then
         assertEquals("Incorrect filename", e.getMessage());

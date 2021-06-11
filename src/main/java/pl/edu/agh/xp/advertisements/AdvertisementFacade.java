@@ -47,7 +47,7 @@ public class AdvertisementFacade {
     }
 
     public void readConfiguration() {
-        configurationService.read();
+        configurationService.readConfiguration();
         advertisementService.setAdvertisementsCsvPath(AdvertisementConfiguration.INSTANCE.pathToAdvertisements);
     }
 

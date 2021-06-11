@@ -1,0 +1,4 @@
+"username","password","userType"
+"admin","admin","ADMIN"
+"adowner","adowner","AD_OWNER"
+"adpublisher","adpublisher","AD_PUBLISHER"

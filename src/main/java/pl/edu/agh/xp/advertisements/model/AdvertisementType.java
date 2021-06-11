@@ -11,7 +11,9 @@ public class AdvertisementType {
 
     @JsonCreator
     public static AdvertisementType create(String value) {
-        if (value == null || value.trim().isEmpty()) {
+        if (value == null) {
+            throw new RuntimeException("Selected not correct advertisement type.");
+        } else if (value.trim().isEmpty()) {
             throw new RuntimeException("Given advertisement type cannot be empty.");
         }
 

@@ -1,2 +1,3 @@
 "id","type","format","advertiser","price","price_type","url","title","details"
 "1","IMAGE","MEDIUM","Example company","0.5 USD","PER_VIEW","https://example.ads.com","Some title","Some details"
+"1","GIF","MEDIUM","a@a.pl","1 USD","PER_VIEW","a.pl","t","d"
