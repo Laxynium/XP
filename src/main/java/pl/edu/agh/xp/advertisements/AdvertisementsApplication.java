@@ -5,7 +5,6 @@ import pl.edu.agh.xp.advertisements.auth.AuthenticationServiceFactory;
 import pl.edu.agh.xp.advertisements.configuration.AdvertisementConfiguration;
 import pl.edu.agh.xp.advertisements.context.ServiceProvider;
 import pl.edu.agh.xp.advertisements.menu.Login;
-import pl.edu.agh.xp.advertisements.menu.MainMenu;
 import pl.edu.agh.xp.advertisements.menu.MenuFactory;
 import pl.edu.agh.xp.advertisements.service.advertisement.AdvertisementService;
 import pl.edu.agh.xp.advertisements.service.configuration.ConfigurationService;
@@ -52,7 +51,7 @@ public class AdvertisementsApplication {
     }
 
     private void start() {
-        var menu = (MainMenu) ServiceProvider.getService(MainMenu.class);
+        var menu = MenuFactory.create();
         var in = (InputStream) ServiceProvider.getService(InputStream.class);
         var out = (PrintStream) ServiceProvider.getService(PrintStream.class);
         out.println("Hello in Advertisement Management System!");

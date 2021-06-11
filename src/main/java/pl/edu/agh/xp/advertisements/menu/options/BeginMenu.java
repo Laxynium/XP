@@ -7,22 +7,17 @@ import java.io.PrintStream;
 public class BeginMenu extends MenuOption {
 
     public BeginMenu(PrintStream out) {
-        super("", "\nSelect action: (write number and press enter)", out);
+        super("\nSelect action: (write number and press enter)", out);
     }
 
     @Override
-    public HandlingResult doAction() {
-        return HandlingResult.SUCCESS;
+    public void doAction() {
+        // do nothing
     }
 
     @Override
-    public String formatMessage() {
+    public String formatMessage(String key) {
         return message;
-    }
-
-    @Override
-    public void printMessage() {
-        printStream.println(formatMessage());
     }
 
 }

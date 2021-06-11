@@ -6,23 +6,17 @@ import java.io.PrintStream;
 
 public class Default extends MenuOption {
 
-    public Default(String key, PrintStream printStream) {
-        super(key, "\"Wrong number!\"", printStream);
+    public Default(PrintStream printStream) {
+        super("\"Wrong number!\"", printStream);
     }
 
     @Override
-    public HandlingResult doAction() {
+    public void doAction() {
         printStream.println(message);
-        return HandlingResult.SUCCESS;
     }
 
     @Override
-    public String formatMessage() {
-        return message;
-    }
-
-    @Override
-    public void printMessage() {
+    public void printMessage(String key) {
         // empty implementation
     }
 

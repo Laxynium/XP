@@ -15,14 +15,14 @@ public class AddUser extends MenuOption {
     private final AuthenticationService authenticationService;
     private final ConsoleReader consoleReader;
 
-    public AddUser(Integer i, PrintStream out) {
-        super(i.toString(), "Add new user", out);
+    public AddUser(PrintStream out) {
+        super("Add new user", out);
         this.authenticationService = (AuthenticationService) ServiceProvider.getService(AuthenticationService.class);
         this.consoleReader = (ConsoleReader) ServiceProvider.getService(ConsoleReader.class);
     }
 
     @Override
-    public HandlingResult doAction() {
+    public void doAction() {
         var userTypes = new HashMap<Integer, UserType>();
         IntStream.range(0, UserType.values().length).forEach(i -> {
             userTypes.put(i, UserType.values()[i]);
@@ -33,6 +33,5 @@ public class AddUser extends MenuOption {
         var password = consoleReader.readString("Please enter password: ");
 
         authenticationService.addUser(username, password, userTypes.get(userType));
-        return HandlingResult.SUCCESS;
     }
 }

@@ -6,30 +6,21 @@ import java.io.PrintStream;
 
 @AllArgsConstructor
 public abstract class MenuOption {
-    protected String key;
     protected String message;
     protected PrintStream printStream;
 
-    public abstract HandlingResult doAction();
+    public abstract void doAction();
 
-    public HandlingResult handleInput(String input) {
-        if (input.matches(key)) {
-            return this.doAction();
-        }
-        return HandlingResult.SKIP;
+    public void handle() {
+        this.doAction();
     }
 
-    public String formatMessage() {
+    public String formatMessage(String key) {
         return String.format("%s. %s", key, message);
     }
 
-    public void printMessage() {
-        printStream.println(formatMessage());
-    }
-
-    public enum HandlingResult {
-        SUCCESS,
-        SKIP
+    public void printMessage(String key) {
+        printStream.println(formatMessage(key));
     }
 
 }

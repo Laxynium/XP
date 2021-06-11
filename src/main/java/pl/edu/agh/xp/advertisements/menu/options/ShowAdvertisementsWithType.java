@@ -14,20 +14,19 @@ public class ShowAdvertisementsWithType extends MenuOption {
     private final AdvertisementService advertisementService;
     private final ConsoleReader consoleReader;
 
-    public ShowAdvertisementsWithType(Integer i, PrintStream out) {
-        super(i.toString(), "Show advertisements with type", out);
+    public ShowAdvertisementsWithType(PrintStream out) {
+        super("Show advertisements with type", out);
         this.advertisementService = (AdvertisementService) ServiceProvider.getService(AdvertisementService.class);
         this.consoleReader = (ConsoleReader) ServiceProvider.getService(ConsoleReader.class);
     }
 
     @Override
-    public HandlingResult doAction() {
+    public void doAction() {
         var types = new HashMap<Integer, String>();
         for (int i = 0; i < AdvertisementConfiguration.INSTANCE.availableAdvertisementTypes.size(); i++) {
             types.put(i, AdvertisementConfiguration.INSTANCE.availableAdvertisementTypes.get(i));
         }
         var id = consoleReader.readInteger("Select advertisement type by number and press Enter. Available types are: " + types.entrySet());
         advertisementService.printAdvertisementWithType(types.get(id));
-        return HandlingResult.SUCCESS;
     }
 }

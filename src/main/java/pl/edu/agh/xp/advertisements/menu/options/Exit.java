@@ -6,13 +6,12 @@ import java.io.PrintStream;
 
 public class Exit extends MenuOption {
 
-    public Exit(Integer i, PrintStream out) {
-        super(i.toString(), "Exit", out);
+    public Exit(PrintStream out) {
+        super("Exit", out);
     }
 
     @Override
-    public HandlingResult doAction() {
+    public void doAction() {
         System.exit(0);
-        return HandlingResult.SUCCESS;
     }
 }

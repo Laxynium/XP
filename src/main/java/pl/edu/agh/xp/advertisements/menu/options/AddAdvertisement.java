@@ -10,14 +10,13 @@ public class AddAdvertisement extends MenuOption {
 
     private final AdvertisementService advertisementService;
 
-    public AddAdvertisement(Integer i, PrintStream out) {
-        super(i.toString(), "Add advertisement", out);
+    public AddAdvertisement(PrintStream out) {
+        super("Add advertisement", out);
         this.advertisementService = (AdvertisementService) ServiceProvider.getService(AdvertisementService.class);
     }
 
     @Override
-    public HandlingResult doAction() {
+    public void doAction() {
         advertisementService.addAdvertisement();
-        return HandlingResult.SUCCESS;
     }
 }
