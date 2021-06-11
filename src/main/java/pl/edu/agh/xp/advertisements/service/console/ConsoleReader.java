@@ -6,8 +6,9 @@ public class ConsoleReader {
 
     private final BufferedReader reader;
     private final PrintStream printer;
-    public ConsoleReader(InputStream inputStream, PrintStream printStream) {
-        this(new BufferedReader(new InputStreamReader(inputStream)), printStream);
+
+    public ConsoleReader(InputStream inputStream, PrintStream outputStream) {
+        this(new BufferedReader(new InputStreamReader(inputStream)), outputStream);
     }
 
     public ConsoleReader(BufferedReader reader, PrintStream printer) {

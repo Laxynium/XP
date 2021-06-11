@@ -39,9 +39,8 @@ public class AdvertisementService {
 
     public void printAdvertisementWithType(String type) {
         var advertisements = csvReader.read(advertisementsCsvPath);
-        var typeToSearch = AdvertisementType.create(type);
         var onlyOfType = advertisements.stream()
-        .filter(x -> x.getType().equals(typeToSearch))
+                .filter(x -> x.getType().equals(AdvertisementType.create(type)))
                 .collect(Collectors.toList());
         advertisementsPrinter.print(onlyOfType);
     }
