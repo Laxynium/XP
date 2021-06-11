@@ -11,6 +11,9 @@ import java.util.stream.Collectors;
 
 public class UsersFileAuthenticationService implements AuthenticationService {
 
+    private static final String ADMIN_USERNAME = "admin";
+    private static final String ADMIN_PASSWORD = "admin";
+
     private final CSVReader<User> csvReader;
     private final CSVWriter<User> csvWriter;
     private final FileName pathToUsersFile;
@@ -26,6 +29,10 @@ public class UsersFileAuthenticationService implements AuthenticationService {
         validateCredentials(username, password);
 
         var usersFromFile = csvReader.read(pathToUsersFile);
+        if (usersFromFile.isEmpty() && username.equals(ADMIN_USERNAME) && password.equals(ADMIN_PASSWORD)) {
+            addUser(ADMIN_USERNAME, ADMIN_PASSWORD, UserType.ADMIN);
+            return logInUser(ADMIN_USERNAME, UserType.ADMIN);
+        }
         var foundUser = usersFromFile.stream()
                 .filter(user -> username.equals(user.getUsername()))
                 .findFirst()
@@ -35,9 +42,13 @@ public class UsersFileAuthenticationService implements AuthenticationService {
             throw new RuntimeException("Given password is incorrect");
         }
 
+        return logInUser(foundUser.getUsername(), foundUser.getUserType());
+    }
+
+    private LoggedInUser logInUser(String username, UserType userType) {
         var loggedInUser = LoggedInUser.builder()
-                .username(foundUser.getUsername())
-                .userType(foundUser.getUserType())
+                .username(username)
+                .userType(userType)
                 .build();
 
         AuthContext.setLoggedInUser(loggedInUser);

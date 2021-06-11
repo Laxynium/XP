@@ -30,6 +30,50 @@ class UsersFileAuthenticationServiceTest {
         AuthContext.setLoggedInUser(null);
     }
 
+    @Test
+    void should_logInAdminUser_whenUsersFileIsEmpty() throws IOException {
+        // given
+        var usersFile = new File(tempDir, "users.csv");
+        boolean newFile = usersFile.createNewFile();
+
+        assertTrue(newFile);
+        assertThat(usersFile).exists();
+        assertEquals(0, Files.readAllLines(usersFile.toPath()).size());
+
+        var authenticationService = new UsersFileAuthenticationService(FileName.create(usersFile.getAbsolutePath()));
+        assertNull(AuthContext.getLoggedInUser());
+
+        // when
+        var actual = authenticationService.login("admin", "admin");
+
+        // then
+        assertNotNull(AuthContext.getLoggedInUser());
+        assertEquals(AuthContext.getLoggedInUser(), actual);
+        assertEquals("admin", actual.getUsername());
+        assertEquals(UserType.ADMIN, actual.getUserType());
+    }
+
+    @Test
+    void should_logInAdminUser_whenUsersFileNotFound() {
+        // given
+        var usersFile = new File(tempDir, "users.csv");
+
+        assertThat(usersFile).doesNotExist();
+
+        var authenticationService = new UsersFileAuthenticationService(FileName.create(usersFile.getAbsolutePath()));
+        assertNull(AuthContext.getLoggedInUser());
+
+        // when
+        var actual = authenticationService.login("admin", "admin");
+
+        // then
+        assertThat(usersFile).exists();
+        assertNotNull(AuthContext.getLoggedInUser());
+        assertEquals(AuthContext.getLoggedInUser(), actual);
+        assertEquals("admin", actual.getUsername());
+        assertEquals(UserType.ADMIN, actual.getUserType());
+    }
+
     @ParameterizedTest
     @MethodSource("correctCredentials")
     void should_returnLoggedInUser_whenCorrectCredentialsGiven(String username, String password, UserType userType) throws IOException {
