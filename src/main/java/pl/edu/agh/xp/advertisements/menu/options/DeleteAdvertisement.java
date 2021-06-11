@@ -19,7 +19,7 @@ public class DeleteAdvertisement extends MenuOption {
     }
 
     @Override
-    public void doAction() {
+    public void handle() {
         var id = consoleReader.readInteger("Please enter id of advertisement to delete:");
         advertisementService.deleteAdvertisement(id);
     }

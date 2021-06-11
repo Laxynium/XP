@@ -11,7 +11,7 @@ public class Exit extends MenuOption {
     }
 
     @Override
-    public void doAction() {
+    public void handle() {
         System.exit(0);
     }
 }

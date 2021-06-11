@@ -11,7 +11,7 @@ public class BeginMenu extends MenuOption {
     }
 
     @Override
-    public void doAction() {
+    public void handle() {
         // do nothing
     }
 

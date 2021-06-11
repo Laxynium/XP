@@ -17,7 +17,7 @@ public class ShowAdvertisements extends MenuOption {
     }
 
     @Override
-    public void doAction() {
+    public void handle() {
         advertisementService.printAdvertisement();
     }
 }

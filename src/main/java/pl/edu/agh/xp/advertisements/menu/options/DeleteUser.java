@@ -19,7 +19,7 @@ public class DeleteUser extends MenuOption {
     }
 
     @Override
-    public void doAction() {
+    public void handle() {
         var username = consoleReader.readString("Please enter username of user you want to delete: ");
 
         authenticationService.deleteUser(username);

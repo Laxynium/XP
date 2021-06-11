@@ -11,7 +11,7 @@ public class Default extends MenuOption {
     }
 
     @Override
-    public void doAction() {
+    public void handle() {
         printStream.println(message);
     }
 

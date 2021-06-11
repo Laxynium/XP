@@ -16,7 +16,7 @@ public class AddAdvertisement extends MenuOption {
     }
 
     @Override
-    public void doAction() {
+    public void handle() {
         advertisementService.addAdvertisement();
     }
 }

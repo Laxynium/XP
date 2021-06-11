@@ -21,7 +21,7 @@ public class ShowAdvertisementsWithType extends MenuOption {
     }
 
     @Override
-    public void doAction() {
+    public void handle() {
         var types = new HashMap<Integer, String>();
         for (int i = 0; i < AdvertisementConfiguration.INSTANCE.availableAdvertisementTypes.size(); i++) {
             types.put(i, AdvertisementConfiguration.INSTANCE.availableAdvertisementTypes.get(i));

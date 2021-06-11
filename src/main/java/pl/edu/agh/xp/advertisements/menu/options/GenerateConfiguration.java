@@ -19,7 +19,7 @@ public class GenerateConfiguration extends MenuOption {
     }
 
     @Override
-    public void doAction() {
+    public void handle() {
         configurationService.save(consoleReader.readString("In which directory do you want to save configuration?\nPlease enter relative path: ") + "/configuration.json");
     }
 }

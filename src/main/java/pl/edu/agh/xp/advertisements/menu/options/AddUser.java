@@ -22,7 +22,7 @@ public class AddUser extends MenuOption {
     }
 
     @Override
-    public void doAction() {
+    public void handle() {
         var userTypes = new HashMap<Integer, UserType>();
         IntStream.range(0, UserType.values().length).forEach(i -> {
             userTypes.put(i, UserType.values()[i]);

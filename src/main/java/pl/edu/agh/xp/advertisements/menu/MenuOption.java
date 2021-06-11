@@ -9,11 +9,7 @@ public abstract class MenuOption {
     protected String message;
     protected PrintStream printStream;
 
-    public abstract void doAction();
-
-    public void handle() {
-        this.doAction();
-    }
+    public abstract void handle();
 
     public String formatMessage(String key) {
         return String.format("%s. %s", key, message);
