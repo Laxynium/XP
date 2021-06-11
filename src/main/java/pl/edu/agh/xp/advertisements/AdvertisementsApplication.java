@@ -1,7 +1,7 @@
 package pl.edu.agh.xp.advertisements;
 
-import pl.edu.agh.xp.advertisements.auth.AuthContext;
-import pl.edu.agh.xp.advertisements.auth.UsersFileAuthenticationService;
+import pl.edu.agh.xp.advertisements.auth.AuthenticationService;
+import pl.edu.agh.xp.advertisements.auth.AuthenticationServiceFactory;
 import pl.edu.agh.xp.advertisements.configuration.AdvertisementConfiguration;
 import pl.edu.agh.xp.advertisements.context.ServiceProvider;
 import pl.edu.agh.xp.advertisements.menu.Login;
@@ -22,7 +22,6 @@ public class AdvertisementsApplication {
         var app = new AdvertisementsApplication();
         app.setupContext();
         app.login();
-        app.setupUserBasedContext();
         app.start();
     }
 
@@ -44,18 +43,12 @@ public class AdvertisementsApplication {
         ServiceProvider.addService(AdvertisementService.class, advertisementService);
     }
 
-    private void setupUserBasedContext() {
-        var user =         AuthContext.getLoggedInUser();
-        var menu = MenuFactory.createMenu(user.getUserType());
-        ServiceProvider.addService(MainMenu.class, menu);
-    }
-
     private void login() {
-        // wywołane logowanie
-        var usersFileAuthenticationService = new UsersFileAuthenticationService( FileName.create(AdvertisementConfiguration.INSTANCE.pathToUsers));
-        ServiceProvider.addService(UsersFileAuthenticationService.class, usersFileAuthenticationService);
-        var reader = (ConsoleReader)ServiceProvider.getService(ConsoleReader.class);
-        Login.login(usersFileAuthenticationService, reader);
+        // invoke login
+        var authenticationService = AuthenticationServiceFactory.create();
+        ServiceProvider.addService(AuthenticationService.class, authenticationService);
+        var reader = (ConsoleReader) ServiceProvider.getService(ConsoleReader.class);
+        Login.login(authenticationService, reader);
     }
 
     private void start() {
