@@ -21,12 +21,19 @@ public class DeleteAds {
     private final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
     private final AdvertisementFacade sut;
     private final File file = new File("testData");
+    private final PrintStream printStream;
 
     public DeleteAds() {
+        printStream = new PrintStream(this.outputStream);
         this.sut = new AdvertisementFacade(
                 inputStream,
-                new PrintStream(this.outputStream),
+                printStream,
                 file.getPath() + "/advertisements.csv");
+    }
+
+    void printAdvertisement() {
+        outputStream.reset();
+        sut.printAdvertisement();
     }
 
     //region scenario 2
@@ -46,7 +53,7 @@ public class DeleteAds {
 
     @Then("This add no longer exists")
     public void thisAddNoLongerExists(String expected) {
-        sut.printAdvertisement();
+        printAdvertisement();
         var output = outputStream.toString();
         assertThat(output).isEqualToIgnoringNewLines(expected);
     }
@@ -55,7 +62,7 @@ public class DeleteAds {
     // region scenario 3
     @When("I delete ad with ID {word} not in presented ads")
     public void iDeleteNotExistingAdd(String id) {
-        sut.printAdvertisement();
+        printAdvertisement();
         var output = outputStream.toString();
         outputStream.reset();
         assertThat(output).doesNotContain("|" + id + "|");
@@ -65,7 +72,7 @@ public class DeleteAds {
 
     @Then("Nothing is deleted")
     public void nothingIsDeleted(String expected) {
-        sut.printAdvertisement();
+        printAdvertisement();
         var output = outputStream.toString();
         assertThat(output).isEqualToIgnoringNewLines(expected);
     }

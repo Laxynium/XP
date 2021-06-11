@@ -1,23 +1,22 @@
 package pl.edu.agh.xp.advertisements.service.console;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 
 public class ConsoleReader {
 
     private final BufferedReader reader;
-    public ConsoleReader(InputStream inputStream) {
-        this(new BufferedReader(new InputStreamReader(inputStream)));
+    private final PrintStream printer;
+    public ConsoleReader(InputStream inputStream, PrintStream printStream) {
+        this(new BufferedReader(new InputStreamReader(inputStream)), printStream);
     }
 
-    public ConsoleReader(BufferedReader reader) {
+    public ConsoleReader(BufferedReader reader, PrintStream printer) {
         this.reader = reader;
+        this.printer = printer;
     }
 
     public Integer readInteger(String message) {
-        System.out.println(message);
+        printer.println(message);
 
         String line;
         try {
@@ -29,7 +28,7 @@ public class ConsoleReader {
     }
 
     public String readString(String message) {
-        System.out.println(message);
+        printer.println(message);
 
         String line;
         try {

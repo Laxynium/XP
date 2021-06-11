@@ -18,12 +18,19 @@ public class CreateAndDeleteAd {
     private final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
     private final AdvertisementFacade sut;
     private final File file = new File("testData");
+    private final PrintStream printStream;
 
     public CreateAndDeleteAd() {
+        printStream = new PrintStream(this.outputStream);
         this.sut = new AdvertisementFacade(
                 inputStream,
-                new PrintStream(this.outputStream),
+                printStream,
                 file.getPath() + "/advertisements.csv");
+    }
+
+    void printAdvertisement() {
+        outputStream.reset();
+        sut.printAdvertisement();
     }
 
     @Given("There is one ad")
@@ -31,7 +38,7 @@ public class CreateAndDeleteAd {
         this.inputStream.write(item.toStringInput());
         this.sut.addAdvertisement();
 
-        this.sut.printAdvertisement();
+        printAdvertisement();
         var output = outputStream.toString();
 
         assertThat(output).contains(item.convertToPipeRow());
@@ -43,7 +50,7 @@ public class CreateAndDeleteAd {
         this.inputStream.write(item.toStringInput());
         this.sut.addAdvertisement();
 
-        this.sut.printAdvertisement();
+        printAdvertisement();
         var output = outputStream.toString();
 
         assertThat(output).contains(item.convertToPipeRow());
@@ -58,7 +65,7 @@ public class CreateAndDeleteAd {
 
     @Then("Ads file has one ad")
     public void adsFileHasOneAd(String expected) {
-        this.sut.printAdvertisement();
+        printAdvertisement();
         var output = outputStream.toString();
 
         assertThat(output).isEqualToIgnoringNewLines(expected);

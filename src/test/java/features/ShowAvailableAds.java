@@ -5,11 +5,13 @@ import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import lombok.SneakyThrows;
 import org.springframework.util.FileSystemUtils;
 import pl.edu.agh.xp.advertisements.AdvertisementFacade;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.List;
 
@@ -20,12 +22,19 @@ public class ShowAvailableAds {
     private final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
     private final AdvertisementFacade sut;
     private final File file = new File("testData");
+    private final PrintStream printStream;
 
     public ShowAvailableAds() {
+        printStream = new PrintStream(this.outputStream);
         this.sut = new AdvertisementFacade(
                 inputStream,
-                new PrintStream(this.outputStream),
+                printStream,
                 file.getPath() + "/advertisements.csv");
+    }
+
+    void printAdvertisement() {
+        outputStream.reset();
+        sut.printAdvertisement();
     }
 
     @Given("there are ads available")
@@ -48,14 +57,14 @@ public class ShowAvailableAds {
 
     @When("I ask to show in console")
     public void iAskToShowInConsole() {
-        sut.printAdvertisement();
+        printAdvertisement();
     }
 
     @When("I add new ad and ask to show in console")
     public void iAddNewAdAndAskToShowInConsole(AdTestItem ad) {
         this.inputStream.write(ad.toStringInput());
         sut.addAdvertisement();
-        sut.printAdvertisement();
+        printAdvertisement();
     }
 
     @Then("I can see them in console")

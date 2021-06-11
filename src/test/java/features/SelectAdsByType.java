@@ -19,14 +19,20 @@ public class SelectAdsByType {
     private final InputStreamFake inputStream = new InputStreamFake();
     private final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
     private final AdvertisementFacade sut;
+    private final PrintStream printStream;
 
     public SelectAdsByType() {
+        printStream = new PrintStream(this.outputStream);
         this.sut = new AdvertisementFacade(
                 inputStream,
-                new PrintStream(this.outputStream),
+                printStream,
                 file.getPath() + "/advertisements.csv");
     }
 
+    void printAdvertisementWithType() {
+        outputStream.reset();
+        sut.printAdvertisementWithType();
+    }
 
     @Given("there are following ads")
     public void thereAreAdsWithDifferentTypes(List<AdTestItem> ads) {
@@ -39,12 +45,13 @@ public class SelectAdsByType {
     @When("I ask for ads of type {word}")
     public void iAskForAdsOfTypeType(String type) {
         this.inputStream.write(type);
-        this.sut.printAdvertisementWithType();
+        printAdvertisementWithType();
     }
 
     @Then("only ads with selected type are returned")
     public void onlyAdsWithSelectedTypeAreReturned(String expectedOutput) {
         var output = outputStream.toString();
+        output = output.substring(output.indexOf('\n')+1);
         assertThat(output).isEqualToIgnoringNewLines(expectedOutput);
     }
 

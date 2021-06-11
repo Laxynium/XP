@@ -20,12 +20,20 @@ public class AddOneAdvertisementToEmptyCollection {
     private final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
     private final AdvertisementFacade sut;
     private final File file = new File("testData");
+    private final PrintStream printStream;
 
     public AddOneAdvertisementToEmptyCollection() {
+        printStream = new PrintStream(this.outputStream);
         this.sut = new AdvertisementFacade(
                 inputStream,
-                new PrintStream(this.outputStream),
+                printStream,
                 file.getPath() + "/advertisements.csv");
+    }
+
+    void printAdvertisement() {
+        outputStream.reset();
+        printStream.flush();
+        sut.printAdvertisement();
     }
 
     @Before
@@ -40,7 +48,7 @@ public class AddOneAdvertisementToEmptyCollection {
 
     @Given("there are zero ads available")
     public void thereAreNoAdsAvailable(String expectedOutput) {
-        sut.printAdvertisement();
+        printAdvertisement();
         var output = outputStream.toString();
         outputStream.reset();
         assertThat(output).isEqualToIgnoringNewLines(expectedOutput);
@@ -50,13 +58,13 @@ public class AddOneAdvertisementToEmptyCollection {
     public void iAddOneAdvertisement(AdTestItem ad) {
         this.inputStream.write(ad.toStringInput());
         sut.addAdvertisement();
-        sut.printAdvertisement();
+        printAdvertisement();
     }
 
     @Then("I can see one advertisement")
     public void iCanSeeOneAdvertisement(String expectedOutput) {
         outputStream.reset();
-        sut.printAdvertisement();
+        printAdvertisement();
         var output = outputStream.toString();
         assertThat(output).isEqualToIgnoringNewLines(expectedOutput);
     }
