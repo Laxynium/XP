@@ -14,6 +14,7 @@ public class AdPublisherMenu extends Menu {
         var menuOptions = Arrays.asList(
                 new ShowAdvertisements(out),
                 new ShowAdvertisementsWithType(out),
+                new GenerateAdvertisementsCsvFile(out),
                 new Exit(out)
         );
 

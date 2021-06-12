@@ -2,6 +2,7 @@ package pl.edu.agh.xp.advertisements.service.advertisement;
 
 import pl.edu.agh.xp.advertisements.model.Advertisement;
 import pl.edu.agh.xp.advertisements.model.AdvertisementType;
+import pl.edu.agh.xp.advertisements.model.PublisherAdvertisementInfo;
 import pl.edu.agh.xp.advertisements.service.console.ConsoleReader;
 import pl.edu.agh.xp.advertisements.service.csv.CSVReader;
 import pl.edu.agh.xp.advertisements.service.csv.CSVWriter;
@@ -52,6 +53,13 @@ public class AdvertisementService {
                 .collect(Collectors.toList());
         csvWriter.delete(advertisementsCsvPath);
         advertisements.forEach(it -> csvWriter.write(advertisementsCsvPath, it));
+    }
+
+    public void generateAdvertisementsCsvFile(String path) {
+        var writer = new CSVWriter<>(PublisherAdvertisementInfo.class, true);
+        csvReader.read(advertisementsCsvPath).forEach(ad -> {
+            writer.write(FileName.create(path), PublisherAdvertisementInfo.mapFromAd(ad));
+        });
     }
 
     public void setAdvertisementsCsvPath(String newPath) {

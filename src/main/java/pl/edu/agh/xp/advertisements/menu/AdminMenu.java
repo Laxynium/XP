@@ -16,6 +16,7 @@ public class AdminMenu extends Menu {
                 new ShowAdvertisementsWithType(out),
                 new AddAdvertisement(out),
                 new DeleteAdvertisement(out),
+                new GenerateAdvertisementsCsvFile(out),
                 new GenerateConfiguration(out),
                 new AddUser(out),
                 new DeleteUser(out),

@@ -42,6 +42,11 @@ public class AdvertisementFacade {
         advertisementService.deleteAdvertisement(id);
     }
 
+    public void generateAdvertisementCsvFile() {
+        var path = consoleReader.readString("In which directory do you want to save csv file?\nPlease enter relative path: ") + "/urls.csv";
+        advertisementService.generateAdvertisementsCsvFile(path);
+    }
+
     public void generateConfiguration() {
         configurationService.save(consoleReader.readString("In which directory do you want to save configuration?\nPlease enter relative path: ") + "/configuration.json");
     }
