@@ -20,7 +20,6 @@ public class AdvertisementsApplication {
     public static void main(String... args) {
         var app = new AdvertisementsApplication();
         app.setupContext();
-        app.login();
         app.start();
     }
 
@@ -42,7 +41,7 @@ public class AdvertisementsApplication {
         ServiceProvider.addService(AdvertisementService.class, advertisementService);
     }
 
-    private void login() {
+    private void login(PrintStream out) {
         // invoke login
         var authenticationService = AuthenticationServiceFactory.create();
         ServiceProvider.addService(AuthenticationService.class, authenticationService);
@@ -51,10 +50,18 @@ public class AdvertisementsApplication {
     }
 
     private void start() {
-        var menu = MenuFactory.create();
         var in = (InputStream) ServiceProvider.getService(InputStream.class);
         var out = (PrintStream) ServiceProvider.getService(PrintStream.class);
+
+        try {
+            login(out);
+        } catch (RuntimeException e) {
+            out.println("Error! " + e.getMessage());
+            start();
+        }
+
         out.println("Hello in Advertisement Management System!");
+        var menu = MenuFactory.create();
         var scanner = new Scanner(in);
         String input;
         while (true) {
