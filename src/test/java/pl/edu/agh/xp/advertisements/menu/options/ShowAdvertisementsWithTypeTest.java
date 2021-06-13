@@ -4,38 +4,41 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import pl.edu.agh.xp.advertisements.configuration.AdvertisementConfiguration;
 import pl.edu.agh.xp.advertisements.context.ServiceProvider;
 import pl.edu.agh.xp.advertisements.service.advertisement.AdvertisementService;
+import pl.edu.agh.xp.advertisements.service.console.ConsoleReader;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
-public class AddAdvertisementTest {
-
+class ShowAdvertisementsWithTypeTest {
     @Mock
     AdvertisementService advertisementService;
+
+    @Mock
+    ConsoleReader consoleReader;
 
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
         ServiceProvider.addService(AdvertisementService.class, advertisementService);
+        ServiceProvider.addService(ConsoleReader.class, consoleReader);
     }
 
     @Test
-    public void inputMatchesKey_actionIsExecuted() {
-        // given
+    void showAdvertisementsWithTypeIsCalled_actionIsExecuted() {
+        when(consoleReader.readInteger(anyString())).thenReturn(1);
+
         var outContent = new ByteArrayOutputStream();
         var printStream = new PrintStream(outContent);
-        var sut = new AddAdvertisement(printStream);
+        var sut = new ShowAdvertisementsWithType(printStream);
 
-        //when
         sut.handle();
 
-        //then
-        verify(advertisementService, times(1)).addAdvertisement();
+        verify(advertisementService, times(1)).printAdvertisementWithType(anyString());
     }
-
 }
