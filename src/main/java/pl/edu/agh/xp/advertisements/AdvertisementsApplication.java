@@ -19,17 +19,19 @@ public class AdvertisementsApplication {
 
     public static void main(String... args) {
         var app = new AdvertisementsApplication();
-        app.setupContext();
-        app.start();
+        app.start(System.in,  System.out);
     }
 
-    private void setupContext() {
+    public void start(InputStream in, PrintStream out) {
+        this.setupContext(in, out);
+        this.login(out);
+        this.showMenu(out);
+    }
+
+    private void setupContext(InputStream in, PrintStream out) {
         var configurationService = new ConfigurationService();
         ServiceProvider.addService(ConfigurationService.class, configurationService);
         configurationService.readConfiguration();
-
-        InputStream in = System.in;
-        PrintStream out = System.out;
 
         ServiceProvider.addService(InputStream.class, in);
         ServiceProvider.addService(PrintStream.class, out);
@@ -39,27 +41,29 @@ public class AdvertisementsApplication {
 
         var advertisementService = new AdvertisementService(reader, out, FileName.create(AdvertisementConfiguration.INSTANCE.pathToAdvertisements));
         ServiceProvider.addService(AdvertisementService.class, advertisementService);
+
+        var authenticationService = AuthenticationServiceFactory.create();
+        ServiceProvider.addService(AuthenticationService.class, authenticationService);
     }
 
     private void login(PrintStream out) {
+        var logged = false;
         // invoke login
-        var authenticationService = AuthenticationServiceFactory.create();
-        ServiceProvider.addService(AuthenticationService.class, authenticationService);
+        var authenticationService = (AuthenticationService) ServiceProvider.getService(AuthenticationService.class);
         var reader = (ConsoleReader) ServiceProvider.getService(ConsoleReader.class);
-        Login.login(authenticationService, reader);
+        while (!logged) {
+            try {
+                Login.login(authenticationService, reader);
+                logged = true;
+            } catch (RuntimeException e) {
+                out.println("Error! " + e.getMessage());
+            }
+
+        }
     }
 
-    private void start() {
+    private void showMenu(PrintStream out) {
         var in = (InputStream) ServiceProvider.getService(InputStream.class);
-        var out = (PrintStream) ServiceProvider.getService(PrintStream.class);
-
-        try {
-            login(out);
-        } catch (RuntimeException e) {
-            out.println("Error! " + e.getMessage());
-            start();
-        }
-
         out.println("Hello in Advertisement Management System!");
         var menu = MenuFactory.create();
         var scanner = new Scanner(in);
